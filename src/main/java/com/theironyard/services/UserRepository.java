@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by drewmunnerlyn on 4/6/16.
  */
 public interface UserRepository extends CrudRepository<User, Integer> {
-    User findByName (String userName);
+    User findByUserName(String userName);
     ArrayList<User> findByIsValid (boolean isValid);
     ArrayList<User> findByUserType (String userType);
 }
