@@ -14,12 +14,12 @@ angular
 .config(function($routeProvider) {
   $routeProvider
     .when('/',{
-      templateUrl: "templates/index.html",
+      templateUrl: "home/views/home.html",
       controller: "HomeController"
     })
 })
 
-require('./controllers/');
+
 require('./admin/');
 require('./buyers/');
 require('./buyers-profile/');
