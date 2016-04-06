@@ -1,0 +1,15 @@
+.row-one {
+  height: 500px;
+  background-image: url(img/hero-pic.jpg);
+  background-size: cover; }
+
+.row-two {
+  height: 500px;
+  background-image: url(img/hero-pic.jpg);
+  background-size: cover; }
+
+.login {
+  margin: 10px; }
+
+footer {
+  height: 70px; }
