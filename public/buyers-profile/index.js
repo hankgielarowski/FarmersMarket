@@ -1,2 +1,2 @@
-require('./buyers-prof.controller');
-require('./buyers-prof.module');
+require('./buyers-profile.controller');
+require('./buyers-profile.module');

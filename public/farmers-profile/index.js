@@ -1,2 +1,2 @@
-require('./farmers-prof.controller');
-require('./farmers-prof.module');
+require('./farmers-profile.controller');
+require('./farmers-profile.module');
