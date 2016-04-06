@@ -1,10 +1,20 @@
 package com.theironyard.controllers;
 
-import org.springframework.web.bind.annotation.RestController;
+import com.theironyard.entities.User;
+import com.theironyard.services.UserRepository;
+import com.theironyard.utilities.PasswordStorage;
+import org.h2.tools.Server;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 /**
@@ -13,17 +23,131 @@ import java.sql.SQLException;
 
 @RestController
 public class FarmersMarketController {
-    //test 1 2 3
-//    Server dbui;
-//
-//    @PostConstruct
-//    public void construct() throws SQLException, SQLException {
-//        dbui = Server.createWebServer().start();
-//    }
-//
-//    @PreDestroy
-//    public void destroy() {
-//        dbui.stop();
-//    }
+
+    @Autowired
+    UserRepository users;
+
+    Server dbui;
+
+    @PostConstruct
+    public void construct() throws SQLException, SQLException {
+        dbui = Server.createWebServer().start();
+    }
+
+    @PreDestroy
+    public void destroy() {
+        dbui.stop();
+    }
+
+    @PostConstruct
+    public void init() {
+        if (users.findByName("Admin") != null) {
+            User user = new User("Admin", "admin", "Admin", "FarmersMarket", "Here", "888-888-8888", "FarmersMarket@FarmersMarket.com", true);
+            users.save(user);
+        }
+    }
+
+    @RequestMapping(path = "/users", method = RequestMethod.POST)
+    public void createUser(String userName, String password, String passwordValidate, String companyName, String location, String phone, String email, boolean userTypeBool) throws Exception {
+        String userType = null;
+
+        if (userTypeBool == true) {
+            userType = "Buyer";
+        }
+        else {
+            userType = "Farmer";
+        }
+
+        if (password.equals(passwordValidate)) {
+
+            User user = new User(userName, PasswordStorage.createHash(password), userType, companyName, location, phone, email);
+            users.save(user);
+        }
+
+        else {
+            throw new Exception("password does not match");
+        }
+    }
+
+    @RequestMapping(path = "/users/{id}", method = RequestMethod.DELETE)
+    public void deleteUser(@PathVariable("id") int id, HttpSession session) {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByName(userName);
+        if(user.getUserType().equals("Admin")) {
+            users.delete(id);
+        }
+        else if(user.getId() == id) {
+            users.delete(id);
+        }
+    }
+
+    @RequestMapping(path = "/users/{id}", method = RequestMethod.PUT)
+    public void updateUser(@RequestBody User newUser, @PathVariable("id") int id, HttpSession session) {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByName(userName);
+        if(user.getUserType().equals("Admin")) {
+            users.save(newUser);
+        }
+
+        else if(user.getId() == id) {
+            users.save(newUser);
+        }
+    }
+
+    @RequestMapping(path = "/users", method = RequestMethod.GET)
+    public ArrayList<User> getUsers(HttpSession session) throws Exception {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByName(userName);
+        if(!user.getUserType().equals("Admin")) {
+            throw new Exception("Insufficient Permissions.");
+        }
+        return (ArrayList<User>) users.findAll();
+    }
+
+    @RequestMapping(path = "/users/category/{category}")
+    public ArrayList<User> getUsersInCategory(HttpSession session, @PathVariable("category") String category) throws Exception {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByName(userName);
+        if(!user.getUserType().equals("Admin") || !user.getUserType().equals("Buyer")) {
+            throw new Exception("Insufficient Permissions");
+        }
+        return users.findByUserType(category);
+    }
+
+    @RequestMapping(path = "/users/validate/{id}", method = RequestMethod.PUT)
+    public void validateUser(@PathVariable("id") int id, HttpSession session) {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByName(userName);
+        if(user.getUserType().equals("Admin")) {
+            User newUser = users.findOne(id);
+            newUser.setValid(true);
+        }
+    }
+
+    @RequestMapping(path = "/users/validate", method = RequestMethod.GET)
+    public ArrayList<User> getValidatingUsers(HttpSession session) throws Exception {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByName(userName);
+        if(!user.getUserType().equals("Admin")) {
+            throw new Exception("Insufficient Permissions");
+        }
+        ArrayList<User> validatingUsers = users.findByIsValid(false);
+        return validatingUsers;
+    }
+
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    public User login(HttpSession session, String userName, String password) throws Exception {
+        User user = users.findByName(userName);
+        if (!PasswordStorage.verifyPassword(password, user.getPasswordHash())) {
+            throw new Exception("Wrong Password");
+        }
+        session.setAttribute("userName", userName);
+        return user;
+    }
+
+    @RequestMapping(path = "/logout", method = RequestMethod.POST)
+    public void logout(HttpSession session) throws IOException {
+        session.invalidate();
+    }
 
 }
