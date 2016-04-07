@@ -38,27 +38,24 @@ public class FarmersMarketController {
     }
 
     @PostConstruct
-    public void construct() {
+    public void construct() throws PasswordStorage.CannotPerformOperationException {
         if (users.findByUserName("Admin") == null) {
-            User user = new User("Admin", "admin", "Admin", "FarmersMarket", "Here", "888-888-8888", "FarmersMarket@FarmersMarket.com", true);
+            User user = new User("Admin", PasswordStorage.createHash("admin"), "Admin", "FarmersMarket", "Here", "888-888-8888", "FarmersMarket@FarmersMarket.com", true);
             users.save(user);
         }
     }
 
     @RequestMapping(path = "/users", method = RequestMethod.POST)
-    public void createUser(String userName, String password, String passwordValidate, String companyName, String location, String phone, String email, boolean userTypeBool) throws Exception {
-        String userType = null;
+    public void createUser(@RequestBody User user) throws Exception {
 
-        if (userTypeBool == true) {
-            userType = "Buyer";
-        }
-        else {
-            userType = "Farmer";
+        if(!user.getUserType().equals("Buyer") && !user.getUserType().equals("Farmer")) {
+            throw new Exception("Invalid user type");
         }
 
-        if (password.equals(passwordValidate)) {
+        if (user.getPasswordHash().equals(user.getPasswordValidate())) {
 
-            User user = new User(userName, PasswordStorage.createHash(password), userType, companyName, location, phone, email);
+            user.setPasswordHash(PasswordStorage.createHash(user.getPasswordHash()));
+
             users.save(user);
         }
 
@@ -94,11 +91,11 @@ public class FarmersMarketController {
 
     @RequestMapping(path = "/users", method = RequestMethod.GET)
     public ArrayList<User> getUsers(HttpSession session) throws Exception {
-//        String userName = (String) session.getAttribute("userName");
-//        User user = users.findByUserName(userName);
-//        if(!user.getUserType().equals("Admin")) {
-//            throw new Exception("Insufficient Permissions.");
-//        }
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+        if(!user.getUserType().equals("Admin")) {
+            throw new Exception("Insufficient Permissions.");
+        }
         return (ArrayList<User>) users.findAll();
     }
 
