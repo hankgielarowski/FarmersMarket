@@ -93,8 +93,13 @@ require('./buyers-profile.module');
 require('./buyers-profile.service');
 
 },{"./buyers-profile.controller":6,"./buyers-profile.module":7,"./buyers-profile.service":8}],10:[function(require,module,exports){
-arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],11:[function(require,module,exports){
+// angular
+// .module("FarmersMarket")
+// .controller("BuyerController", BuyerController);
+//
+// BuyerController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyerService"];
+
+},{}],11:[function(require,module,exports){
 angular
 .module("buyers.module", [
   "ngRoute"
@@ -137,8 +142,13 @@ require('./farmers-profile.module');
 require('./farmers-profile.service');
 
 },{"./farmers-profile.controller":14,"./farmers-profile.module":15,"./farmers-profile.service":16}],18:[function(require,module,exports){
-arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],19:[function(require,module,exports){
+// angular
+// .module("FarmersMarket")
+// .controller("FarmerController", FarmerController);
+//
+// FarmerController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmerService"];
+
+},{}],19:[function(require,module,exports){
 angular
 .module("farmers.module", [
   "ngRoute"
@@ -173,6 +183,17 @@ function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
   //   console.log("THIS SHOULD BE USERS", users);
   //
   // })
+
+  $scope.getUser = function(user) {
+    console.log("NOTHIGN IS HAPPENING?");
+    HomeService.getUser(user)
+    .then(function(data){
+      console.log('SUCCESS: ', data);
+      $location.path('/users');
+    },function error(err) {
+      console.log("nope: ", err)
+    })
+  }
 
   $scope.createFarmer = function(user) {
     console.log("NOTHIGN IS HAPPENING?");

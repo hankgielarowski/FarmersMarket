@@ -13,6 +13,17 @@ function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
   //
   // })
 
+  $scope.getUser = function(user) {
+    console.log("NOTHIGN IS HAPPENING?");
+    HomeService.getUser(user)
+    .then(function(data){
+      console.log('SUCCESS: ', data);
+      $location.path('/users');
+    },function error(err) {
+      console.log("nope: ", err)
+    })
+  }
+
   $scope.createFarmer = function(user) {
     console.log("NOTHIGN IS HAPPENING?");
 
