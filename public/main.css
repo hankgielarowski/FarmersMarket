@@ -1,15 +1,34 @@
+.login {
+  margin: 10px;
+  margin-right: 15px !important; }
+
+.logo {
+  float: left; }
+
+.navbar-text {
+  margin-left: 240px !important;
+  font-size: 1.6em; }
+
+.dropdown-menu {
+  left: 83% !important;
+  background-color: #598796 !important; }
+
 .row-one {
   height: 500px;
   background-image: url(img/hero-pic.jpg);
   background-size: cover; }
+
+.connect {
+  font-size: 2.5em;
+  font-family: Copperplate / Copperplate Gothic Light, sans-serif;
+  float: right;
+  padding-top: 75px; }
 
 .row-two {
   height: 500px;
   background-image: url(img/hero-pic.jpg);
   background-size: cover; }
 
-.login {
-  margin: 10px; }
-
 footer {
-  height: 70px; }
+  height: 70px;
+  border: 2px solid red; }
