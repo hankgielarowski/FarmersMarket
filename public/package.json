@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node_modules/.bin/serve",
     "bundle": "node_modules/.bin/browserify --entry app.module.js -o bundle.js",
-    "watch": "node_modules/.bin/watchify --entry app.module.js -o bundle.js & node_modules/.bin/node-sass main.scss main.css -w"
+    "watch": "node_modules/.bin/watchify --entry app.module.js -o bundle.js & node_modules/.bin/node-sass main.scss main.css -w",
+    "serve": "cd ../ && java -jar FarmersMarket-0.0.1-SNAPSHOT.jar"
   },
   "repository": {
     "type": "git",
