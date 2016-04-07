@@ -8,14 +8,33 @@ angular
   'buyers.module' ,
   'buyers-profile.module' ,
   'farmers.module' ,
-  'farmers-profile.module' ,
-  'home.module'
+  'farmers-profile.module'
 ])
 .config(function($routeProvider) {
   $routeProvider
     .when('/',{
       templateUrl: "home/views/home.html",
       controller: "HomeController"
+    })
+    .when('/admin', {
+      templateUrl: "admin/views/admin.html",
+      controller: "AdminController"
+    })
+    .when('/buyers', {
+      templateUrl: "buyers/views/buyers.html",
+      controller: "BuyersController"
+    })
+    .when('/buyers-profile', {
+      templateUrl: "buyers-profile/views/buyers-profile.html",
+      controller: "BuyersProfileController"
+    })
+    .when('/farmers', {
+      templateUrl: "farmers/views/farmers.html",
+      controller: "FarmersController"
+    })
+    .when('/farmers-profile', {
+      templateUrl: "farmers-profile/views/farmers-profile.html",
+      controller: "FarmersProfileController"
     })
 })
 

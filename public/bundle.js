@@ -29,14 +29,33 @@ angular
   'buyers.module' ,
   'buyers-profile.module' ,
   'farmers.module' ,
-  'farmers-profile.module' ,
-  'home.module'
+  'farmers-profile.module'
 ])
 .config(function($routeProvider) {
   $routeProvider
     .when('/',{
       templateUrl: "home/views/home.html",
       controller: "HomeController"
+    })
+    .when('/admin', {
+      templateUrl: "admin/views/admin.html",
+      controller: "AdminController"
+    })
+    .when('/buyers', {
+      templateUrl: "buyers/views/buyers.html",
+      controller: "BuyersController"
+    })
+    .when('/buyers-profile', {
+      templateUrl: "buyers-profile/views/buyers-profile.html",
+      controller: "BuyersProfileController"
+    })
+    .when('/farmers', {
+      templateUrl: "farmers/views/farmers.html",
+      controller: "FarmersController"
+    })
+    .when('/farmers-profile', {
+      templateUrl: "farmers-profile/views/farmers-profile.html",
+      controller: "FarmersProfileController"
     })
 })
 
@@ -48,7 +67,7 @@ require('./farmers/');
 require('./farmers-profile/');
 require('./home/');
 
-},{"./admin/":3,"./buyers-profile/":7,"./buyers/":10,"./farmers-profile/":13,"./farmers/":16,"./home/":19,"angular":23,"angular-route":21}],5:[function(require,module,exports){
+},{"./admin/":3,"./buyers-profile/":7,"./buyers/":10,"./farmers-profile/":13,"./farmers/":16,"./home/":18,"angular":22,"angular-route":20}],5:[function(require,module,exports){
 arguments[4][1][0].apply(exports,arguments)
 },{"dup":1}],6:[function(require,module,exports){
 angular
@@ -131,30 +150,19 @@ angular
 .module("FarmersMarket")
 .controller("HomeController", HomeController);
 
-HomeController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope"];
+HomeController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope",'HomeService'];
 
-function HomeController($scope,$http,$location,$q,$rootScope) {
-
+function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
+  HomeService.getUser()
+  .then(function(data) {
+    console.log("THIS SHOULD BE USERS", users);
+  })
 }
 
-},{"underscore":24}],18:[function(require,module,exports){
-angular
-.module("home.module", [
-  "ngRoute"
-])
-.config(function($routeProvider) {
-  $routeProvider
-    .when('/home',{
-      templateUrl: "views/home.html",
-      controller: "HomeController"
-    })
-})
-
-},{}],19:[function(require,module,exports){
+},{"underscore":23}],18:[function(require,module,exports){
 require('./home.controller');
-require('./home.module');
 
-},{"./home.controller":17,"./home.module":18}],20:[function(require,module,exports){
+},{"./home.controller":17}],19:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1178,11 +1186,11 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 require('./angular-route');
 module.exports = 'ngRoute';
 
-},{"./angular-route":20}],22:[function(require,module,exports){
+},{"./angular-route":19}],21:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -31897,11 +31905,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":22}],24:[function(require,module,exports){
+},{"./angular":21}],23:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors

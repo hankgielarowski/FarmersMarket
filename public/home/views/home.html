@@ -1,17 +1,107 @@
-<header>
   <nav class="navbar navbar-default">
-    <!-- <div class="container-fluid">
-      <div class="navbar-header"> -->
-        <a class="navbar-brand" href="#">
-          <img alt="Brand" src="img/farmersMarketLogo.jpg" style="width: 100px; height: 100px;">
-        </a>
-        <button type="button" class="btn login btn-danger navbar-right">Sign Up</button>
-        <button type="button" class="btn login btn-primary navbar-right">Sign In</button>
-        <button type="button" class="btn login btn-warning navbar-right">Log Out</button>
-      <!-- </div>
-    </div> -->
+    <div class="container-fluid">
+        <img class="logo" alt="Brand" src="img/farmersMarketLogo.jpg" style="width: 50px; height: 50px;">
+        <p class="navbar-text">Farmers Market</p>
+        <div class="dropdown">
+        <button type="button" class="btn btn-danger navbar-right login" data-toggle="dropdown" role="button">Sign Up </button>
+          <ul class="dropdown-menu">
+            <li><button type="button" class="btn btn-info" data-toggle="modal" data-target="#farmerLogin">Farmers</button></li>
+            <li><button type="button" class="btn btn-info navbar-right login" data-toggle="modal" data-target="#buyerLogin">Buyers</button></li>
+          </ul>
+        </div>
+      <button type="button" class="btn btn-primary navbar-right login" data-toggle="modal" data-target="#userLogin">Sign In</button>
+        <button type="button" class="btn btn-warning navbar-right login">Log Out</button>
+      </div>
+
+
+        <div class="modal fade" id="farmerLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Farmer Sign-Up Form</h4>
+              </div>
+              <div class="modal-body">
+                <div class="box">
+                  <div class="content register-box">
+                    <div class="form">
+                      <form class="signin-form">
+                        <input id="userName" class="form-control" type="text" placeholder="User Name" name="userName" ng-model="user.userName">
+                        <input id="email" class="form-control" type="text" placeholder="Email" name="email" ng-model="user.email">
+                        <input id="password" class="form-control" type="password" placeholder="Password" name="password" ng-model="user.password">
+                        <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation" ng-model="user.passwordValidate">
+                        <input id="companyName" class="form-control" type="text" placeholder="Company Name" name="companyName" ng-model="user.companyName">
+                        <input id="location" class="form-control" type="text" placeholder="Enter Adress" name="location" ng-model="user.location">
+                        <input id="phoneNumber" class="form-control" type="text" placeholder="Phone Number" name="phoneNumber" ng-model="user.phoneNumber">
+                        <input class="btn btn-default btn-register" type="button" value="Create account" name="commit">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="buyerLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Buyer Sign-Up Form</h4>
+              </div>
+              <div class="modal-body">
+                <div class="box">
+                  <div class="content register-box">
+                    <div class="form">
+                      <form class="signin-form">
+                        <input id="userName" class="form-control" type="text" placeholder="User Name" name="userName" ng-model="user.userName">
+                        <input id="email" class="form-control" type="text" placeholder="Email" name="email" ng-model="user.email">
+                        <input id="password" class="form-control" type="password" placeholder="Password" name="password" ng-model="user.password">
+                        <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation" ng-model="user.passwordValidate">
+                        <input id="companyName" class="form-control" type="text" placeholder="Company Name" name="companyName" ng-model="user.companyName">
+                        <input id="location" class="form-control" type="text" placeholder="Enter Adress" name="location" ng-model="user.location">
+                        <input id="phoneNumber" class="form-control" type="text" placeholder="Phone Number" name="phoneNumber" ng-model="user.phoneNumber">
+                        <input class="btn btn-default btn-register" type="button" value="Create account" name="commit">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+                <div class="modal fade" id="userLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Sign-In Form</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="box">
+                          <div class="content register-box">
+                            <div class="form">
+                              <form class="signin-form">
+                                <input id="email" class="form-control" type="text" placeholder="Email" name="email">
+                                <input id="password" class="form-control" type="password" placeholder="Password" name="password">
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+    </div>
   </nav>
-</header>
 <div class="row row-one">
   <div class="col-lg-12">
     <article class="value">
@@ -31,10 +121,3 @@
   </article>
 </div>
 </div>
-<footer>
-  <div class="row row-footer">
-    <div class="col-lg-12">
-      <button type="button" class="btn login btn-danger">contact</button>
-      <a href="https://www.placecage.com/gif/200/300">FAQ</a>
-  </div>
-</footer>
