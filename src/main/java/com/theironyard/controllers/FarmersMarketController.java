@@ -40,7 +40,7 @@ public class FarmersMarketController {
     @PostConstruct
     public void construct() throws PasswordStorage.CannotPerformOperationException {
         if (users.findByUserName("Admin") == null) {
-            User user = new User("Admin", PasswordStorage.createHash("admin"), "Admin", "FarmersMarket", "Here", "888-888-8888", "FarmersMarket@FarmersMarket.com", true);
+            User user = new User("Admin", PasswordStorage.createHash("admin"), "Admin", "FarmersMarket", "Here", "888-888-8888", "FarmersMarket@FarmersMarket.com", "admin");
             users.save(user);
         }
     }
@@ -93,9 +93,9 @@ public class FarmersMarketController {
     public ArrayList<User> getUsers(HttpSession session) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-        if(!user.getUserType().equals("Admin")) {
-            throw new Exception("Insufficient Permissions.");
-        }
+//        if(!user.getUserType().equals("Admin")) {
+//            throw new Exception("Insufficient Permissions.");
+//        }
         return (ArrayList<User>) users.findAll();
     }
 
