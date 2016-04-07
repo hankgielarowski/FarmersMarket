@@ -1,2 +1,2 @@
 require('./home.controller');
-require('./home.module');
+require('./home.service');

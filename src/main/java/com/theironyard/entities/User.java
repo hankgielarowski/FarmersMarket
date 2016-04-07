@@ -12,6 +12,8 @@ public class User {
     @GeneratedValue
     int id;
 
+
+
     @Column(nullable = false, unique = true)
     String userName;
 
@@ -36,6 +38,17 @@ public class User {
     @Column(nullable = false)
     Boolean isValid = false;
 
+    @Transient
+    String passwordValidate;
+
+    public String getPasswordValidate() {
+        return passwordValidate;
+    }
+
+    public void setPasswordValidate(String passwordValidate) {
+        this.passwordValidate = passwordValidate;
+    }
+
     public User() {
     }
 
@@ -58,6 +71,17 @@ public class User {
         this.location = location;
         this.phone = phone;
         this.email = email;
+    }
+
+    public User(String userName, String passwordHash, String userType, String companyName, String location, String phone, String email, String passwordValidate) {
+        this.userName = userName;
+        this.passwordHash = passwordHash;
+        this.userType = userType;
+        this.companyName = companyName;
+        this.location = location;
+        this.phone = phone;
+        this.email = email;
+        this.passwordValidate = passwordValidate;
     }
 
     public String getUserName() {

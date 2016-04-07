@@ -1,0 +1,250 @@
+Name: FarmersMarket
+
+
+Team: Hank, Frank, Richard, Drew
+
+
+Pitch: 
+FarmersMarket is a website application that aims to connect small farmers with local wholesale buyers such as restaurants and grocery stores. Small farmers typically don’t have the time or means to engage in marketing, while local buyers are noticing their customers’ increasing desire to support locally grown produce. This app solves both dilemmas by creating an inventory tool for farmers, which markets their products to local buyers. The app goes one step further for those farmers who are reluctant or slow to adopt the system by allowing a website Admin to enter/edit inventory on their behalf. This Admin will also have the role of approving new users (famers and buyers), ensuring that they are local and legitimate.
+
+
+Data Collections:
+
+Tables
+Users (which includes Farmers and Buyers)
+Inventories
+Purchases
+
+Users
+id
+password
+userType (of user: farmer or buyer)
+userName
+companyName (company name)
+location (location of farmer or buyer)
+phone
+email
+isValid? (is a valid used approved by the Admin)
+
+Inventories
+id
+category (each produce item will be placed into a category which will be filterable)
+name (specific name of produce, not filterable)
+quantityAvailable (all by pounds/lbs.)
+farmer
+price
+
+*no need for a category picture since we will hard code that. no pictures needed for each listed item since we are just making lists
+
+*when an inventory quantity reaches zero, instead of automatically deleting it from the farmers inventory, keep it there even when its zeroed out so that it still shows in the farmer’s page so they don't have to re-enter it once it is grown again.
+
+Purchases
+id
+category
+name
+buyer
+farmer
+quantityPurchased
+price
+timeStamp (local date time)
+isPendingApproval (approval by Farmer to sell item)
+dateDesired (after the buyer clicks “order” a box pops up and allows the buyer to type in a string of desired delivery date)
+
+
+Routes:
+to be determined
+
+
+Technology:
+HTML/CSS
+Angular Javascript
+Spring w/ Hibernate
+H2 Database
+Postgres for final deployment?
+Digital Ocean
+Password Hashing API
+
+
+Features:
+There will be three types of users, each will have different viewing capabilities
+Admin
+-   approves all new users (farmers and buyers)
+can enter/edit inventory on behalf of Farmers
+can post on the public forum page
+Farmers
+- creates an account with basic information, which is used to create their profile
+- can edit/delete their profile
+- can add/edit produce items in their inventory
+- can post on the public forum page
+- stretch goal, can send direct messages to Buyers
+Buyers
+-   creates an account with basic information
+-   can delete their account
+searches through online inventory of available produce and can search/filter by produce sub-categories, once they click on a subcategory, it takes the buyer to a page that lists links of all available produce in that sub-category. They can order from that page, or they can click on the link which takes them to that Farmer’s page of inventory, where they can also order.
+can search by Farmer if they want to see the inventory of a particular Farmer
+- can type in an integer next to each listed item to purchase X amount of an item, then clicks on an “order” button at the bottom of the list, which will be automatically accepted and then will change the current amount of that item’s inventory. should be allowed to order more that one item at a time from that list. 
+- can view a list of all inventory that they have ordered which shows quantity and from which farmer they purchased it from.
+- can post on the public forum page
+- stretch goal, can send direct messages to farmers
+
+
+All Stories:
+1. Welcome Page (Welcome/Login/Create Account)
+2. Admin’s Home Page (Control Panel)
+3. Buyer’s Home Page (combines both the overall category view and also the list view once a category is select that portion of the page changes)
+4. Farmer’s Home Page
+5. Buyer’s Profile Page (contact info and purchase history)
+6. List of All Farmers Page
+7. stretch goal: Public Forum Page
+
+
+User Stories for FARMERS:
+
+Farmer’s view of Home page
+
+View: 
+list of their inventory where they can add/edit/delete
+list of all items pending the Farmer’s approval for sale
+list of all items sold
+farmers cannot view other farmers pages
+stretch goal, imbedded iframe from Facebook that shows a photo gallery of their produce
+or some other way of showing a photo gallery
+
+Value Statement: Farmer can monitor their inventory levels and simultaneously market their product to buyers
+	
+Acceptance Criteria:
+- Farmer must be logged in, and cannot view other Farmers pages
+
+
+Farmer’s view of Public Forum page
+	
+View: same as all users, can only post on Farmer’s behalf
+	
+Value Statement: Allows farmer to post general requests
+
+Acceptance Criteria: ?
+
+
+Farmer’s view of Buyer’s Profile page
+
+View: 
+buyer has a profile page that shows their contact info which they can edit from there
+also shows a list of all items they have purchased but this is hidden from the Farmer
+
+Value Statement: Farmer is able to view the contact info of buyers who they want to reach
+	
+Acceptance Criteria:
+?
+
+
+User Stories for BUYERS:
+
+Buyer’s view of Home page
+
+View: 
+- buyer can see images of all produce types by category, whether that produce is in current inventory or not. once clicking on an image, it will render all items related to that category in the current inventory which will display as a list of links. the buyer can make an order on that page by selecting the quantity they want which will be located next to each item and then can click an “order” button at bottom of that list. if the buyer doesn't want to order on that page, they can click on any of the links which will take them to the Buyer’s view of Farmer’s Home Page.
+	
+Value Statement: Buyer is able to view all categories of produce, can filter/search by specific produce category types. Buyer is able to view particular inventory available and make orders from that page, or can click on any of the item links to go to the farmer’s inventory page
+	
+Acceptance Criteria:
+- Buyer must be logged in.
+
+
+Buyer’s view of Public Forum page
+	
+View: same as all users, can only post on Buyer’s behalf
+	
+Value Statement: Allows buyer to post general requests for produce in case its not in inventory.
+
+Acceptance Criteria: ?
+
+
+Buyer’s view of Farmer’s Home page
+
+View: 
+once buyer has selected a link to a particular farmer’s page, it will show the exact same view of that particular farmer’s home page, except it wont show the list of who that farmer has sold to or the farmer’s pending approval section.
+
+Value Statement: Buyer is able to view particular inventories of all available produce by a particular farmer, they can make orders on that page too just like they can on the Buyer’s Home page
+	
+Acceptance Criteria:
+?
+
+
+Buyer’s view of List of All Farmers page
+
+View: 
+(reached by clicking on a link in the nav bar) alphabetical list of links of all Farmers, once clicked it goes to the Buyer’s view of Farmers’ Home pag
+
+Value Statement: Allows Buyer to find a particular Farmer they are interested in getting produce from.
+
+Acceptance Criteria: ?
+
+
+Buyer’s view of Buyer’s Profile page
+
+View: 
+buyer has a profile page that shows their contact info which they can edit from there
+also shows a list of all items they have purchased
+they cannot view other buyer’s pages
+
+Value Statement: Buyer is able to their purchase history, and this is also the buyers way to display their contact info to farmers
+	
+Acceptance Criteria:
+?
+
+
+User Stories for ADMIN:
+
+Admin’s Home page (Control Panel)
+
+View: 
+- list of links of new user requests with accept/deny button next to it, if link is clicked, it goes to that user’s profile page (which is still private from other users (not live) at that point, until the Admin accepts/authorizes the new user)
+button in nav bar to go to List of All Farmers page
+button in nav bar to go to public forum page
+	
+Value Statement: Admin is able to view all parts of the website
+	
+Acceptance Criteria: Admin is at the highest level and has access to all functionality
+
+
+Admin’s view of Public Forum page
+	
+View: same as all users, can only post on Admin’s behalf
+	
+Value Statement: Allows Admin to post news and other events/needs in the forum
+
+Acceptance Criteria: ?
+
+
+Admin’s view of List of All Farmers page
+	
+View: 
+- alphabetical list of links of all Farmers, once clicked it goes to the Admin’s view of Farmers’ Home page and gives the Admin all permissions to act as that particular Farmer (so its the same view as the Farmer would see)
+
+Value Statement: Allows Admin to enter/edit a farmers inventory in case that farmer is slow to adopt the system.
+
+Acceptance Criteria: ?
+
+
+Admin’s view of Farmer’s Home page
+	
+View: 
+- Admin view of a particular Farmers page appears the exact same as that particular Farmer would see it. Only difference is the Admin would have a Home button at top of page that takes them back to the Admin’s view of Home page
+
+Value Statement: Allows Admin to enter/edit a farmers inventory in case that farmer is slow to adopt the system.
+
+Acceptance Criteria: ?
+
+
+Admin’s view of Buyer’s Home page
+	
+View: 
+Admin view of a particular Buyer’s page appears the exact same as that particular Buyer would see it.
+
+Value Statement: Allows Admin to view a buyer’s purchase history
+
+Acceptance Criteria: ?
+
+
+Wire Frames:
+See hand drawn pages
