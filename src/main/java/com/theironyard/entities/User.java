@@ -12,6 +12,8 @@ public class User {
     @GeneratedValue
     int id;
 
+
+
     @Column(nullable = false, unique = true)
     String userName;
 
