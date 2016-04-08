@@ -47,20 +47,27 @@ public class FarmersMarketController {
 
     @RequestMapping(path = "/users", method = RequestMethod.POST)
     public void createUser(@RequestBody User user) throws Exception {
-
         if(!user.getUserType().equals("Buyer") && !user.getUserType().equals("Farmer")) {
             throw new Exception("Invalid user type");
         }
-
         if (user.getPasswordHash().equals(user.getPasswordValidate())) {
-
             user.setPasswordHash(PasswordStorage.createHash(user.getPasswordHash()));
-
             users.save(user);
         }
-
         else {
             throw new Exception("password does not match");
+        }
+    }
+
+    @RequestMapping(path = "/users/{id}", method = RequestMethod.PUT)
+    public void updateUser(@RequestBody User newUser, @PathVariable("id") int id, HttpSession session) {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+        if(user.getUserType().equals("Admin")) {
+            users.save(newUser);
+        }
+        else if(user.getId() == id) {
+            users.save(newUser);
         }
     }
 
@@ -73,19 +80,6 @@ public class FarmersMarketController {
         }
         else if(user.getId() == id) {
             users.delete(id);
-        }
-    }
-
-    @RequestMapping(path = "/users/{id}", method = RequestMethod.PUT)
-    public void updateUser(@RequestBody User newUser, @PathVariable("id") int id, HttpSession session) {
-        String userName = (String) session.getAttribute("userName");
-        User user = users.findByUserName(userName);
-        if(user.getUserType().equals("Admin")) {
-            users.save(newUser);
-        }
-
-        else if(user.getId() == id) {
-            users.save(newUser);
         }
     }
 
@@ -131,13 +125,13 @@ public class FarmersMarketController {
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public User login(HttpSession session, String userName, String password) throws Exception {
-        User user = users.findByUserName(userName);
-        if (!PasswordStorage.verifyPassword(password, user.getPasswordHash())) {
+    public User login(HttpSession session, @RequestBody User user) throws Exception {
+        User user2 = users.findByUserName(user.getUserName());
+        if (!PasswordStorage.verifyPassword(user.getPasswordHash(), user2.getPasswordHash())) {
             throw new Exception("Wrong Password");
         }
-        session.setAttribute("userName", userName);
-        return user;
+        session.setAttribute("userName", user.getUserName());
+        return user2;
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
