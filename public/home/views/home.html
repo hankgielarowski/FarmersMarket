@@ -27,13 +27,14 @@
                     <div class="form">
                       <form class="signin-form">
                         <input id="userName" class="form-control" type="text" placeholder="User Name" name="userName" ng-model="user.userName">
-                        <input id="email" class="form-control" type="text" placeholder="Email" name="email" ng-model="user.email">
-                        <input id="password" class="form-control" type="password" placeholder="Password" name="password" ng-model="user.password">
-                        <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation" ng-model="user.passwordValidate">
+                        <input id="password" class="form-control" type="password" placeholder="Password" name="password" ng-model="user.passwordHash">
+                        <input id="userType" class="form-control" type="text" placeholder="Enter Farmer" name="userType" ng-model="user.userType">
                         <input id="companyName" class="form-control" type="text" placeholder="Company Name" name="companyName" ng-model="user.companyName">
                         <input id="location" class="form-control" type="text" placeholder="Enter Adress" name="location" ng-model="user.location">
-                        <input id="phoneNumber" class="form-control" type="text" placeholder="Phone Number" name="phoneNumber" ng-model="user.phoneNumber">
-                        <input class="btn btn-default btn-register" type="button" value="Create account" name="commit">
+                        <input id="phoneNumber" class="form-control" type="text" placeholder="Phone Number" name="phoneNumber" ng-model="user.phone">
+                        <input id="email" class="form-control" type="text" placeholder="Email" name="email" ng-model="user.email">
+                        <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation" ng-model="user.passwordValidate">
+                        <input class="btn btn-default btn-register" type="button" value="Create account" name="commit" ng-click="createFarmer(user)">
                       </form>
                     </div>
                   </div>
@@ -42,6 +43,10 @@
             </div>
           </div>
         </div>
+
+
+
+
 
         <div class="modal fade" id="buyerLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
@@ -56,13 +61,14 @@
                     <div class="form">
                       <form class="signin-form">
                         <input id="userName" class="form-control" type="text" placeholder="User Name" name="userName" ng-model="user.userName">
-                        <input id="email" class="form-control" type="text" placeholder="Email" name="email" ng-model="user.email">
-                        <input id="password" class="form-control" type="password" placeholder="Password" name="password" ng-model="user.password">
-                        <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation" ng-model="user.passwordValidate">
+                        <input id="password" class="form-control" type="password" placeholder="Password" name="password" ng-model="user.passwordHash">
+                        <input id="userType" class="form-control" type="text" placeholder="Enter Buyer" name="userType" ng-model="user.userType">
                         <input id="companyName" class="form-control" type="text" placeholder="Company Name" name="companyName" ng-model="user.companyName">
                         <input id="location" class="form-control" type="text" placeholder="Enter Adress" name="location" ng-model="user.location">
-                        <input id="phoneNumber" class="form-control" type="text" placeholder="Phone Number" name="phoneNumber" ng-model="user.phoneNumber">
-                        <input class="btn btn-default btn-register" type="button" value="Create account" name="commit">
+                        <input id="phoneNumber" class="form-control" type="text" placeholder="Phone Number" name="phoneNumber" ng-model="user.phone">
+                        <input id="email" class="form-control" type="text" placeholder="Email" name="email" ng-model="user.email">
+                        <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation" ng-model="user.passwordValidate">
+                        <input class="btn btn-default btn-register" type="button" value="Create account" name="commit" ng-click="createBuyer(user)">
                       </form>
                     </div>
                   </div>
@@ -86,38 +92,37 @@
                           <div class="content register-box">
                             <div class="form">
                               <form class="signin-form">
-                                <input id="email" class="form-control" type="text" placeholder="Email" name="email">
-                                <input id="password" class="form-control" type="password" placeholder="Password" name="password">
+                                <input id="email" class="form-control" type="text" placeholder="User Name" name="email" ng-model="user.userName">
+                                <input id="password" class="form-control" type="password" placeholder="Password" name="password" ng-model="user.passwordHash">
                               </form>
                             </div>
                           </div>
                         </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-primary" ng-click="getUser(user)">Sign In</button>
                           </div>
                         </div>
                       </div>
                     </div>
-
-    </div>
+                  </div>
   </nav>
-<div class="row row-one">
-  <div class="col-lg-12">
-    <article class="value">
-      <p class="connect">
-        Connecting Farmers with Buyers
+  <div class="row row-one">
+    <div class="col-lg-12">
+      <article class="value">
+        <p class="connect">
+          Connecting Farmers with Buyers
+        </p>
+      </article>
+    </div>
+  </div>
+  <div class="row row-two">
+    <div class="col-lg-12">
+    <article class="statement">
+      <p class="mission">
+        FarmersMarket is a website application that aims to connect small farmers with local wholesale buyers such as restaurants and grocery stores. Small farmers typically don’t have the time or means to engage in marketing, while local buyers are noticing their customers’ increasing desire to support locally grown produce. This app solves both dilemmas by creating an inventory tool for farmers, which markets their products to local buyers. The app goes one step further for those farmers who are reluctant or slow to adopt the system by allowing a website Admin to enter/edit inventory on their behalf. This Admin will also have the role of approving new users (famers and buyers), ensuring that they are local and legitimate.
+
       </p>
     </article>
   </div>
-</div>
-<div class="row row-two">
-  <div class="col-lg-12">
-  <article class="statement">
-    <p class="mission">
-      FarmersMarket is a website application that aims to connect small farmers with local wholesale buyers such as restaurants and grocery stores. Small farmers typically don’t have the time or means to engage in marketing, while local buyers are noticing their customers’ increasing desire to support locally grown produce. This app solves both dilemmas by creating an inventory tool for farmers, which markets their products to local buyers. The app goes one step further for those farmers who are reluctant or slow to adopt the system by allowing a website Admin to enter/edit inventory on their behalf. This Admin will also have the role of approving new users (famers and buyers), ensuring that they are local and legitimate.
-
-    </p>
-  </article>
-</div>
-</div>
+  </div>

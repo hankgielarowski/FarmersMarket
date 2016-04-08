@@ -32,3 +32,12 @@
 footer {
   height: 70px;
   border: 2px solid red; }
+
+footer ul {
+  display: inline-block;
+  width: 100%; }
+
+footer li {
+  display: inline-block;
+  list-style: none;
+  padding-right: 10%; }

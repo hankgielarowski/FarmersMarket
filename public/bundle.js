@@ -15,10 +15,13 @@ angular
 })
 
 },{}],3:[function(require,module,exports){
+arguments[4][1][0].apply(exports,arguments)
+},{"dup":1}],4:[function(require,module,exports){
 require('./admin.controller');
 require('./admin.module');
+require('./admin.service');
 
-},{"./admin.controller":1,"./admin.module":2}],4:[function(require,module,exports){
+},{"./admin.controller":1,"./admin.module":2,"./admin.service":3}],5:[function(require,module,exports){
 var angular = require("angular");
 require("angular-route");
 
@@ -67,9 +70,9 @@ require('./farmers/');
 require('./farmers-profile/');
 require('./home/');
 
-},{"./admin/":3,"./buyers-profile/":7,"./buyers/":10,"./farmers-profile/":13,"./farmers/":16,"./home/":18,"angular":22,"angular-route":20}],5:[function(require,module,exports){
+},{"./admin/":4,"./buyers-profile/":9,"./buyers/":13,"./farmers-profile/":17,"./farmers/":21,"./home/":24,"angular":28,"angular-route":26}],6:[function(require,module,exports){
 arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],6:[function(require,module,exports){
+},{"dup":1}],7:[function(require,module,exports){
 angular
 .module("buyers-profile.module", [
   "ngRoute"
@@ -82,13 +85,21 @@ angular
     })
 })
 
-},{}],7:[function(require,module,exports){
-require('./buyers-profile.controller');
-require('./buyers-profile.module');
-
-},{"./buyers-profile.controller":5,"./buyers-profile.module":6}],8:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 arguments[4][1][0].apply(exports,arguments)
 },{"dup":1}],9:[function(require,module,exports){
+require('./buyers-profile.controller');
+require('./buyers-profile.module');
+require('./buyers-profile.service');
+
+},{"./buyers-profile.controller":6,"./buyers-profile.module":7,"./buyers-profile.service":8}],10:[function(require,module,exports){
+// angular
+// .module("FarmersMarket")
+// .controller("BuyerController", BuyerController);
+//
+// BuyerController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyerService"];
+
+},{}],11:[function(require,module,exports){
 angular
 .module("buyers.module", [
   "ngRoute"
@@ -101,13 +112,16 @@ angular
     })
 })
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
+arguments[4][1][0].apply(exports,arguments)
+},{"dup":1}],13:[function(require,module,exports){
 require('./buyers.controller');
 require('./buyers.module');
+require('./buyers.service');
 
-},{"./buyers.controller":8,"./buyers.module":9}],11:[function(require,module,exports){
+},{"./buyers.controller":10,"./buyers.module":11,"./buyers.service":12}],14:[function(require,module,exports){
 arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],12:[function(require,module,exports){
+},{"dup":1}],15:[function(require,module,exports){
 angular
 .module("farmers-profile.module", [
   "ngRoute"
@@ -120,13 +134,21 @@ angular
     })
 })
 
-},{}],13:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
+arguments[4][1][0].apply(exports,arguments)
+},{"dup":1}],17:[function(require,module,exports){
 require('./farmers-profile.controller');
 require('./farmers-profile.module');
+require('./farmers-profile.service');
 
-},{"./farmers-profile.controller":11,"./farmers-profile.module":12}],14:[function(require,module,exports){
-arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],15:[function(require,module,exports){
+},{"./farmers-profile.controller":14,"./farmers-profile.module":15,"./farmers-profile.service":16}],18:[function(require,module,exports){
+// angular
+// .module("FarmersMarket")
+// .controller("FarmerController", FarmerController);
+//
+// FarmerController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmerService"];
+
+},{}],19:[function(require,module,exports){
 angular
 .module("farmers.module", [
   "ngRoute"
@@ -139,30 +161,95 @@ angular
     })
 })
 
-},{}],16:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
+arguments[4][1][0].apply(exports,arguments)
+},{"dup":1}],21:[function(require,module,exports){
 require('./farmers.controller');
 require('./farmers.module');
+require('./farmers.service');
 
-},{"./farmers.controller":14,"./farmers.module":15}],17:[function(require,module,exports){
+},{"./farmers.controller":18,"./farmers.module":19,"./farmers.service":20}],22:[function(require,module,exports){
 var _ = require("underscore");
 
 angular
 .module("FarmersMarket")
 .controller("HomeController", HomeController);
 
-HomeController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope",'HomeService'];
+HomeController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "HomeService"];
 
 function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
-  HomeService.getUser()
-  .then(function(data) {
-    console.log("THIS SHOULD BE USERS", users);
-  })
+  // HomeService.getUser()
+  // .then(function(data) {
+  //   console.log("THIS SHOULD BE USERS", users);
+  //
+  // })
+
+  $scope.getUser = function(user) {
+    console.log("NOTHIGN IS HAPPENING?");
+    HomeService.getUser(user)
+    .then(function(data){
+      console.log('SUCCESS: ', data);
+      $location.path('/users');
+    },function error(err) {
+      console.log("nope: ", err)
+    })
+  }
+
+  $scope.createFarmer = function(user) {
+    console.log("NOTHIGN IS HAPPENING?");
+
+    HomeService.createFarmer(user)
+      .then(function(data) {
+        console.log('SUCCESS: ', data);
+        $location.path('/farmers');
+      },function error(err) {
+        console.log("FUCK!: ", err);
+      })
+  }
+  $scope.createBuyer = function(user) {
+    console.log("NOTHIGN IS HAPPENING?");
+
+    HomeService.createBuyer(user)
+      .then(function(data) {
+        console.log('SUCCESS: ', data);
+        $location.path('/buyers');
+      },function error(err) {
+        console.log("FUCK!: ", err);
+      })
+  }
 }
 
-},{"underscore":23}],18:[function(require,module,exports){
-require('./home.controller');
+},{"underscore":29}],23:[function(require,module,exports){
+angular
+  .module('FarmersMarket')
+  .service('HomeService', function($http) {
 
-},{"./home.controller":17}],19:[function(require,module,exports){
+
+    function getUser() {
+      return $http.get('/users');
+    }
+
+    function createFarmer(user) {
+      return $http.post('/users', user);
+    }
+
+    function createBuyer(user) {
+      return $http.post('/users', user);
+    }
+
+    return {
+      getUser: getUser,
+      createFarmer: createFarmer,
+      createBuyer: createBuyer
+
+    }
+  })
+
+},{}],24:[function(require,module,exports){
+require('./home.controller');
+require('./home.service');
+
+},{"./home.controller":22,"./home.service":23}],25:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1186,11 +1273,11 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],20:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 require('./angular-route');
 module.exports = 'ngRoute';
 
-},{"./angular-route":19}],21:[function(require,module,exports){
+},{"./angular-route":25}],27:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -31905,11 +31992,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],22:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":21}],23:[function(require,module,exports){
+},{"./angular":27}],29:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -33459,4 +33546,4 @@ module.exports = angular;
   }
 }.call(this));
 
-},{}]},{},[4]);
+},{}]},{},[5]);
