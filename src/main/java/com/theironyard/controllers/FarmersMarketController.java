@@ -1,6 +1,8 @@
 package com.theironyard.controllers;
 
+import com.theironyard.entities.Inventory;
 import com.theironyard.entities.User;
+import com.theironyard.services.InventoryRepository;
 import com.theironyard.services.UserRepository;
 import com.theironyard.utilities.PasswordStorage;
 import org.h2.tools.Server;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,6 +27,9 @@ public class FarmersMarketController {
 
     @Autowired
     UserRepository users;
+
+    @Autowired
+    InventoryRepository inventories;
 
     Server dbui = null;
 
@@ -98,7 +104,7 @@ public class FarmersMarketController {
         return users.findOne(id);
     }
 
-    @RequestMapping(path = "/users/category/{category}")
+    @RequestMapping(path = "/users/category/{category}", method = RequestMethod.GET)
     public ArrayList<User> getUsersInCategory(HttpSession session, @PathVariable("category") String category) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
@@ -142,6 +148,36 @@ public class FarmersMarketController {
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public void logout(HttpSession session) throws IOException {
         session.invalidate();
+    }
+
+    @RequestMapping(path = "/inventory", method = RequestMethod.POST)
+    public Inventory createInventory(@RequestBody Inventory inventory, HttpSession session) throws Exception {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+        inventory.setUser(user);
+        inventories.save(inventory);
+        return inventory;
+    }
+
+    @RequestMapping(path = "/inventory", method = RequestMethod.GET)
+    public List<Inventory> getAllInventory() {
+        return (List<Inventory>) inventories.findAll();
+    }
+
+    //is getOne needed?
+    @RequestMapping(path = "/inventory/{id}", method = RequestMethod.GET)
+    public Inventory getOneInventory(@PathVariable("id") int id) {
+        return inventories.findOne(id);
+    }
+
+    @RequestMapping(path = "/inventory/{id}", method = RequestMethod.DELETE)
+    public void deleteInventory(@PathVariable("id") int id) {
+        inventories.delete(id);
+    }
+
+    @RequestMapping(path = "/inventory/{id}", method = RequestMethod.PUT)
+    public void updateInventory(@RequestBody Inventory inventory, @PathVariable("id") int id) {
+        inventories.save(inventory);
     }
 
 }

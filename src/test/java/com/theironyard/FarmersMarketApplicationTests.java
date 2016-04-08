@@ -1,7 +1,9 @@
 package com.theironyard;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.theironyard.entities.Inventory;
 import com.theironyard.entities.User;
+import com.theironyard.services.InventoryRepository;
 import com.theironyard.services.UserRepository;
 import com.theironyard.utilities.PasswordStorage;
 import org.junit.Assert;
@@ -34,6 +36,9 @@ public class FarmersMarketApplicationTests {
     UserRepository users;
 
     @Autowired
+    InventoryRepository inventories;
+
+    @Autowired
     WebApplicationContext wap;
 
     MockMvc mockMvc;
@@ -59,7 +64,7 @@ public class FarmersMarketApplicationTests {
     @Test
     public void test2UpdateUser() throws Exception {
         User user = users.findOne(2);
-        user.setCompanyName("NOT Limehouse Produce 2.0");
+        user.setCompanyName("Rawl Produce");
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(user);
         mockMvc.perform(
@@ -68,7 +73,7 @@ public class FarmersMarketApplicationTests {
                         .contentType("application/json")
                         .sessionAttr("userName", "Alice")
         );
-        Assert.assertTrue(users.findOne(2).getCompanyName().equals("NOT Limehouse Produce 2.0"));
+        Assert.assertTrue(users.findOne(2).getCompanyName().equals("Rawl Produce"));
     }
 
     @Test
@@ -90,9 +95,48 @@ public class FarmersMarketApplicationTests {
         Assert.assertTrue(session.getAttribute("userName").equals("Alice"));
     }
 
+    @Test
+    public void test4CreateInventory() throws Exception {
+        Inventory inventory = new Inventory();
+        inventory.setCategory("Banana");
+        inventory.setName("Golden Yellow Bananas");
+        inventory.setQuantityAvailable(9);
+        inventory.setFarmer("Rawl Produce");
+        inventory.setPrice(2.55);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(inventory);
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/inventory")
+                        .content(json)
+                        .contentType("application/json")
+                        .sessionAttr("userName", "Alice")
+        );
+        Assert.assertTrue(inventories.count() == 1);
+    }
+    @Test
+    public void test5UpdateInventory() throws Exception {
+        Inventory i = inventories.findOne(1);
+        i.setCategory("Tomato");
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(i);
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/inventory/1")
+                        .content(json)
+                        .contentType("application/json")
+                        .sessionAttr("userName", "Alice")
+        );
+        Assert.assertTrue(inventories.findOne(1).getCategory().equals("Tomato"));
+    }
+    @Test
+    public void test6DeleteInventory() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/inventory/1")
+        );
+        Assert.assertTrue(inventories.count() == 0);
+    }
 
-//    @Test
-//    public void test4DeleteUser() throws Exception {
+//     @Test
+//    public void test7DeleteUser() throws Exception {
 //        mockMvc.perform(
 //                MockMvcRequestBuilders.delete("/users/2")
 //        );
