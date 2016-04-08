@@ -52,7 +52,16 @@ dateDesired (after the buyer clicks “order” a box pops up and allows the buy
 
 
 Routes:
-to be determined
+createUser: "/users" POST 
+updateUser: "/users/{id}" PUT
+deleteUser: "/users/{id}" DELETE
+getAllUsers: "/users" GET all
+getOneUser: "/users/{id}" GET one
+login: "/login" POST
+logout: "/logout" POST
+getValidatingUsers: "/users/validate" GET all Users who are "false" for isValid
+validateUser: "/users/validate/{id}" PUT (this should be connected to the "approve" button on the Admin's page next to each user that is displayed by the previous method)
+getUsersInCategory: "/users/category/{category}" GET all users by userType (either "Farmer" or "Buyer")
 
 
 Technology:
