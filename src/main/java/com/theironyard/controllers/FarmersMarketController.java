@@ -84,13 +84,18 @@ public class FarmersMarketController {
     }
 
     @RequestMapping(path = "/users", method = RequestMethod.GET)
-    public ArrayList<User> getUsers(HttpSession session) throws Exception {
+    public ArrayList<User> getAllUsers(HttpSession session) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
 //        if(!user.getUserType().equals("Admin")) {
 //            throw new Exception("Insufficient Permissions.");
 //        }
         return (ArrayList<User>) users.findAll();
+    }
+
+    @RequestMapping(path = "/users/{id}", method = RequestMethod.GET)
+    public User getOneUser(@PathVariable("id") int id) {
+        return users.findOne(id);
     }
 
     @RequestMapping(path = "/users/category/{category}")
