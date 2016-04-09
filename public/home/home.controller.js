@@ -23,15 +23,15 @@ function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
   //     console.log("nope: ", err)
   //   })
   // }
-  $scope.createUser = function(user){
-    HomeService.createUser(user)
-      if(this.buyer)then(function(data) {
-      $location.path('/buyers/:id');
-    })
-      if(this.farmer)then(function(data){
-      $location.path('/farmers/:id');
-    })
-  }
+  // $scope.createUser = function(user){
+  //   HomeService.createUser(user)
+  //     if(this.buyer)then(function(data) {
+  //     $location.path('/buyers/:id');
+  //   })
+  //     if(this.farmer)then(function(data){
+  //     $location.path('/farmers/:id');
+  //   })
+  // }
 
   $scope.createFarmer = function(user) {
     console.log("NOTHIGN IS HAPPENING?");
