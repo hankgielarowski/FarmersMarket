@@ -1,5 +1,5 @@
-// angular
-// .module("FarmersMarket")
-// .controller("FarmerController", FarmerController);
-//
-// FarmerController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmerService"];
+angular
+.module("FarmersMarket")
+.controller("FarmersController", FarmersController);
+
+FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmersService"];
