@@ -2,6 +2,7 @@ var angular = require('angular');
 
 angular
 .module('FarmersMarket')
+
 .controller('ModalController', function ($scope, $uibModal, $log) {
 
   $scope.items = ['item1', 'item2', 'item3'];
@@ -38,14 +39,16 @@ angular
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-  .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+  .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items, HomeService) {
+
 
   $scope.items = items;
   $scope.selected = {
     item: $scope.items[0]
   };
 
-  $scope.ok = function () {
+  $scope.createFarmer = function (user) {
+    HomeService.createFarmer(user)
     $uibModalInstance.close($scope.selected.item);
   };
 
