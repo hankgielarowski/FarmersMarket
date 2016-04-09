@@ -1,6 +1,8 @@
 package com.theironyard.controllers;
 
+import com.theironyard.entities.Inventory;
 import com.theironyard.entities.User;
+import com.theironyard.services.InventoryRepository;
 import com.theironyard.services.UserRepository;
 import com.theironyard.utilities.PasswordStorage;
 import org.h2.tools.Server;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,6 +27,9 @@ public class FarmersMarketController {
 
     @Autowired
     UserRepository users;
+
+    @Autowired
+    InventoryRepository inventories;
 
     Server dbui = null;
 
@@ -47,20 +53,27 @@ public class FarmersMarketController {
 
     @RequestMapping(path = "/users", method = RequestMethod.POST)
     public void createUser(@RequestBody User user) throws Exception {
-
         if(!user.getUserType().equals("Buyer") && !user.getUserType().equals("Farmer")) {
             throw new Exception("Invalid user type");
         }
-
         if (user.getPasswordHash().equals(user.getPasswordValidate())) {
-
             user.setPasswordHash(PasswordStorage.createHash(user.getPasswordHash()));
-
             users.save(user);
         }
-
         else {
             throw new Exception("password does not match");
+        }
+    }
+
+    @RequestMapping(path = "/users/{id}", method = RequestMethod.PUT)
+    public void updateUser(@RequestBody User newUser, @PathVariable("id") int id, HttpSession session) {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+        if(user.getUserType().equals("Admin")) {
+            users.save(newUser);
+        }
+        else if(user.getId() == id) {
+            users.save(newUser);
         }
     }
 
@@ -76,21 +89,8 @@ public class FarmersMarketController {
         }
     }
 
-    @RequestMapping(path = "/users/{id}", method = RequestMethod.PUT)
-    public void updateUser(@RequestBody User newUser, @PathVariable("id") int id, HttpSession session) {
-        String userName = (String) session.getAttribute("userName");
-        User user = users.findByUserName(userName);
-        if(user.getUserType().equals("Admin")) {
-            users.save(newUser);
-        }
-
-        else if(user.getId() == id) {
-            users.save(newUser);
-        }
-    }
-
     @RequestMapping(path = "/users", method = RequestMethod.GET)
-    public ArrayList<User> getUsers(HttpSession session) throws Exception {
+    public ArrayList<User> getAllUsers(HttpSession session) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
 //        if(!user.getUserType().equals("Admin")) {
@@ -99,7 +99,12 @@ public class FarmersMarketController {
         return (ArrayList<User>) users.findAll();
     }
 
-    @RequestMapping(path = "/users/category/{category}")
+    @RequestMapping(path = "/users/{id}", method = RequestMethod.GET)
+    public User getOneUser(@PathVariable("id") int id) {
+        return users.findOne(id);
+    }
+
+    @RequestMapping(path = "/users/category/{category}", method = RequestMethod.GET)
     public ArrayList<User> getUsersInCategory(HttpSession session, @PathVariable("category") String category) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
@@ -131,18 +136,48 @@ public class FarmersMarketController {
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public User login(HttpSession session, String userName, String password) throws Exception {
-        User user = users.findByUserName(userName);
-        if (!PasswordStorage.verifyPassword(password, user.getPasswordHash())) {
+    public User login(HttpSession session, @RequestBody User user) throws Exception {
+        User user2 = users.findByUserName(user.getUserName());
+        if (!PasswordStorage.verifyPassword(user.getPasswordHash(), user2.getPasswordHash())) {
             throw new Exception("Wrong Password");
         }
-        session.setAttribute("userName", userName);
-        return user;
+        session.setAttribute("userName", user.getUserName());
+        return user2;
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public void logout(HttpSession session) throws IOException {
         session.invalidate();
+    }
+
+    @RequestMapping(path = "/inventory", method = RequestMethod.POST)
+    public Inventory createInventory(@RequestBody Inventory inventory, HttpSession session) throws Exception {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+        inventory.setUser(user);
+        inventories.save(inventory);
+        return inventory;
+    }
+
+    @RequestMapping(path = "/inventory", method = RequestMethod.GET)
+    public List<Inventory> getAllInventory() {
+        return (List<Inventory>) inventories.findAll();
+    }
+
+    //is getOne needed?
+    @RequestMapping(path = "/inventory/{id}", method = RequestMethod.GET)
+    public Inventory getOneInventory(@PathVariable("id") int id) {
+        return inventories.findOne(id);
+    }
+
+    @RequestMapping(path = "/inventory/{id}", method = RequestMethod.DELETE)
+    public void deleteInventory(@PathVariable("id") int id) {
+        inventories.delete(id);
+    }
+
+    @RequestMapping(path = "/inventory/{id}", method = RequestMethod.PUT)
+    public void updateInventory(@RequestBody Inventory inventory, @PathVariable("id") int id) {
+        inventories.save(inventory);
     }
 
 }
