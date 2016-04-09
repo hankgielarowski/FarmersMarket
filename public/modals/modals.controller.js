@@ -5,17 +5,18 @@ angular
 
 .controller('ModalController', function ($scope, $uibModal, $log) {
 
-  $scope.items = ['item1', 'item2', 'item3'];
+
 
   $scope.animationsEnabled = true;
 
-  $scope.open = function (size) {
+  $scope.open = function (buyer) {
 
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'modals/modals.html',
       controller: 'ModalInstanceCtrl',
-      size: size,
+      buyer:buyer,
+
       resolve: {
         items: function () {
           return $scope.items;
@@ -30,6 +31,29 @@ angular
     });
   };
 
+  $scope.open = function (farmer) {
+
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'modals/modals.html',
+      controller: 'ModalInstanceCtrl',
+
+      farmer:farmer,
+      resolve: {
+        items: function () {
+          return $scope.items;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+
+
   $scope.toggleAnimation = function () {
     $scope.animationsEnabled = !$scope.animationsEnabled;
   };
@@ -42,17 +66,19 @@ angular
   .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items, HomeService) {
 
 
-  $scope.items = items;
-  $scope.selected = {
-    item: $scope.items[0]
-  };
 
-  $scope.createFarmer = function (user) {
-    HomeService.createFarmer(user)
-    $uibModalInstance.close($scope.selected.item);
+
+  $scope.createUser = function (user) {
+    HomeService.createUser(user)
+    $uibModalInstance.close();
   };
+  // $scope.createBuyer = function (user) {
+  //   HomeService.createBuyer(user)
+  //   $uibModalInstance.close($scope.selected.item);
+  // };
+
 
   $scope.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
+    $uibModalInstance.close('cancel');
   };
 });

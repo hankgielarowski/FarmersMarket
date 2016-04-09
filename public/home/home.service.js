@@ -14,11 +14,15 @@ angular
     function createBuyer(user) {
       return $http.post('/users', user);
     }
+    function createUser(user){
+      return $http.post('/users',user);
+    }
 
     return {
       getUser: getUser,
       createFarmer: createFarmer,
-      createBuyer: createBuyer
+      createBuyer: createBuyer,
+      createUser: createUser
 
     }
   })
