@@ -7407,7 +7407,7 @@ require('./farmers-profile');
 require('./home');
 require('./modals');
 
-},{"./admin":6,"./buyers":15,"./buyers-profile":11,"./farmers":22,"./farmers-profile":19,"./home":25,"./modals":26,"angular":31,"angular-route":29,"angular-ui-bootstrap":2}],8:[function(require,module,exports){
+},{"./admin":6,"./buyers":15,"./buyers-profile":11,"./farmers":23,"./farmers-profile":19,"./home":26,"./modals":27,"angular":32,"angular-route":30,"angular-ui-bootstrap":2}],8:[function(require,module,exports){
 arguments[4][3][0].apply(exports,arguments)
 },{"dup":3}],9:[function(require,module,exports){
 angular
@@ -7485,16 +7485,49 @@ angular
 
 FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmersService"];
 
+function FarmersController($scope, $http, $location, $q, $rootScope, FarmersService){
+  FarmersService.getUser()
+  .then(function(data) {
+    console.log("THIS SHOULD BE USERS", data);
+
+  })
+
+}
+
 },{}],21:[function(require,module,exports){
+var angular = require("angular");
+require("angular-route");
+require("angular-ui-bootstrap");
+
+angular
+.module("FarmersMarket", [
+  "ngRoute",
+  // "farmers.module"
+])
+.config(function($routeProvider) {
+  $routeProvider
+    .when('/farmers',{
+      templateUrl: "views/farmers.html",
+      controller: "FarmersController"
+    })
+    .when('/farmers/:id/',{
+        templateUrl: "views/farmers.html",
+        controller: "FarmersController"
+    })
+
+})
+
+},{"angular":32,"angular-route":30,"angular-ui-bootstrap":2}],22:[function(require,module,exports){
 angular
   .module('FarmersMarket')
   .service('FarmersService', function($http){})
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 require('./farmers.controller');
 require('./farmers.service');
+require('./farmers.module');
 
-},{"./farmers.controller":20,"./farmers.service":21}],23:[function(require,module,exports){
+},{"./farmers.controller":20,"./farmers.module":21,"./farmers.service":22}],24:[function(require,module,exports){
 var _ = require("underscore");
 
 angular
@@ -7520,15 +7553,15 @@ function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
   //     console.log("nope: ", err)
   //   })
   // }
-  $scope.createUser = function(user){
-    HomeService.createUser(user)
-      if(this.buyer)then(function(data) {
-      $location.path('/buyers/:id');
-    })
-      if(this.farmer)then(function(data){
-      $location.path('/farmers/:id');
-    })
-  }
+  // $scope.createUser = function(user){
+  //   HomeService.createUser(user)
+  //     if(this.buyer)then(function(data) {
+  //     $location.path('/buyers/:id');
+  //   })
+  //     if(this.farmer)then(function(data){
+  //     $location.path('/farmers/:id');
+  //   })
+  // }
 
   $scope.createFarmer = function(user) {
     console.log("NOTHIGN IS HAPPENING?");
@@ -7554,7 +7587,7 @@ function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
   }
 }
 
-},{"underscore":32}],24:[function(require,module,exports){
+},{"underscore":33}],25:[function(require,module,exports){
 angular
   .module('FarmersMarket')
   .service('HomeService', function($http) {
@@ -7584,14 +7617,14 @@ angular
     }
   })
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 require('./home.controller');
 require('./home.service');
 
-},{"./home.controller":23,"./home.service":24}],26:[function(require,module,exports){
+},{"./home.controller":24,"./home.service":25}],27:[function(require,module,exports){
 require('./modals.controller')
 
-},{"./modals.controller":27}],27:[function(require,module,exports){
+},{"./modals.controller":28}],28:[function(require,module,exports){
 var angular = require('angular');
 
 angular
@@ -7677,7 +7710,7 @@ angular
   };
 });
 
-},{"angular":31}],28:[function(require,module,exports){
+},{"angular":32}],29:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -8701,11 +8734,11 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 require('./angular-route');
 module.exports = 'ngRoute';
 
-},{"./angular-route":28}],30:[function(require,module,exports){
+},{"./angular-route":29}],31:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -39420,11 +39453,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":30}],32:[function(require,module,exports){
+},{"./angular":31}],33:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
