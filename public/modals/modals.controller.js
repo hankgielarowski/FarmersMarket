@@ -63,19 +63,15 @@ angular
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-  .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items, HomeService) {
 
 
-
+ .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, AuthService) {
 
   $scope.createUser = function (user) {
-    HomeService.createUser(user)
+
+    AuthService.createUser(user)
     $uibModalInstance.close();
   };
-  // $scope.createBuyer = function (user) {
-  //   HomeService.createBuyer(user)
-  //   $uibModalInstance.close($scope.selected.item);
-  // };
 
 
   $scope.cancel = function () {

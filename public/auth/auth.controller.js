@@ -1,20 +1,17 @@
 angular
-  .module('FarmersMarket');
+  .module('FarmersMarket')
   .controller('AuthController', AuthController);
 
-  AuthController.$inject = ['$scope', 'AuthService', '$routeParams', '$location'];
+  AuthController.$inject = ['$scope', "$http",'AuthService', '$routeParams', '$location'];
 
-  function AuthController($scope, AuthService, $routeParams, $location){
-    $scope.loginUser = function (user)
+  function AuthController($scope,$http, AuthService, $routeParams, $location){
+
+    $scope.createUser = function (user){
     AuthService.login(user).success(function(res){
-      if(res.data.type === 'farmer') {
-      $location.path("/farmers/"+ res.user.id);
-    } else if (res.data.user.type === 'buyer') {
-      $location.path("/buyers/" + res.user.id);
+      if(res.data.userType === 'Farmer') {
+      $location.path("/farmers/"+ res.id);
+    } else if (res.data.userType === 'Buyer') {
+      $location.path("/buyers/" + res.id);
   }
     })
-
-
-
-    })
-  }
+}

@@ -4,14 +4,15 @@ angular
 .module("FarmersMarket")
 .controller("HomeController", HomeController);
 
-HomeController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "HomeService"];
+HomeController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "$routeParams", "HomeService"];
 
-function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
+function HomeController($scope,$http,$location,$q,$rootScope,$routeParams,HomeService) {
   HomeService.getUser()
   .then(function(data) {
     console.log("THIS SHOULD BE USERS", data);
 
   })
+
 
   //   getUser = function(user) {
   //   console.log("NOTHIGN IS HAPPENING?");
@@ -24,7 +25,9 @@ function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
   //   })
   // }
   // $scope.createUser = function(user){
+  //     console.log("NOTHIGN IS HAPPENING?");
   //   HomeService.createUser(user)
+  //   console.log("you IS HAPPENING?", user);
   //     if(this.buyer)then(function(data) {
   //     $location.path('/buyers/:id');
   //   })
@@ -33,26 +36,26 @@ function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
   //   })
   // }
 
-  $scope.createFarmer = function(user) {
-    console.log("NOTHIGN IS HAPPENING?");
-
-    HomeService.createFarmer(user)
-      .then(function(data) {
-        console.log('SUCCESS: ', data);
-        $location.path('/farmers');
-      },function error(err) {
-        console.log("FUCK!: ", err);
-      })
-  }
-  $scope.createBuyer = function(user) {
-    console.log("NOTHIGN IS HAPPENING?");
-
-    HomeService.createBuyer(user)
-      .then(function(data) {
-        console.log('SUCCESS: ', data);
-        $location.path('/buyers');
-      },function error(err) {
-        console.log("FUCK!: ", err);
-      })
-  }
+    // $scope.createFarmer = function(user) {
+    //   console.log("NOTHIGN IS HAPPENING?");
+    //
+    //   HomeService.createFarmer(user)
+    //     .then(function(data) {
+    //       console.log('SUCCESS: ', data);
+    //       $location.path('/farmers');
+    //     },function error(err) {
+    //       console.log("FUCK!: ", err);
+    //     })
+    // }
+    // $scope.createBuyer = function(user) {
+    //   console.log("NOTHIGN IS HAPPENING?");
+    //
+    //   HomeService.createBuyer(user)
+    //     .then(function(data) {
+    //       console.log('SUCCESS: ', data);
+    //       $location.path('/buyers');
+    //     },function error(err) {
+    //       console.log("FUCK!: ", err);
+    //     })
+    // }
 }
