@@ -1,1 +1,1 @@
-console.error("\n/Users/franklinfinger/Desktop/FarmersMarket/public/auth/auth.service.js:14\n<<<<<<< HEAD\n^\nParseError: Unexpected token");
+console.error("Error: Parsing file /Users/franklinfinger/Desktop/FarmersMarket/public/auth/auth.controller.js: Unexpected token (39:3)");

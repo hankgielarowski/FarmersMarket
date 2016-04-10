@@ -2,6 +2,10 @@ angular
   .module('FarmersMarket')
   .service('AuthService', function($http) {
 
+    function getUser() {
+      return $http.get('/users');
+    }
+
     function loginUser(user){
       return $http.post('/login', user);
     }
@@ -11,25 +15,15 @@ angular
     }
 
     function createUser(user){
-<<<<<<< HEAD
-      console.log('you are working', user);
-      return $http.post('/users',user);
-    }
-
-=======
       return $http.post('/users',user);
     }
 
 
->>>>>>> 348a1482644e2fccef154c86808c472d7ad70419
     return{
+      getUser:getUser,
       loginUser:loginUser,
       logOutUser:logOutUser,
       createUser: createUser
-<<<<<<< HEAD
-
-=======
       
->>>>>>> 348a1482644e2fccef154c86808c472d7ad70419
     }
 })

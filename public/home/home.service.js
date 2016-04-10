@@ -3,9 +3,9 @@ angular
   .service('HomeService', function($http) {
 
 
-    function getUser() {
-      return $http.get('/users');
-    }
+    // function getUser() {
+    //   return $http.get('/users');
+    // }
 
     function createFarmer(user) {
       return $http.post('/users', user);
@@ -16,7 +16,7 @@ angular
     }
 
     return {
-      getUser: getUser,
+      // getUser: getUser,
       createFarmer: createFarmer,
       createBuyer: createBuyer,
       // createUser: createUser

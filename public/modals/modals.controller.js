@@ -13,7 +13,8 @@ angular
 
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
-      templateUrl: 'modals/modals.html',
+      templateUrl: 'modals/modalsignup.html',
+
       controller: 'ModalInstanceCtrl',
       buyer:buyer,
 
@@ -35,7 +36,7 @@ angular
 
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
-      templateUrl: 'modals/modals.html',
+      templateUrl: 'modals/modallogin.html',
       controller: 'ModalInstanceCtrl',
 
       farmer:farmer,
@@ -63,23 +64,23 @@ angular
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-<<<<<<< HEAD
-=======
-  .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items, AuthService) {
-
->>>>>>> 348a1482644e2fccef154c86808c472d7ad70419
-
-
  .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, AuthService) {
 
-  $scope.createUser = function (user) {
-<<<<<<< HEAD
 
-=======
->>>>>>> 348a1482644e2fccef154c86808c472d7ad70419
+
+
+  $scope.createUser = function (user) {
     AuthService.createUser(user)
     $uibModalInstance.close();
   };
+  $scope.loginUser = function (user) {
+    AuthService.loginUser(user)
+    $uibModalInstance.close();
+  };
+  // $scope.createBuyer = function (user) {
+  //   HomeService.createBuyer(user)
+  //   $uibModalInstance.close($scope.selected.item);
+  // };
 
 
   $scope.cancel = function () {
