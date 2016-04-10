@@ -1,17 +1,39 @@
+var angular = require('angular');
+var _ = require("underscore");
+
 angular
-  .module('FarmersMarket')
+  .module("FarmersMarket")
   .controller('AuthController', AuthController);
 
-  AuthController.$inject = ['$scope','$http', 'AuthService', '$routeParams', '$location'];
+  AuthController.$inject = ['$scope', '$q','$http', '$rootScope', 'AuthService', '$routeParams', '$location'];
 
-  function AuthController($scope,$http, AuthService, $routeParams, $location){
+  function AuthController($scope, $q, $http, $rootScope, AuthService, $routeParams, $location){
+    AuthService.getUser()
+    .then(function(data) {
+      console.log("THIS SHOULD BE USERS", data);
 
-    $scope.loginUser = function (user)
+    })
+    $scope.loginUser = function (user){
     AuthService.login(user).success(function(res){
-      if(res.data.type === 'farmer') {
-      $location.path("/farmers/"+ res.user.id);
-    } else if (res.data.user.type === 'buyer') {
-      $location.path("/buyers/" + res.user.id);
+      if(res.data.userType === 'Farmer') {
+      $location.path("/farmers/"+ res.data.id);
+    } else if (res.data.userType === 'Buyer') {
+      $location.path("/buyers/" + res.data.id);
   }
     })
   }
+
+  // $scope.loginUser = function (user) {
+  //      AuthService.login(user).success(function (res) {
+  //        $location.path('/users/' + res.id)
+  //      })
+  //    }
+  //
+  //    if($routeParams.userId) {
+  //      AuthService.getOneFarmer($routeParams.userId).then(function (currentUser) {
+  //        $scope.currentuser = currentUser;
+  //      });
+  //    }
+
+
+}

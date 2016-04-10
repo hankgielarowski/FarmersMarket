@@ -13,7 +13,8 @@ angular
 
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
-      templateUrl: 'modals/modals.html',
+      templateUrl: 'modals/modalsignup.html',
+
       controller: 'ModalInstanceCtrl',
       buyer:buyer,
 
@@ -35,7 +36,7 @@ angular
 
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
-      templateUrl: 'modals/modals.html',
+      templateUrl: 'modals/modallogin.html',
       controller: 'ModalInstanceCtrl',
 
       farmer:farmer,
@@ -70,6 +71,10 @@ angular
 
   $scope.createUser = function (user) {
     AuthService.createUser(user)
+    $uibModalInstance.close();
+  };
+  $scope.loginUser = function (user) {
+    AuthService.loginUser(user)
     $uibModalInstance.close();
   };
   // $scope.createBuyer = function (user) {
