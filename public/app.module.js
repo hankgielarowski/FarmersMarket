@@ -9,7 +9,11 @@ angular
   'admin.module' ,
   'buyers.module' ,
   'buyers-profile.module' ,
+<<<<<<< HEAD
   // 'farmers.module' ,
+=======
+
+>>>>>>> 348a1482644e2fccef154c86808c472d7ad70419
   'farmers-profile.module'
 ])
 .config(function($routeProvider) {

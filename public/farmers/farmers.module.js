@@ -5,8 +5,8 @@
 // angular
 // .module("FarmersMarket", [
 //   "ngRoute",
-//   "farmers.module" ,
-//   'ui.bootstrap'
+
+//   "farmers.module"
 // ])
 // .config(function($routeProvider) {
 //   $routeProvider
