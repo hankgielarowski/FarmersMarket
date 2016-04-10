@@ -1,1 +1,1 @@
-console.error("Error: Parsing file /Users/franklinfinger/Desktop/FarmersMarket/public/app.module.js: Unexpected token (12:0)");
+console.error("\n/Users/franklinfinger/Desktop/FarmersMarket/public/auth/auth.service.js:14\n<<<<<<< HEAD\n^\nParseError: Unexpected token");
