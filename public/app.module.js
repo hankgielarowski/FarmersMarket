@@ -9,7 +9,7 @@ angular
   'admin.module' ,
   'buyers.module' ,
   'buyers-profile.module' ,
-
+  // 'farmers.module' ,
   'farmers-profile.module'
 ])
 .config(function($routeProvider) {

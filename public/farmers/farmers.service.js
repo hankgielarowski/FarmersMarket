@@ -1,3 +1,6 @@
 // angular
 //   .module('FarmersMarket')
-//   .service('FarmersService', function($http){})
+//   .service('FarmersService', function($http){
+//
+//
+//   })

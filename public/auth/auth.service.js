@@ -2,6 +2,10 @@ angular
   .module('FarmersMarket')
   .service('AuthService', function($http) {
 
+    function getUser() {
+      return $http.get('/users');
+    }
+
     function loginUser(user){
       return $http.post('/login', user);
     }
@@ -16,9 +20,10 @@ angular
 
 
     return{
+      getUser:getUser,
       loginUser:loginUser,
       logOutUser:logOutUser,
       createUser: createUser
-      
+
     }
 })
