@@ -9,7 +9,7 @@ angular
   'admin.module' ,
   'buyers.module' ,
   'buyers-profile.module' ,
-  'farmers.module' ,
+
   'farmers-profile.module'
 ])
 .config(function($routeProvider) {
@@ -48,3 +48,4 @@ require('./farmers');
 require('./farmers-profile');
 require('./home');
 require('./modals');
+require('./auth');
