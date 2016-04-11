@@ -24,6 +24,8 @@ angular
       getUser:getUser,
       loginUser:loginUser,
       logOutUser:logOutUser,
-      createUser: createUser
+      createUser: createUser,
+      isAuthenticated: false,
+      user: null
     }
 })

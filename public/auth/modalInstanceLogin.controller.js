@@ -7,7 +7,9 @@ angular
    console.log("TEST MODAL", user);
    AuthService.loginUser(user)
    .success(function(res){
-     console.log(res);
+     console.log("RIGHT?",res);
+     AuthService.isAuthenticated = true;
+     AuthService.user = res;
      if(res.userType === 'Farmer') {
        $location.path("/farmers/"+ res.id);
      } else if (res.userType === 'Buyer') {
@@ -16,7 +18,9 @@ angular
    })
    .error(function(err) {
      console.log("SHIT", err);
+     alert("I Password");
    });
+
    $uibModalInstance.close();
  };
  // $scope.createBuyer = function (user) {
