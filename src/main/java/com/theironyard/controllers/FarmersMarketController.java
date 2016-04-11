@@ -3,6 +3,7 @@ package com.theironyard.controllers;
 import com.theironyard.entities.Inventory;
 import com.theironyard.entities.User;
 import com.theironyard.services.InventoryRepository;
+import com.theironyard.services.PurchaseRepository;
 import com.theironyard.services.UserRepository;
 import com.theironyard.utilities.PasswordStorage;
 import org.h2.tools.Server;
@@ -34,10 +35,13 @@ public class FarmersMarketController {
     @Autowired
     InventoryRepository inventories;
 
+    @Autowired
+    PurchaseRepository purchases;
+
     Server dbui = null;
 
     @PostConstruct
-    public void init() throws SQLException, SQLException, FileNotFoundException {
+    public void init() throws SQLException, FileNotFoundException {
         dbui = Server.createWebServer().start();
     }
 
@@ -55,7 +59,7 @@ public class FarmersMarketController {
     }
 
     @RequestMapping(path = "/users", method = RequestMethod.POST)
-    public void createUser(@RequestBody User user) throws Exception {
+    public User createUser(@RequestBody User user) throws Exception {
         if(!user.getUserType().equals("Buyer") && !user.getUserType().equals("Farmer")) {
             throw new Exception("Invalid user type");
         }
@@ -66,6 +70,7 @@ public class FarmersMarketController {
         else {
             throw new Exception("password does not match");
         }
+        return user;
     }
 
     @RequestMapping(path = "/users/{id}", method = RequestMethod.PUT)
@@ -170,7 +175,7 @@ public class FarmersMarketController {
     // show all inventory by category findByCategory
     @RequestMapping(path = "/inventory/{category}", method = RequestMethod.GET)
     public List<Inventory> getAllInventoryByCategory() {
-        return (List<Inventory>) inventories.findAll();
+        return (List<Inventory>) inventories.findAll(); //findAllByCategory? need to make in the inventory repository??
     }
 
     //is getOne needed?

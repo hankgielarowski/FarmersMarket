@@ -26,7 +26,6 @@ var angular = require("angular");
 
 require("angular-route");
 require("angular-ui-bootstrap");
-
 angular
 .module("FarmersMarket",[
   "ngRoute",
@@ -68,10 +67,9 @@ require('./buyers-profile');
 require('./farmers-profile');
 require('./home');
 require('./farmers');
-require('./modals');
 require('./auth');
 
-},{"./admin":4,"./auth":8,"./buyers":16,"./buyers-profile":12,"./farmers":24,"./farmers-profile":20,"./home":27,"./modals":28,"angular":35,"angular-route":31,"angular-ui-bootstrap":33}],6:[function(require,module,exports){
+},{"./admin":4,"./auth":8,"./buyers":18,"./buyers-profile":14,"./farmers":26,"./farmers-profile":22,"./home":29,"angular":35,"angular-route":31,"angular-ui-bootstrap":33}],6:[function(require,module,exports){
 var angular = require('angular');
 var _ = require("underscore");
 
@@ -102,6 +100,22 @@ angular
       })
     }
 
+    $scope.createUser = function (user) {
+      AuthService.createUser(user)
+      .success(function(res){
+        console.log(res);
+        if(res.userType === 'Farmer') {
+          $location.path("/farmers/"+ res.id);
+        } else if (res.userType === 'Buyer') {
+          $location.path("/buyers/" + res.id);
+        }
+      })
+      .error(function(err) {
+        console.log("SHIT", err);
+      });
+      $uibModalInstance.close();
+    };
+
   // $scope.loginUser = function (user) {
   //      AuthService.login(user).success(function (res) {
   //        $location.path('/users/' + res.id)
@@ -113,6 +127,8 @@ angular
   //        $scope.currentuser = currentUser;
   //      });
   //    }
+
+
 
 
 }
@@ -151,10 +167,104 @@ angular
 },{}],8:[function(require,module,exports){
 require('./auth.controller');
 require('./auth.service');
+require("./modalInstanceLogin.controller")
+require("./modalInstanceSignup.controller")
 
-},{"./auth.controller":6,"./auth.service":7}],9:[function(require,module,exports){
+},{"./auth.controller":6,"./auth.service":7,"./modalInstanceLogin.controller":9,"./modalInstanceSignup.controller":10}],9:[function(require,module,exports){
+angular
+.module('farmers.module')
+.controller('ModalLoginInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location) {
+
+
+ $scope.loginUser = function (user) {
+   console.log("TEST MODAL", user);
+   AuthService.loginUser(user)
+   .success(function(res){
+     console.log(res);
+     if(res.userType === 'Farmer') {
+       $location.path("/farmers/"+ res.id);
+     } else if (res.userType === 'Buyer') {
+       $location.path("/buyers/" + res.id);
+     }
+   })
+   .error(function(err) {
+     console.log("SHIT", err);
+   });
+   $uibModalInstance.close();
+ };
+ // $scope.createBuyer = function (user) {
+ //   HomeService.createBuyer(user)
+ //   $uibModalInstance.close($scope.selected.item);
+ // };
+
+
+ $scope.cancel = function () {
+   $uibModalInstance.close('cancel');
+ };
+});
+
+},{}],10:[function(require,module,exports){
+angular
+.module('farmers.module')
+.controller('ModalSignupInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location) {
+
+  $scope.createUser = function (user) {
+    AuthService.createUser(user)
+    .success(function(res){
+      console.log("CREATED",res);
+
+      if(res.userType === 'Farmer') {
+        $location.path("/farmers/"+ res.id);
+      } else if (res.userType === 'Buyer') {
+        $location.path("/buyers/" + res.id);
+      }
+    })
+
+    .error(function(err) {
+      console.log("SHIT", err);
+    });
+    $uibModalInstance.close();
+  };
+  // $scope.createBuyer = function (user) {
+  //   HomeService.createBuyer(user)
+  //   $uibModalInstance.close($scope.selected.item);
+  // };
+
+
+  $scope.cancel = function () {
+    $uibModalInstance.close('cancel');
+  };
+});
+ // $scope.loginUser = function (user) {
+ //   console.log("TEST MODAL", user);
+ //   AuthService.loginUser(user)
+ //   .success(function(res){
+ //     console.log(res);
+ //     if(res.userType === 'Farmer') {
+ //       $location.path("/farmers/"+ res.id);
+ //     } else if (res.userType === 'Buyer') {
+ //       $location.path("/buyers/" + res.id);
+ //     }
+ //   })
+ //   .error(function(err) {
+ //     console.log("SHIT", err);
+ //   });
+ //   $uibModalInstance.close();
+ // };
+ // $scope.createBuyer = function (user) {
+ //   HomeService.createBuyer(user)
+ //   $uibModalInstance.close($scope.selected.item);
+ // };
+
+
+//  $scope.cancel = function () {
+//    $uibModalInstance.close('cancel');
+//  };
+// });
+
+},{}],11:[function(require,module,exports){
 arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],10:[function(require,module,exports){
+},{"dup":1}],12:[function(require,module,exports){
 angular
 .module("buyers-profile.module", [
   "ngRoute"
@@ -167,21 +277,21 @@ angular
     })
 })
 
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],12:[function(require,module,exports){
+},{"dup":1}],14:[function(require,module,exports){
 require('./buyers-profile.controller');
 require('./buyers-profile.module');
 require('./buyers-profile.service');
 
-},{"./buyers-profile.controller":9,"./buyers-profile.module":10,"./buyers-profile.service":11}],13:[function(require,module,exports){
+},{"./buyers-profile.controller":11,"./buyers-profile.module":12,"./buyers-profile.service":13}],15:[function(require,module,exports){
 // angular
 // .module("FarmersMarket")
 // .controller("BuyerController", BuyerController);
 //
 // BuyerController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyerService"];
 
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 angular
 .module("buyers.module", [
   "ngRoute"
@@ -194,16 +304,16 @@ angular
     })
 })
 
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],16:[function(require,module,exports){
+},{"dup":1}],18:[function(require,module,exports){
 require('./buyers.controller');
 require('./buyers.module');
 require('./buyers.service');
 
-},{"./buyers.controller":13,"./buyers.module":14,"./buyers.service":15}],17:[function(require,module,exports){
+},{"./buyers.controller":15,"./buyers.module":16,"./buyers.service":17}],19:[function(require,module,exports){
 arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],18:[function(require,module,exports){
+},{"dup":1}],20:[function(require,module,exports){
 angular
 .module("farmers-profile.module", [
   "ngRoute"
@@ -216,14 +326,14 @@ angular
     })
 })
 
-},{}],19:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],20:[function(require,module,exports){
+},{"dup":1}],22:[function(require,module,exports){
 require('./farmers-profile.controller');
 require('./farmers-profile.module');
 require('./farmers-profile.service');
 
-},{"./farmers-profile.controller":17,"./farmers-profile.module":18,"./farmers-profile.service":19}],21:[function(require,module,exports){
+},{"./farmers-profile.controller":19,"./farmers-profile.module":20,"./farmers-profile.service":21}],23:[function(require,module,exports){
 angular
 .module("farmers.module")
 .controller("FarmersController", FarmersController);
@@ -239,7 +349,7 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
 
 }
 
-},{}],22:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var angular = require("angular");
 require("angular-route");
 require("angular-ui-bootstrap");
@@ -258,7 +368,7 @@ angular
 
 })
 
-},{"angular":35,"angular-route":31,"angular-ui-bootstrap":33}],23:[function(require,module,exports){
+},{"angular":35,"angular-route":31,"angular-ui-bootstrap":33}],25:[function(require,module,exports){
 angular
   .module('farmers.module')
   .service('FarmersService', function($http){
@@ -273,21 +383,56 @@ angular
 
   })
 
-},{}],24:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 require('./farmers.module');
 require('./farmers.controller');
 require('./farmers.service');
 
-},{"./farmers.controller":21,"./farmers.module":22,"./farmers.service":23}],25:[function(require,module,exports){
+},{"./farmers.controller":23,"./farmers.module":24,"./farmers.service":25}],27:[function(require,module,exports){
 var _ = require("underscore");
 
 angular
 .module("FarmersMarket")
 .controller("HomeController", HomeController);
 
-HomeController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "$routeParams", "HomeService"];
+HomeController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "$routeParams", "HomeService",'$uibModal'];
 
-function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
+function HomeController($scope,$http,$location,$q,$rootScope,$routeParams,HomeService,$uibModal) {
+  $scope.openLogin = function() {
+    console.log("WHAT UP");
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: './auth/views/modallogin.html',
+      controller: 'ModalLoginInstanceCtrl',
+      size: 'lg',
+      resolve: {
+
+      }
+    });
+  }
+
+
+  $scope.toggleAnimation = function () {
+    $scope.animationsEnabled = !$scope.animationsEnabled;
+  };
+
+  $scope.openSignup = function() {
+    console.log("WHAT SIGNUP");
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: './auth/views/modalsignup.html',
+      controller: 'ModalSignupInstanceCtrl',
+      size: 'lg',
+      resolve: {
+
+      }
+    });
+  }
+
+
+  $scope.toggleAnimation = function () {
+    $scope.animationsEnabled = !$scope.animationsEnabled;
+  };
   // HomeService.getUser()
   // .then(function(data) {
   //   console.log("THIS SHOULD BE USERS", data);
@@ -338,7 +483,7 @@ function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
   // }
 }
 
-},{"underscore":36}],26:[function(require,module,exports){
+},{"underscore":36}],28:[function(require,module,exports){
 angular
   .module('FarmersMarket')
   .service('HomeService', function($http) {
@@ -364,114 +509,11 @@ angular
     // }
   })
 
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 require('./home.controller');
 require('./home.service');
 
-},{"./home.controller":25,"./home.service":26}],28:[function(require,module,exports){
-require('./modals.controller')
-
-},{"./modals.controller":29}],29:[function(require,module,exports){
-var angular = require('angular');
-
-angular
-.module('FarmersMarket')
-
-.controller('ModalController', function ($scope, $uibModal, $log) {
-  console.log("HELLO FROM LOGIN")
-
-
-  $scope.animationsEnabled = true;
-
-  $scope.open = function (user) {
-
-    var modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: 'modals/modalsignup.html',
-
-      controller: 'ModalInstanceCtrl',
-      user:user,
-
-      resolve: {
-        items: function () {
-          return $scope.items;
-        }
-      }
-    });
-
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
-    }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
-    });
-  };
-
-  $scope.open = function (farmer) {
-
-    var modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: 'modals/modallogin.html',
-      controller: 'ModalInstanceCtrl',
-
-      farmer:farmer,
-      resolve: {
-        items: function () {
-          return $scope.items;
-        }
-      }
-    });
-
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
-    }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
-    });
-  };
-
-
-  $scope.toggleAnimation = function () {
-    $scope.animationsEnabled = !$scope.animationsEnabled;
-  };
-
-})
-
-// Please note that $uibModalInstance represents a modal window (instance) dependency.
-// It is not the same as the $uibModal service used above.
-
- .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location) {
-
-  $scope.createUser = function (user) {
-    AuthService.createUser(user)
-    $uibModalInstance.close();
-  };
-  $scope.loginUser = function (user) {
-    console.log("TEST MODAL", user);
-    AuthService.loginUser(user)
-    .success(function(res){
-      console.log(res);
-      if(res.userType === 'Farmer') {
-        $location.path("/farmers/"+ res.id);
-      } else if (res.userType === 'Buyer') {
-        $location.path("/buyers/" + res.id);
-      }
-    })
-    .error(function(err) {
-      console.log("SHIT", err);
-    });
-    $uibModalInstance.close();
-  };
-  // $scope.createBuyer = function (user) {
-  //   HomeService.createBuyer(user)
-  //   $uibModalInstance.close($scope.selected.item);
-  // };
-
-
-  $scope.cancel = function () {
-    $uibModalInstance.close('cancel');
-  };
-});
-
-},{"angular":35}],30:[function(require,module,exports){
+},{"./home.controller":27,"./home.service":28}],30:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org

@@ -28,6 +28,22 @@ angular
       })
     }
 
+    $scope.createUser = function (user) {
+      AuthService.createUser(user)
+      .success(function(res){
+        console.log(res);
+        if(res.userType === 'Farmer') {
+          $location.path("/farmers/"+ res.id);
+        } else if (res.userType === 'Buyer') {
+          $location.path("/buyers/" + res.id);
+        }
+      })
+      .error(function(err) {
+        console.log("SHIT", err);
+      });
+      $uibModalInstance.close();
+    };
+
   // $scope.loginUser = function (user) {
   //      AuthService.login(user).success(function (res) {
   //        $location.path('/users/' + res.id)
@@ -39,6 +55,8 @@ angular
   //        $scope.currentuser = currentUser;
   //      });
   //    }
+
+
 
 
 }
