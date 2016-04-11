@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theironyard.entities.Inventory;
 import com.theironyard.entities.User;
 import com.theironyard.services.InventoryRepository;
+import com.theironyard.services.PurchaseRepository;
 import com.theironyard.services.UserRepository;
 import com.theironyard.utilities.PasswordStorage;
 import org.junit.Assert;
@@ -37,6 +38,9 @@ public class FarmersMarketApplicationTests {
 
     @Autowired
     InventoryRepository inventories;
+
+    @Autowired
+    PurchaseRepository purchases;
 
     @Autowired
     WebApplicationContext wap;
