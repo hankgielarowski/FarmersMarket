@@ -1,5 +1,6 @@
 package com.theironyard;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theironyard.entities.Inventory;
 import com.theironyard.entities.User;
@@ -105,7 +106,6 @@ public class FarmersMarketApplicationTests {
         inventory.setCategory("Banana");
         inventory.setName("Golden Yellow Bananas");
         inventory.setQuantityAvailable(9);
-        inventory.setFarmer("Rawl Produce");
         inventory.setPrice(2.55);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(inventory);
@@ -131,8 +131,22 @@ public class FarmersMarketApplicationTests {
         );
         Assert.assertTrue(inventories.findOne(1).getCategory().equals("Tomato"));
     }
+
     @Test
-    public void test6DeleteInventory() throws Exception {
+    public void test6FindByCategory() throws Exception {
+//        ObjectMapper mapper = new ObjectMapper();
+//        String json = mapper.writeValueAsString(inventories.findAll());
+//        mockMvc.perform(
+//                MockMvcRequestBuilders.get("/inventory/category/Tomato")
+//                        .content(json)
+//                        .contentType("application/json")
+//                        .sessionAttr("userName", "Alice")
+//        );
+        Assert.assertTrue(inventories.findByCategory("Tomato").size() == 1);
+    }
+
+    @Test
+    public void test7DeleteInventory() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/inventory/1")
         );
