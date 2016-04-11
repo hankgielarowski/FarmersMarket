@@ -4,7 +4,7 @@ angular
 .module("FarmersMarket")
 .controller("HomeController", HomeController);
 
-HomeController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "HomeService"];
+HomeController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "$routeParams", "HomeService"];
 
 function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
   // HomeService.getUser()
@@ -33,8 +33,8 @@ function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
   //   })
   // }
 
-  $scope.createFarmer = function(user) {
-    console.log("NOTHIGN IS HAPPENING?");
+  // $scope.createFarmer = function(user) {
+  //   console.log("NOTHIGN IS HAPPENING?");
 
   //   HomeService.createFarmer(user)
   //     .then(function(data) {
@@ -43,7 +43,7 @@ function HomeController($scope,$http,$location,$q,$rootScope,HomeService) {
   //     },function error(err) {
   //       console.log("FUCK!: ", err);
   //     })
-  }
+  // }
   // $scope.createBuyer = function(user) {
   //   console.log("NOTHIGN IS HAPPENING?");
   //

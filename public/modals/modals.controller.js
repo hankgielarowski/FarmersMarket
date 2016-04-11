@@ -9,14 +9,14 @@ angular
 
   $scope.animationsEnabled = true;
 
-  $scope.open = function (buyer) {
+  $scope.open = function (user) {
 
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'modals/modalsignup.html',
 
       controller: 'ModalInstanceCtrl',
-      buyer:buyer,
+      user:user,
 
       resolve: {
         items: function () {
@@ -64,7 +64,7 @@ angular
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-  .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items, AuthService) {
+ .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, AuthService) {
 
 
 
