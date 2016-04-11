@@ -134,10 +134,17 @@ angular
 },{"angular":36,"underscore":38}],7:[function(require,module,exports){
 angular
   .module('FarmersMarket')
-  .service('AuthService', function($http) {
+  .service('AuthService', function($http,$window) {
 
     function getUser() {
       return $http.get('/users');
+    }
+
+    function isAuthenticated() {
+      if($window.localStorage.getItem('mahUser')) {
+        return true
+      }
+      return false
     }
 
     function loginUser(user){
@@ -146,6 +153,7 @@ angular
     }
 
     function logOutUser(user){
+      localStorage.removeItem('mahUser');
       return $http.post('/logout', user);
     }
 
@@ -159,8 +167,8 @@ angular
       loginUser:loginUser,
       logOutUser:logOutUser,
       createUser: createUser,
-      isAuthenticated: false,
-      user: null
+      user: null,
+      isAuthenticated: isAuthenticated
     }
 })
 
@@ -173,7 +181,7 @@ require("./modalInstanceSignup.controller")
 },{"./auth.controller":6,"./auth.service":7,"./modalInstanceLogin.controller":9,"./modalInstanceSignup.controller":10}],9:[function(require,module,exports){
 angular
 .module('farmers.module')
-.controller('ModalLoginInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location) {
+.controller('ModalLoginInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location,$window) {
 
 
  $scope.loginUser = function (user) {
@@ -181,7 +189,7 @@ angular
    AuthService.loginUser(user)
    .success(function(res){
      console.log("RIGHT?",res);
-     AuthService.isAuthenticated = true;
+     $window.localStorage.setItem('mahUser', JSON.stringify(res));
      AuthService.user = res;
      if(res.userType === 'Farmer') {
        $location.path("/farmers/"+ res.id);
@@ -399,16 +407,16 @@ angular
 .module("FarmersMarket")
 .controller("HomeController", HomeController);
 
-HomeController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "$routeParams", "HomeService",'$uibModal'];
+HomeController.$inject = ["$scope", "$http", "$location", "$q", "$routeParams", "HomeService",'$uibModal'];
 
-function HomeController($scope,$http,$location,$q,$rootScope,$routeParams,HomeService,$uibModal) {
+function HomeController($scope,$http,$location,$q,$routeParams,HomeService,$uibModal) {
   $scope.openLogin = function() {
     console.log("WHAT UP");
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: './auth/views/modallogin.html',
       controller: 'ModalLoginInstanceCtrl',
-      size: 'lg',
+      size: 'size',
       resolve: {
 
       }
@@ -420,18 +428,18 @@ function HomeController($scope,$http,$location,$q,$rootScope,$routeParams,HomeSe
     $scope.animationsEnabled = !$scope.animationsEnabled;
   };
 
-  $scope.openSignup = function() {
-    console.log("WHAT SIGNUP");
-    var modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: './auth/views/modalsignup.html',
-      controller: 'ModalSignupInstanceCtrl',
-      size: 'lg',
-      resolve: {
-
-      }
-    });
-  }
+  // $scope.openSignup = function(size) {
+  //   console.log("WHAT SIGNUP");
+  //   var modalInstance = $uibModal.open({
+  //     animation: $scope.animationsEnabled,
+  //     templateUrl: './auth/views/modalsignup.html',
+  //     controller: 'ModalSignupInstanceCtrl',
+  //     size: size,
+  //     resolve: {
+  //
+  //     }
+  //   });
+  // }
 
 
   $scope.toggleAnimation = function () {
@@ -476,10 +484,16 @@ require('./navbar.js');
 },{"./home.controller":27,"./home.service":28,"./navbar.js":30}],30:[function(require,module,exports){
 angular
 .module('FarmersMarket')
-  .controller('NavbarCtrl', function($scope, AuthService,$uibModal,$location) {
+  .controller('NavbarCtrl', function($scope, AuthService,$uibModal,$location,$window) {
     $scope.isAuthenticated = function() {
-      return AuthService.isAuthenticated;
+      $scope.user = JSON.parse($window.localStorage.getItem('mahUser'))
+      return AuthService.isAuthenticated();
     };
+
+    if($window.localStorage.getItem('mahUser')) {
+      $scope.user = JSON.parse($window.localStorage.getItem('mahUser'));
+    }
+    // $scope.user = JSON.parse($window.localStorage.getItem('mahUser'));
 
     $scope.openLogin = function() {
       console.log("WHAT UP");
@@ -487,7 +501,7 @@ angular
         animation: $scope.animationsEnabled,
         templateUrl: './auth/views/modallogin.html',
         controller: 'ModalLoginInstanceCtrl',
-        size: 'lg',
+        size: 'sm',
         resolve: {
 
         }
@@ -499,7 +513,6 @@ angular
         AuthService.logOutUser(user)
         .success(function(res) {
           AuthService.user = null;
-          AuthService.isAuthenticated = false;
           $location.path("/");
         })
     }
@@ -514,7 +527,7 @@ angular
         animation: $scope.animationsEnabled,
         templateUrl: './auth/views/modalsignup.html',
         controller: 'ModalSignupInstanceCtrl',
-        size: 'lg',
+        size: 'sm',
         resolve: {
 
         }
