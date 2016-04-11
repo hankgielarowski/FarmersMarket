@@ -191,7 +191,7 @@ angular
    })
    .error(function(err) {
      console.log("SHIT", err);
-     alert("I Password");
+     alert("Incorrect Password");
    });
 
    $uibModalInstance.close();
