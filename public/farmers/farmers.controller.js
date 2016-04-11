@@ -1,5 +1,14 @@
 // angular
 // .module("FarmersMarket")
-// .controller("FarmerController", FarmerController);
+// .controller("FarmersController", FarmersController);
 //
-// FarmerController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmerService"];
+// FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmersService"];
+//
+// function FarmersController($scope, $http, $location, $q, $rootScope, FarmersService){
+//   FarmersService.getUser()
+//   .then(function(data) {
+//     console.log("THIS SHOULD BE USERS", data);
+//
+//   })
+//
+// }

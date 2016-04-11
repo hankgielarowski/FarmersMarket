@@ -1,0 +1,100 @@
+<div id="farmerLogin">
+      <div class="modal-header">
+          <h3 class="modal-title">Sign-Up Form</h3>
+      </div>
+      <div class="modal-body">
+      <div class="box">
+        <div class="content register-box">
+          <div class="form">
+            <form class="signin-form">
+              <input id="userName" class="form-control" type="text" placeholder="User Name" name="userName" ng-model="user.userName">
+              <input id="password" class="form-control" type="password" placeholder="Password" name="password" ng-model="user.passwordHash">
+              <input id="userType" class="form-control" type="text" placeholder="Enter Farmer or Buyer" name="userType" ng-model="user.userType">
+              <input id="companyName" class="form-control" type="text" placeholder="Company Name" name="companyName" ng-model="user.companyName">
+              <input id="location" class="form-control" type="text" placeholder="Enter Address" name="location" ng-model="user.location">
+              <input id="phoneNumber" class="form-control" type="text" placeholder="Phone Number" name="phoneNumber" ng-model="user.phone">
+              <input id="email" class="form-control" type="text" placeholder="Email" name="email" ng-model="user.email">
+              <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation" ng-model="user.passwordValidate">
+
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="modal-footer">
+            <input class="btn btn-default btn-register" type="button" value="Create account" name="commit" ng-click="createUser(user)">
+          <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+      </div>
+      </div>
+
+
+
+
+
+
+      <!-- <div id="buyerLogin">
+            <div class="modal-header">
+                <h3 class="modal-title">Buyers Sign-Up Form</h3>
+            </div>
+            <div class="modal-body">
+            <div class="box">
+              <div class="content register-box">
+                <div class="form">
+                  <form class="signin-form">
+                    <input id="userName" class="form-control" type="text" placeholder="User Name" name="userName" ng-model="user.userName">
+                    <input id="password" class="form-control" type="password" placeholder="Password" name="password" ng-model="user.passwordHash">
+                    <input id="userType" class="form-control" type="text" placeholder="Enter Farmer" name="userType" ng-model="user.userType">
+                    <input id="companyName" class="form-control" type="text" placeholder="Company Name" name="companyName" ng-model="user.companyName">
+                    <input id="location" class="form-control" type="text" placeholder="Enter Address" name="location" ng-model="user.location">
+                    <input id="phoneNumber" class="form-control" type="text" placeholder="Phone Number" name="phoneNumber" ng-model="user.phone">
+                    <input id="email" class="form-control" type="text" placeholder="Email" name="email" ng-model="user.email">
+                    <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation" ng-model="user.passwordValidate">
+
+                  </form>
+                </div>
+              </div>
+            </div>
+            </div>
+
+            <div class="modal-footer">
+                  <input class="btn btn-default btn-register" type="button" value="Create account" name="commit" ng-click="createBuyer(user)">
+                <button class="btn btn-warning" type="button" data-toggle="modal" ng-click="cancel()">Cancel</button>
+            </div>
+            </div>
+ -->
+
+      <!-- <div id="BuyerLogin">
+            <div class="modal-header">
+                <h3 class="modal-title">Farmer Sign-Up Form</h3>
+            </div>
+            <div class="modal-body">
+            <div class="box">
+              <div class="content register-box">
+                <div class="form">
+                  <form class="signin-form">
+                    <input id="userName" class="form-control" type="text" placeholder="User Name" name="userName" ng-model="user.userName">
+                    <input id="password" class="form-control" type="password" placeholder="Password" name="password" ng-model="user.passwordHash">
+                    <input id="userType" class="form-control" type="text" placeholder="Enter Farmer" name="userType" ng-model="user.userType">
+                    <input id="companyName" class="form-control" type="text" placeholder="Company Name" name="companyName" ng-model="user.companyName">
+                    <input id="location" class="form-control" type="text" placeholder="Enter Address" name="location" ng-model="user.location">
+                    <input id="phoneNumber" class="form-control" type="text" placeholder="Phone Number" name="phoneNumber" ng-model="user.phone">
+                    <input id="email" class="form-control" type="text" placeholder="Email" name="email" ng-model="user.email">
+                    <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation" ng-model="user.passwordValidate">
+
+                  </form>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+            <div class="modal-footer">
+                  <input class="btn btn-default btn-register" type="button" value="Create account" name="commit" ng-click="createBuyer(user)">
+                <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            </div> -->
+  <!-- <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+  <button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>
+  <button type="button" class="btn btn-default" ng-click="open('sm')">Small modal</button>
+  <button type="button" class="btn btn-default" ng-click="toggleAnimation()">Toggle Animation ({{ animationsEnabled }})</button>
+  <div ng-show="selected">Selection from a modal: {{ selected }}</div> -->
+<!-- </div> -->

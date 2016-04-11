@@ -1,3 +1,3 @@
 require('./farmers.controller');
-require('./farmers.module');
 require('./farmers.service');
+require('./farmers.module');
