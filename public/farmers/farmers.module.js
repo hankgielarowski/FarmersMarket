@@ -1,22 +1,17 @@
-// var angular = require("angular");
-// require("angular-route");
-// require("angular-ui-bootstrap");
-//
-// angular
-// .module("FarmersMarket", [
-//   "ngRoute",
+var angular = require("angular");
+require("angular-route");
+require("angular-ui-bootstrap");
 
-//   "farmers.module"
-// ])
-// .config(function($routeProvider) {
-//   $routeProvider
-//     .when('/farmers',{
-//       templateUrl: "views/farmers.html",
-//       controller: "FarmersController"
-//     })
-//     .when('/farmers/:id/',{
-//         templateUrl: "views/farmers.html",
-//         controller: "FarmersController"
-//     })
-//
-// })
+
+angular
+.module("farmers.module", [
+  "ngRoute",
+])
+.config(function($routeProvider) {
+  $routeProvider
+    .when('/farmers/:id/',{
+        templateUrl: "./farmers/views/farmers.html",
+        controller: "FarmersController"
+    })
+
+})
