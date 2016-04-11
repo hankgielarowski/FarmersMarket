@@ -1,15 +1,16 @@
 var angular = require("angular");
+
 require("angular-route");
 require("angular-ui-bootstrap");
 
 angular
-.module("FarmersMarket", [
+.module("FarmersMarket",[
   "ngRoute",
   'ui.bootstrap',
   'admin.module' ,
   'buyers.module' ,
-  'buyers-profile.module' ,
-  // 'farmers.module' ,
+  'buyers-profile.module',
+  'farmers.module',
   'farmers-profile.module'
 ])
 .config(function($routeProvider) {
@@ -30,10 +31,6 @@ angular
       templateUrl: "buyers-profile/views/buyers-profile.html",
       controller: "BuyersProfileController"
     })
-    .when('/farmers', {
-      templateUrl: "farmers/views/farmers.html",
-      controller: "FarmersController"
-    })
     .when('/farmers-profile', {
       templateUrl: "farmers-profile/views/farmers-profile.html",
       controller: "FarmersProfileController"
@@ -44,8 +41,8 @@ angular
 require('./admin');
 require('./buyers');
 require('./buyers-profile');
-require('./farmers');
 require('./farmers-profile');
 require('./home');
+require('./farmers');
 require('./modals');
 require('./auth');
