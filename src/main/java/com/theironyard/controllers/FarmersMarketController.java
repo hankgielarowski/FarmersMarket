@@ -144,7 +144,7 @@ public class FarmersMarketController {
         if (!PasswordStorage.verifyPassword(user.getPasswordHash(), user2.getPasswordHash())) {
             throw new Exception("Wrong Password");
         }
-        session.setAttribute("userName", user2.getUserName());
+        session.setAttribute("userName", user.getUserName());
         return user2;
     }
 
