@@ -7,16 +7,20 @@
       <div class="box">
         <div class="content register-box">
           <div class="form">
-            <form class="signin-form">
+            <form class="signin-form" ng-submit="createUser(user)">
               <input id="userName" class="form-control" type="text" placeholder="User Name" name="userName" ng-model="user.userName">
               <input id="password" class="form-control" type="password" placeholder="Password" name="password" ng-model="user.passwordHash">
-              <input id="userType" class="form-control" type="text" placeholder="Enter Farmer or Buyer" name="userType" ng-model="user.userType">
+              <input id="userType" class="form-control" type="text" placeholder="Enter Farmer or Buyer" list= "listid" name="userType" ng-model="user.userType">
+                <datalist id="listid">
+                  <option value="Farmer">
+                  <option value="Buyer">
+                </datalist>
               <input id="companyName" class="form-control" type="text" placeholder="Company Name" name="companyName" ng-model="user.companyName">
               <input id="location" class="form-control" type="text" placeholder="Enter Address" name="location" ng-model="user.location">
               <input id="phoneNumber" class="form-control" type="text" placeholder="Phone Number" name="phoneNumber" ng-model="user.phone">
               <input id="email" class="form-control" type="text" placeholder="Email" name="email" ng-model="user.email">
               <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation" ng-model="user.passwordValidate">
-
+              <input class="btn btn-default btn-register" type="submit" value="Create account" name="commit" >
             </form>
           </div>
         </div>
@@ -24,7 +28,7 @@
       </div>
 
       <div class="modal-footer">
-            <input class="btn btn-default btn-register" type="submit" onclick="submit" value="Create account" name="commit" ng-click="createUser(user)">
+
           <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
       </div>
       </div>
