@@ -59,7 +59,7 @@ public class FarmersMarketController {
     }
 
     @RequestMapping(path = "/users", method = RequestMethod.POST)
-    public void createUser(@RequestBody User user) throws Exception {
+    public User createUser(@RequestBody User user) throws Exception {
         if(!user.getUserType().equals("Buyer") && !user.getUserType().equals("Farmer")) {
             throw new Exception("Invalid user type");
         }
@@ -70,6 +70,7 @@ public class FarmersMarketController {
         else {
             throw new Exception("password does not match");
         }
+        return user;
     }
 
     @RequestMapping(path = "/users/{id}", method = RequestMethod.PUT)
