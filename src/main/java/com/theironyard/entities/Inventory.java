@@ -22,9 +22,6 @@ public class Inventory {
     int quantityAvailable;
 
     @Column(nullable = false)
-    String farmer;
-
-    @Column(nullable = false)
     double price;
 
     @ManyToOne
@@ -33,11 +30,10 @@ public class Inventory {
     public Inventory() {
     }
 
-    public Inventory(String category, String name, int quantityAvailable, String farmer, double price, User user) {
+    public Inventory(String category, String name, int quantityAvailable, double price, User user) {
         this.category = category;
         this.name = name;
         this.quantityAvailable = quantityAvailable;
-        this.farmer = farmer;
         this.price = price;
         this.user = user;
     }
@@ -68,14 +64,6 @@ public class Inventory {
 
     public void setQuantityAvailable(int quantityAvailable) {
         this.quantityAvailable = quantityAvailable;
-    }
-
-    public String getFarmer() {
-        return farmer;
-    }
-
-    public void setFarmer(String farmer) {
-        this.farmer = farmer;
     }
 
     public double getPrice() {

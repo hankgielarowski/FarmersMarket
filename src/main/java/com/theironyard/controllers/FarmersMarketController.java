@@ -174,8 +174,8 @@ public class FarmersMarketController {
 
     // show all inventory by category findByCategory
     @RequestMapping(path = "/inventory/{category}", method = RequestMethod.GET)
-    public List<Inventory> getAllInventoryByCategory() {
-        return (List<Inventory>) inventories.findAll(); //findAllByCategory? need to make in the inventory repository??
+    public ArrayList<Inventory> getAllInventoryByCategory(@PathVariable("category") String category, HttpSession session) {
+        return (ArrayList<Inventory>) inventories.findByCategory(category);
     }
 
     //is getOne needed?
