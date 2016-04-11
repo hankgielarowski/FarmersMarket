@@ -2,7 +2,6 @@ var angular = require("angular");
 
 require("angular-route");
 require("angular-ui-bootstrap");
-
 angular
 .module("FarmersMarket",[
   "ngRoute",
@@ -44,5 +43,4 @@ require('./buyers-profile');
 require('./farmers-profile');
 require('./home');
 require('./farmers');
-require('./modals');
 require('./auth');
