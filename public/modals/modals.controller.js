@@ -9,14 +9,14 @@ angular
 
   $scope.animationsEnabled = true;
 
-  $scope.open = function (buyer) {
+  $scope.open = function (user) {
 
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'modals/modalsignup.html',
 
       controller: 'ModalInstanceCtrl',
-      buyer:buyer,
+      user:user,
 
       resolve: {
         items: function () {

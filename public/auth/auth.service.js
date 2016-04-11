@@ -24,6 +24,5 @@ angular
       loginUser:loginUser,
       logOutUser:logOutUser,
       createUser: createUser
-      
     }
 })

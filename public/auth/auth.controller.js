@@ -36,5 +36,4 @@ angular
   //    }
 
 
->>>>>>> beba0ab2b50b472a3c02f495f5821116bece64ce
 }
