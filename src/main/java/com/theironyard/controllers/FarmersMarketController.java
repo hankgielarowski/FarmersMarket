@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 /**
@@ -34,7 +37,7 @@ public class FarmersMarketController {
     Server dbui = null;
 
     @PostConstruct
-    public void init() throws SQLException, SQLException {
+    public void init() throws SQLException, SQLException, FileNotFoundException {
         dbui = Server.createWebServer().start();
     }
 
@@ -141,7 +144,7 @@ public class FarmersMarketController {
         if (!PasswordStorage.verifyPassword(user.getPasswordHash(), user2.getPasswordHash())) {
             throw new Exception("Wrong Password");
         }
-        session.setAttribute("userName", user.getUserName());
+        session.setAttribute("userName", user2.getUserName());
         return user2;
     }
 
@@ -164,6 +167,12 @@ public class FarmersMarketController {
         return (List<Inventory>) inventories.findAll();
     }
 
+    // show all inventory by category findByCategory
+    @RequestMapping(path = "/inventory/{category}", method = RequestMethod.GET)
+    public List<Inventory> getAllInventoryByCategory() {
+        return (List<Inventory>) inventories.findAll();
+    }
+
     //is getOne needed?
     @RequestMapping(path = "/inventory/{id}", method = RequestMethod.GET)
     public Inventory getOneInventory(@PathVariable("id") int id) {
@@ -175,6 +184,7 @@ public class FarmersMarketController {
         inventories.delete(id);
     }
 
+    //is this one written right? to edit an inventory item...
     @RequestMapping(path = "/inventory/{id}", method = RequestMethod.PUT)
     public void updateInventory(@RequestBody Inventory inventory, @PathVariable("id") int id) {
         inventories.save(inventory);
