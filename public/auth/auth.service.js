@@ -7,6 +7,7 @@ angular
     }
 
     function loginUser(user){
+      console.log("ARE YOU HAPPENING?");
       return $http.post('/login', user);
     }
 
