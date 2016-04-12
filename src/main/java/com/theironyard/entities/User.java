@@ -18,6 +18,9 @@ public class User {
     @Column(nullable = false)
     String passwordHash;
 
+    @Transient
+    String passwordValidate;
+
     @Column(nullable = false)
     String userType;
 
@@ -35,17 +38,6 @@ public class User {
 
     @Column(nullable = false)
     Boolean isValid = false;
-
-    @Transient
-    String passwordValidate;
-
-    public String getPasswordValidate() {
-        return passwordValidate;
-    }
-
-    public void setPasswordValidate(String passwordValidate) {
-        this.passwordValidate = passwordValidate;
-    }
 
     public User() {
     }
@@ -71,15 +63,15 @@ public class User {
         this.email = email;
     }
 
-    public User(String userName, String passwordHash, String userType, String companyName, String location, String phone, String email, String passwordValidate) {
+    public User(String userName, String passwordHash, String passwordValidate, String userType, String companyName, String location, String phone, String email) {
         this.userName = userName;
         this.passwordHash = passwordHash;
+        this.passwordValidate = passwordValidate;
         this.userType = userType;
         this.companyName = companyName;
         this.location = location;
         this.phone = phone;
         this.email = email;
-        this.passwordValidate = passwordValidate;
     }
 
     public String getUserName() {
@@ -96,6 +88,14 @@ public class User {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public String getPasswordValidate() {
+        return passwordValidate;
+    }
+
+    public void setPasswordValidate(String passwordValidate) {
+        this.passwordValidate = passwordValidate;
     }
 
     public String getUserType() {

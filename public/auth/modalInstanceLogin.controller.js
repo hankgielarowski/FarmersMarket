@@ -23,10 +23,7 @@ angular
 
    $uibModalInstance.close();
  };
- // $scope.createBuyer = function (user) {
- //   HomeService.createBuyer(user)
- //   $uibModalInstance.close($scope.selected.item);
- // };
+ 
 
 
  $scope.cancel = function () {
