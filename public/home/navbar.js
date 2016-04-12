@@ -1,9 +1,15 @@
 angular
 .module('FarmersMarket')
-  .controller('NavbarCtrl', function($scope, AuthService,$uibModal,$location) {
+  .controller('NavbarCtrl', function($scope, AuthService,$uibModal,$location,$window) {
     $scope.isAuthenticated = function() {
-      return AuthService.isAuthenticated;
+      $scope.user = JSON.parse($window.localStorage.getItem('mahUser'))
+      return AuthService.isAuthenticated();
     };
+
+    if($window.localStorage.getItem('mahUser')) {
+      $scope.user = JSON.parse($window.localStorage.getItem('mahUser'));
+    }
+    // $scope.user = JSON.parse($window.localStorage.getItem('mahUser'));
 
     $scope.openLogin = function() {
       console.log("WHAT UP");
@@ -11,7 +17,7 @@ angular
         animation: $scope.animationsEnabled,
         templateUrl: './auth/views/modallogin.html',
         controller: 'ModalLoginInstanceCtrl',
-        size: 'lg',
+        size: 'sm',
         resolve: {
 
         }
@@ -23,7 +29,6 @@ angular
         AuthService.logOutUser(user)
         .success(function(res) {
           AuthService.user = null;
-          AuthService.isAuthenticated = false;
           $location.path("/");
         })
     }
@@ -38,7 +43,7 @@ angular
         animation: $scope.animationsEnabled,
         templateUrl: './auth/views/modalsignup.html',
         controller: 'ModalSignupInstanceCtrl',
-        size: 'lg',
+        size: 'sm',
         resolve: {
 
         }

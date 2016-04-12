@@ -1,9 +1,16 @@
 angular
   .module('FarmersMarket')
-  .service('AuthService', function($http) {
+  .service('AuthService', function($http,$window) {
 
     function getUser() {
       return $http.get('/users');
+    }
+
+    function isAuthenticated() {
+      if($window.localStorage.getItem('mahUser')) {
+        return true
+      }
+      return false
     }
 
     function loginUser(user){
@@ -12,6 +19,7 @@ angular
     }
 
     function logOutUser(user){
+      localStorage.removeItem('mahUser');
       return $http.post('/logout', user);
     }
 
@@ -25,7 +33,7 @@ angular
       loginUser:loginUser,
       logOutUser:logOutUser,
       createUser: createUser,
-      isAuthenticated: false,
-      user: null
+      user: null,
+      isAuthenticated: isAuthenticated
     }
 })

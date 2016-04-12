@@ -1,6 +1,6 @@
 angular
 .module('farmers.module')
-.controller('ModalLoginInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location) {
+.controller('ModalLoginInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location,$window) {
 
 
  $scope.loginUser = function (user) {
@@ -8,7 +8,7 @@ angular
    AuthService.loginUser(user)
    .success(function(res){
      console.log("RIGHT?",res);
-     AuthService.isAuthenticated = true;
+     $window.localStorage.setItem('mahUser', JSON.stringify(res));
      AuthService.user = res;
      if(res.userType === 'Farmer') {
        $location.path("/farmers/"+ res.id);
