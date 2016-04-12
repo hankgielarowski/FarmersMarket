@@ -49,10 +49,10 @@ angular
       templateUrl: "admin/views/admin.html",
       controller: "AdminController"
     })
-    .when('/buyers', {
-      templateUrl: "buyers/views/buyers.html",
-      controller: "BuyersController"
-    })
+    // .when('/buyers', {
+    //   templateUrl: "buyers/views/buyers.html",
+    //   controller: "BuyersController"
+    // })
     .when('/buyers-profile', {
       templateUrl: "buyers-profile/views/buyers-profile.html",
       controller: "BuyersProfileController"
@@ -161,14 +161,24 @@ angular
       return $http.post('/users',user);
     }
 
+    function currentUser() {
+      if($window.localStorage.getItem('mahUser')) {
+        var user = JSON.parse($window.localStorage.getItem('mahUser'));
+        return user;
+      } else {
+        return false;
+      }
+    }
 
-    return{
+
+    return {
       getUser:getUser,
       loginUser:loginUser,
       logOutUser:logOutUser,
       createUser: createUser,
       user: null,
-      isAuthenticated: isAuthenticated
+      isAuthenticated: isAuthenticated,
+      currentUser: currentUser
     }
 })
 
@@ -204,10 +214,7 @@ angular
 
    $uibModalInstance.close();
  };
- // $scope.createBuyer = function (user) {
- //   HomeService.createBuyer(user)
- //   $uibModalInstance.close($scope.selected.item);
- // };
+ 
 
 
  $scope.cancel = function () {
@@ -218,13 +225,14 @@ angular
 },{}],10:[function(require,module,exports){
 angular
 .module('farmers.module')
-.controller('ModalSignupInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location) {
+.controller('ModalSignupInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location,$window) {
 
   $scope.createUser = function (user) {
     AuthService.createUser(user)
     .success(function(res){
       console.log("CREATED",res);
-
+      $window.localStorage.setItem('mahUser', JSON.stringify(res));
+      AuthService.user = res;
       if(res.userType === 'Farmer') {
         $location.path("/farmers/"+ res.id);
       } else if (res.userType === 'Buyer') {
@@ -237,42 +245,13 @@ angular
     });
     $uibModalInstance.close();
   };
-  // $scope.createBuyer = function (user) {
-  //   HomeService.createBuyer(user)
-  //   $uibModalInstance.close($scope.selected.item);
-  // };
+  
 
 
   $scope.cancel = function () {
     $uibModalInstance.close('cancel');
   };
 });
- // $scope.loginUser = function (user) {
- //   console.log("TEST MODAL", user);
- //   AuthService.loginUser(user)
- //   .success(function(res){
- //     console.log(res);
- //     if(res.userType === 'Farmer') {
- //       $location.path("/farmers/"+ res.id);
- //     } else if (res.userType === 'Buyer') {
- //       $location.path("/buyers/" + res.id);
- //     }
- //   })
- //   .error(function(err) {
- //     console.log("SHIT", err);
- //   });
- //   $uibModalInstance.close();
- // };
- // $scope.createBuyer = function (user) {
- //   HomeService.createBuyer(user)
- //   $uibModalInstance.close($scope.selected.item);
- // };
-
-
-//  $scope.cancel = function () {
-//    $uibModalInstance.close('cancel');
-//  };
-// });
 
 },{}],11:[function(require,module,exports){
 arguments[4][1][0].apply(exports,arguments)
@@ -297,30 +276,60 @@ require('./buyers-profile.module');
 require('./buyers-profile.service');
 
 },{"./buyers-profile.controller":11,"./buyers-profile.module":12,"./buyers-profile.service":13}],15:[function(require,module,exports){
-// angular
-// .module("FarmersMarket")
-// .controller("BuyerController", BuyerController);
-//
-// BuyerController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyerService"];
+angular
+.module("buyers.module")
+.controller("BuyersController", BuyersController);
+
+BuyersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyersService"];
+
+function BuyersController($scope, $http, $location, $q, $rootScope, BuyersService){
+  BuyersService.getUser()
+  .then(function(data) {
+    console.log("THIS SHOULD BE USERS", data);
+
+  })
+
+}
 
 },{}],16:[function(require,module,exports){
+var angular = require("angular");
+require("angular-route");
+require("angular-ui-bootstrap");
+
+
 angular
 .module("buyers.module", [
-  "ngRoute"
+  "ngRoute",
 ])
 .config(function($routeProvider) {
   $routeProvider
-    .when('/buyers',{
-      templateUrl: "views/buyers.html",
-      controller: "BuyersController"
+    .when('/buyers/:id/',{
+        templateUrl: "./buyers/views/buyers.html",
+        controller: "BuyersController"
     })
+
 })
 
-},{}],17:[function(require,module,exports){
-arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],18:[function(require,module,exports){
-require('./buyers.controller');
+},{"angular":36,"angular-route":32,"angular-ui-bootstrap":34}],17:[function(require,module,exports){
+angular
+  .module('buyers.module')
+  .service('BuyersService', function($http){
+
+        function getUser() {
+          return $http.get('/users');
+        }
+
+
+        return {
+          getUser: getUser
+
+        }
+
+  })
+
+},{}],18:[function(require,module,exports){
 require('./buyers.module');
+require('./buyers.controller');
 require('./buyers.service');
 
 },{"./buyers.controller":15,"./buyers.module":16,"./buyers.service":17}],19:[function(require,module,exports){
@@ -350,15 +359,31 @@ angular
 .module("farmers.module")
 .controller("FarmersController", FarmersController);
 
-FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmersService"];
+FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmersService", "AuthService"];
 
-function FarmersController($scope, $http, $location, $q, $rootScope, FarmersService){
+function FarmersController($scope, $http, $location, $q, $rootScope, FarmersService, AuthService){
+  $scope.user = AuthService.currentUser();
   FarmersService.getUser()
   .then(function(data) {
-    console.log("THIS SHOULD BE USERS", data);
+    // console.log("THIS SHOULD BE USERS", data);
+    // console.log("TEST: ",AuthService.currentUser());
+    $scope.user = AuthService.currentUser();
+
+})
+$scope.createInventory = function(inventory) {
+  // inventory.user = $scope.user;
+  console.log("LASTLY", inventory);
+  FarmersService.createInventory(inventory)
+  .success(function(res){
+    console.log("SUCCES", res);
+  })
+}
+$scope.getAllInventory = function(inventory) {
+  FarmersService.getAllInventory()
+  .then(function(data){
 
   })
-
+}
 }
 
 },{}],24:[function(require,module,exports){
@@ -388,9 +413,19 @@ angular
         function getUser() {
           return $http.get('/users');
         }
+        function createInventory(inventory){
+          console.log("fuck,");
+          return $http.post('/inventory', inventory);
+        }
+        function getAllInventory(inventory){
+          return $http.get('/inventory', inventory);
+        }
+
 
         return {
-          getUser: getUser
+          getUser: getUser,
+          createInventory:createInventory,
+          getAllInventory:getAllInventory,
         }
 
   })
