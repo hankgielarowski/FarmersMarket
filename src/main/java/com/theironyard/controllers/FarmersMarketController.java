@@ -59,12 +59,22 @@ public class FarmersMarketController {
     }
 
     @PostConstruct
-    public void construct() throws PasswordStorage.CannotPerformOperationException {
+    public void constructAdmin() throws PasswordStorage.CannotPerformOperationException {
         if (users.findByUserName("Admin") == null) {
             User user = new User("Admin", PasswordStorage.createHash("admin"), "Admin", "FarmersMarket", "Here", "888-888-8888", "FarmersMarket@FarmersMarket.com", "admin");
             users.save(user);
         }
     }
+
+//    @PostConstruct
+//    public void constructFarmer() {
+//
+//    }
+//
+//    @PostConstruct
+//    public void constructInventory(){
+//
+//    }
 
     @PostConstruct
     public void categoryParse() throws FileNotFoundException {
