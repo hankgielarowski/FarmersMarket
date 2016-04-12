@@ -1,7 +1,10 @@
 package com.theironyard.controllers;
 
+import com.theironyard.entities.Category;
 import com.theironyard.entities.Inventory;
+import com.theironyard.entities.Purchase;
 import com.theironyard.entities.User;
+import com.theironyard.services.CategoryRepository;
 import com.theironyard.services.InventoryRepository;
 import com.theironyard.services.PurchaseRepository;
 import com.theironyard.services.UserRepository;
@@ -16,7 +19,9 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -38,6 +43,9 @@ public class FarmersMarketController {
     @Autowired
     PurchaseRepository purchases;
 
+    @Autowired
+    CategoryRepository categories;
+
     Server dbui = null;
 
     @PostConstruct
@@ -55,6 +63,21 @@ public class FarmersMarketController {
         if (users.findByUserName("Admin") == null) {
             User user = new User("Admin", PasswordStorage.createHash("admin"), "Admin", "FarmersMarket", "Here", "888-888-8888", "FarmersMarket@FarmersMarket.com", "admin");
             users.save(user);
+        }
+    }
+
+    @PostConstruct
+    public void categoryParse() throws FileNotFoundException {
+        if (categories.count() == 0) {
+            File f = new File("categoryCSV.csv");
+            Scanner fileScanner = new Scanner(new File("categoryCSV.csv"));
+            fileScanner.nextLine();
+            while (fileScanner.hasNext()) {
+                String line = fileScanner.nextLine();
+                String[] column = line.split(",");
+                Category c = new Category(column[0], column[1]);
+                categories.save(c);
+            }
         }
     }
 
@@ -193,6 +216,45 @@ public class FarmersMarketController {
     @RequestMapping(path = "/inventory/{id}", method = RequestMethod.PUT)
     public void updateInventory(@RequestBody Inventory inventory, @PathVariable("id") int id) {
         inventories.save(inventory);
+    }
+
+    @RequestMapping(path = "/categories", method = RequestMethod.GET)
+    public ArrayList<Category> getAllCategories(HttpSession session) {
+        return (ArrayList<Category>) categories.findAll();
+    }
+
+    @RequestMapping(path = "/categories/{letter}", method = RequestMethod.GET)
+    public ArrayList<Category> getCategoryByLetter(HttpSession session, @PathVariable("letter") String letter) {
+        return categories.findByCategoryNameStartingWith(letter);
+    }
+
+    //Purchases routes:
+    // GET route FOR THE ADMIN
+    //DELETE route which can only be called on validated ones
+    //PUT route for farmer to validate order
+
+    // frontend will handle the buyers' order validation by just not sending the validated (GET route) to backend until the buyer clicks "confirm"
+    // need to explain to frontend that they should display a purchse button next to each item
+    // when deleting a user or inventory object, need to figure out the parenthood/cascading
+
+    @RequestMapping(path = "/purchases/{pending}", method = RequestMethod.GET)
+    public ArrayList<Purchase> getPurchasesPending(HttpSession session, @PathVariable("pending") boolean pending) {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+        ArrayList<Purchase> purchaseList = new ArrayList<>();
+        if(user.getUserType().equals("Farmer")) {
+            purchaseList = purchases.findByIsPendingApprovalAndFarmer(pending, user.getUserName());
+        }
+        else if (user.getUserType().equals("Buyer")) {
+            purchaseList = purchases.findByIsPendingApprovalAndBuyer(pending, user.getUserName());
+        }
+        return purchaseList;
+    }
+
+    @RequestMapping(path = "/purchases", method = RequestMethod.POST)
+    public void createPurchase (HttpSession session, @RequestBody Purchase purchase) {
+        purchase.setTimeStamp(LocalDateTime.now());
+        purchases.save(purchase);
     }
 
 }
