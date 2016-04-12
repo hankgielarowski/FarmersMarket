@@ -27,13 +27,23 @@ angular
       return $http.post('/users',user);
     }
 
+    function currentUser() {
+      if($window.localStorage.getItem('mahUser')) {
+        var user = JSON.parse($window.localStorage.getItem('mahUser'));
+        return user;
+      } else {
+        return false;
+      }
+    }
 
-    return{
+
+    return {
       getUser:getUser,
       loginUser:loginUser,
       logOutUser:logOutUser,
       createUser: createUser,
       user: null,
-      isAuthenticated: isAuthenticated
+      isAuthenticated: isAuthenticated,
+      currentUser: currentUser
     }
 })

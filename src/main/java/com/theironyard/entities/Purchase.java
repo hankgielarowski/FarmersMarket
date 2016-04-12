@@ -36,10 +36,13 @@ public class Purchase {
     LocalDateTime timeStamp;
 
     @Column(nullable = false)
-    boolean isPendingApproval;
+    boolean isPendingApproval = true;
 
     @Column(nullable = false)
     String dateDesiredByBuyer;
+
+    @ManyToOne
+    Inventory inventory;
 
     public Purchase() {
     }

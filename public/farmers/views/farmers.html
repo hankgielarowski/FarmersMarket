@@ -5,7 +5,45 @@
     <div class="row">
       <div class="col-md-6" id="left">
         <div class="well">
-          <h4 class="text-danger">  Purchase to be approved </h4>
+          <h4 class="text-danger">Goods For Sale</h4>
+            <ul>
+              <form class="signin-form" ng-submit="createInventory(item)">
+                <input id="category" class="form-control" type="text" placeholder="Category" name="userType" ng-model="item.category">
+                <input id="type" class="form-control" type="text" placeholder="Type" name="userType" ng-model="item.name">
+                <input id="amount" class="form-control" type="text" placeholder="Amount" name="userType" ng-model="item.quantityAvailable">
+                <input id="amount" class="form-control" type="text" placeholder="Market Price" name="userType" ng-model="item.price" >
+                <!-- <input style="display:none" ng-show="user" accept=""id="amount" class="form-control" type="text" name="userType" ng-model="user" placeholder="{{user.userName}}"> -->
+                <input class="btn btn-default btn-register" type="submit" value="Post Products" name="commit" >
+              </form>
+            </ul>
+        </div>
+      </div>
+      <div class="col-md-6" id="right">
+        <div class="well">
+          <h4 class="text-success"> Goods Available </h4>
+          <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<div class="container-farm">
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-6" id="left">
+        <div class="well">
+          <h4 class="text-danger">Product Orders</h4>
             <ul>
               <li>1</li>
               <li>2</li>
@@ -28,7 +66,7 @@
       </div>
       <div class="col-md-6" id="right">
         <div class="well">
-          <h4 class="text-success"> Approved purchase </h4>
+          <h4 class="text-success"> Approved Orders </h4>
           <ul>
             <li>1</li>
             <li>2</li>

@@ -25,10 +25,10 @@ angular
       templateUrl: "admin/views/admin.html",
       controller: "AdminController"
     })
-    .when('/buyers', {
-      templateUrl: "buyers/views/buyers.html",
-      controller: "BuyersController"
-    })
+    // .when('/buyers', {
+    //   templateUrl: "buyers/views/buyers.html",
+    //   controller: "BuyersController"
+    // })
     .when('/buyers-profile', {
       templateUrl: "buyers-profile/views/buyers-profile.html",
       controller: "BuyersProfileController"
