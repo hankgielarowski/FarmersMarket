@@ -1,33 +1,70 @@
-.login {
+.nav-user {
   margin: 10px;
-  margin-right: 15px !important; }
+  margin-right: 15px !important;
+  float: right; }
 
-.logo {
-  float: left; }
+.nav-signup {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right; }
+
+.nav-signin {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right; }
+
+.nav-logout {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right; }
 
 .navbar-text {
   margin-left: 240px !important;
   font-size: 1.6em; }
 
-.dropdown-menu {
-  left: 83% !important;
-  background-color: #598796 !important; }
+.nav-branding {
+  list-style: none;
+  display: inline-block;
+  float: left; }
+
+.navbar li {
+  list-style: none;
+  display: inline-block; }
+
+.container-main {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  opacity: 0.8; }
+
+.container-full-bg {
+  width: 100%;
+  height: 70%;
+  background-image: url(img/hero-pic.jpg);
+  background-size: cover;
+  margin-top: 7%; }
 
 .row-one {
-  height: 500px;
-  background-image: url(img/hero-pic.jpg);
-  background-size: cover; }
+  height: 450px; }
 
 .connect {
   font-size: 2.5em;
   font-family: Copperplate / Copperplate Gothic Light, sans-serif;
   float: right;
-  padding-top: 75px; }
+  padding-top: 75px;
+  color: #000000;
+  margin-right: 8%; }
 
 .row-two {
-  height: 500px;
-  background-image: url(img/hero-pic.jpg);
-  background-size: cover; }
+  height: 300px;
+  margin-left: 0 !important;
+  margin-right: 0 !important; }
+
+.mission {
+  color: #000;
+  font-size: 1.3em;
+  font-family: Copperplate / Copperplate Gothic Light, sans-serif;
+  font-weight: bold; }
 
 footer {
   height: 70px;
