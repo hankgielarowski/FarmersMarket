@@ -14,7 +14,7 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
 
 })
 $scope.createInventory = function(inventory) {
-  
+  // inventory.user = $scope.user;
   console.log("LASTLY", inventory);
   FarmersService.createInventory(inventory)
   .success(function(res){

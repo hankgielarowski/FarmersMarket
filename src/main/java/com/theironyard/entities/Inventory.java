@@ -38,6 +38,13 @@ public class Inventory {
         this.user = user;
     }
 
+    public Inventory(String category, String name, int quantityAvailable, double price) {
+        this.category = category;
+        this.name = name;
+        this.quantityAvailable = quantityAvailable;
+        this.price = price;
+    }
+
     public int getId() {
         return id;
     }
