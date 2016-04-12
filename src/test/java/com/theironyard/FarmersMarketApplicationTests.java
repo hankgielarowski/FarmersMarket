@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theironyard.entities.Inventory;
 import com.theironyard.entities.User;
+import com.theironyard.services.CategoryRepository;
 import com.theironyard.services.InventoryRepository;
 import com.theironyard.services.PurchaseRepository;
 import com.theironyard.services.UserRepository;
@@ -44,6 +45,9 @@ public class FarmersMarketApplicationTests {
     PurchaseRepository purchases;
 
     @Autowired
+    CategoryRepository categories;
+
+    @Autowired
     WebApplicationContext wap;
 
     MockMvc mockMvc;
@@ -55,7 +59,7 @@ public class FarmersMarketApplicationTests {
 
     @Test
     public void test1CreateUser() throws Exception {
-        User user = new User("Alice", "password", "Farmer", "Limehouse Produce", "charleston", "8888", "alice@alice", "password");
+        User user = new User("Alice", "password", "password", "Farmer", "Limehouse Produce", "charleston", "8888", "alice@alice");
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(user);
         mockMvc.perform(
