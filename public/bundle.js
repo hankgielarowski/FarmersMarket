@@ -142,9 +142,9 @@ angular
 
     function isAuthenticated() {
       if($window.localStorage.getItem('mahUser')) {
-        return true
+        return true;
       }
-      return false
+      return false;
     }
 
     function loginUser(user){
@@ -367,11 +367,12 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
   .then(function(data) {
     // console.log("THIS SHOULD BE USERS", data);
     // console.log("TEST: ",AuthService.currentUser());
-    $scope.user = AuthService.currentUser();
 
 })
 $scope.createInventory = function(inventory) {
-  // inventory.user = $scope.user;
+  inventory.price = parseInt(inventory.price);
+  inventory.quantityAvailable = parseInt(inventory.quantityAvailable);
+  inventory.user = null;
   console.log("LASTLY", inventory);
   FarmersService.createInventory(inventory)
   .success(function(res){
@@ -414,9 +415,10 @@ angular
           return $http.get('/users');
         }
         function createInventory(inventory){
-          console.log("fuck,");
-          return $http.post('/inventory', inventory);
+          console.log("fuck: ", inventory);
+          return $http.post('/inventory/', inventory);
         }
+
         function getAllInventory(inventory){
           return $http.get('/inventory', inventory);
         }
@@ -425,7 +427,7 @@ angular
         return {
           getUser: getUser,
           createInventory:createInventory,
-          getAllInventory:getAllInventory,
+          getAllInventory: getAllInventory
         }
 
   })
