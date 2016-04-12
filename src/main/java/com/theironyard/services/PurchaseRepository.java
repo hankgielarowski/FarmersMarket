@@ -11,4 +11,5 @@ import java.util.ArrayList;
 public interface PurchaseRepository extends CrudRepository<Purchase, Integer> {
     ArrayList<Purchase> findByIsPendingApprovalAndFarmer(boolean isPendingApproval, String farmer);
     ArrayList<Purchase> findByIsPendingApprovalAndBuyer(boolean isPendingApproval, String buyer);
+    ArrayList<Purchase> findByFarmerOrBuyer(String userName, String userName2);
 }
