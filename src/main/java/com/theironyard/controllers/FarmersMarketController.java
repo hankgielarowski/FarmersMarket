@@ -251,7 +251,7 @@ public class FarmersMarketController {
     public ArrayList<Purchase> getPurchasesPending(HttpSession session, @PathVariable("pending") boolean pending) {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-        ArrayList<Purchase> purchaseList = new ArrayList<>();
+        ArrayList<Purchase> purchaseList = new ArrayList<Purchase>();
         if(user.getUserType().equals("Farmer")) {
             purchaseList = purchases.findByIsPendingApprovalAndFarmer(pending, user.getUserName());
         }
@@ -262,9 +262,30 @@ public class FarmersMarketController {
     }
 
     @RequestMapping(path = "/purchases", method = RequestMethod.POST)
-    public void createPurchase (HttpSession session, @RequestBody Purchase purchase) {
+    public void createPurchase(HttpSession session, @RequestBody Purchase purchase) {
         purchase.setTimeStamp(LocalDateTime.now());
         purchases.save(purchase);
+    }
+
+    @RequestMapping(path = "/purchases/{id}", method = RequestMethod.DELETE)
+    public void deletePurchase(HttpSession session, @PathVariable("id") int id) throws Exception {
+        if(purchases.findOne(id).isPendingApproval() == false) {
+            throw new Exception("invalid request");
+        }
+        purchases.delete(id);
+    }
+
+    @RequestMapping(path = "/purchases/{user}", method = RequestMethod.GET)
+    public ArrayList<Purchase> getUserPurchases(HttpSession session, @PathVariable("id") int id) throws Exception {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+
+        if(!user.getUserType().equals("Admin")){
+            throw new Exception("insufficient permisions");
+        }
+        User checkedUser = users.findOne(id);
+
+        return purchases.findByFarmerOrBuyer(checkedUser.getUserName(), checkedUser.getUserName());
     }
 
 }
