@@ -8,9 +8,9 @@ angular
 
     function isAuthenticated() {
       if($window.localStorage.getItem('mahUser')) {
-        return true
+        return true;
       }
-      return false
+      return false;
     }
 
     function loginUser(user){

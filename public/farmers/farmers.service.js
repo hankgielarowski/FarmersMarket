@@ -6,9 +6,10 @@ angular
           return $http.get('/users');
         }
         function createInventory(inventory){
-          console.log("fuck,");
-          return $http.post('/inventory', inventory);
+          console.log("fuck: ", inventory);
+          return $http.post('/inventory/', inventory);
         }
+
         function getAllInventory(inventory){
           return $http.get('/inventory', inventory);
         }
@@ -17,7 +18,7 @@ angular
         return {
           getUser: getUser,
           createInventory:createInventory,
-          getAllInventory:getAllInventory,
+          getAllInventory: getAllInventory
         }
 
   })

@@ -10,11 +10,12 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
   .then(function(data) {
     // console.log("THIS SHOULD BE USERS", data);
     // console.log("TEST: ",AuthService.currentUser());
-    $scope.user = AuthService.currentUser();
 
 })
 $scope.createInventory = function(inventory) {
-  // inventory.user = $scope.user;
+  inventory.price = parseInt(inventory.price);
+  inventory.quantityAvailable = parseInt(inventory.quantityAvailable);
+  inventory.user = null;
   console.log("LASTLY", inventory);
   FarmersService.createInventory(inventory)
   .success(function(res){
