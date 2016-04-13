@@ -43,9 +43,6 @@ public class FarmersMarketApplicationTests {
     OrderRepository orders;
 
     @Autowired
-    SoldRepository sales;
-
-    @Autowired
     WebApplicationContext wap;
 
     MockMvc mockMvc;

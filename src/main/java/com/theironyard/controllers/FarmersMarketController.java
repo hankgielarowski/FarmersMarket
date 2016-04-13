@@ -42,9 +42,6 @@ public class FarmersMarketController {
     @Autowired
     OrderRepository orders;
 
-    @Autowired
-    SoldRepository sales;
-
     Server dbui = null;
 
     @PostConstruct
@@ -236,46 +233,46 @@ public class FarmersMarketController {
         return categories.findByCategoryNameStartingWith(letter);
     }
 
-//    @RequestMapping(path = "/orders/{pending}", method = RequestMethod.GET)
-//    public ArrayList<Order> getOrdersPending(HttpSession session, @PathVariable("pending") boolean pending) {
-//        String userName = (String) session.getAttribute("userName");
-//        User user = users.findByUserName(userName);
-//        ArrayList<Order> orderList = new ArrayList<Order>();
-//        if(user.getUserType().equals("Farmer")) {
-//            orderList = orders.findByIsPendingApprovalAndFarmer(pending, user.getUserName());
-//        }
-//        else if (user.getUserType().equals("Buyer")) {
-//            orderList = orders.findByIsPendingApprovalAndBuyer(pending, user.getUserName());
-//        }
-//        return orderList;
-//    }
-//
-//    @RequestMapping(path = "/orders", method = RequestMethod.POST)
-//    public void createOrder(HttpSession session, @RequestBody Order order) {
-//        order.setTimeStampOrdered(LocalDateTime.now());
-//        orders.save(order);
-//    }
-//
-//    @RequestMapping(path = "/orders/{id}", method = RequestMethod.DELETE)
-//    public void deleteOrder(HttpSession session, @PathVariable("id") int id) throws Exception {
-//        if(orders.findOne(id).isPendingApproval() == false) {
-//            throw new Exception("invalid request");
-//        }
-//        orders.delete(id);
-//    }
-//
-//    @RequestMapping(path = "/orders/{userId}", method = RequestMethod.GET)
-//    public ArrayList<Order> getUserOrders(HttpSession session, @PathVariable("userId") int id) throws Exception {
-//        String userName = (String) session.getAttribute("userName");
-//        User user = users.findByUserName(userName);
-//
-//        if(!user.getUserType().equals("Admin")){
-//            throw new Exception("insufficient permisions");
-//        }
-//        User checkedUser = users.findOne(id);
-//
-//        return orders.findByFarmerOrBuyer(checkedUser.getUserName(), checkedUser.getUserName());
-//    }
+    @RequestMapping(path = "/orders/{pending}", method = RequestMethod.GET)
+    public ArrayList<Order> getOrdersPending(HttpSession session, @PathVariable("pending") boolean pending) {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+        ArrayList<Order> orderList = new ArrayList<Order>();
+        if(user.getUserType().equals("Farmer")) {
+            orderList = orders.findByIsPendingApprovalAndFarmer(pending, user.getUserName());
+        }
+        else if (user.getUserType().equals("Buyer")) {
+            orderList = orders.findByIsPendingApprovalAndBuyer(pending, user.getUserName());
+        }
+        return orderList;
+    }
+
+    @RequestMapping(path = "/orders", method = RequestMethod.POST)
+    public void createOrder(HttpSession session, @RequestBody Order order) {
+        order.setTimeStampOrdered(LocalDateTime.now());
+        orders.save(order);
+    }
+
+    @RequestMapping(path = "/orders/{id}", method = RequestMethod.DELETE)
+    public void deleteOrder(HttpSession session, @PathVariable("id") int id) throws Exception {
+        if(orders.findOne(id).isPendingApproval() == false) {
+            throw new Exception("invalid request");
+        }
+        orders.delete(id);
+    }
+
+    @RequestMapping(path = "/orders/{userId}", method = RequestMethod.GET)
+    public ArrayList<Order> getUserOrders(HttpSession session, @PathVariable("userId") int id) throws Exception {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+
+        if(!user.getUserType().equals("Admin")){
+            throw new Exception("insufficient permisions");
+        }
+        User checkedUser = users.findOne(id);
+
+        return orders.findByFarmerOrBuyer(checkedUser.getUserName(), checkedUser.getUserName());
+    }
 
 
     // frontend will handle the buyers' order validation by just not sending the validated (GET route) to backend until the buyer clicks "confirm"

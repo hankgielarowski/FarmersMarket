@@ -36,6 +36,9 @@ public class Order {
     LocalDateTime timeStampOrdered;
 
     @Column(nullable = false)
+    boolean isPendingApproval = true;
+
+    @Column(nullable = false)
     String dateDesiredByBuyer;
 
     @ManyToOne
@@ -44,7 +47,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(String category, String name, User buyer, User farmer, int quantityOrdered, double price, LocalDateTime timeStampOrdered, String dateDesiredByBuyer, Inventory inventory) {
+    public Order(String category, String name, User buyer, User farmer, int quantityOrdered, double price, LocalDateTime timeStampOrdered, boolean isPendingApproval, String dateDesiredByBuyer, Inventory inventory) {
         this.category = category;
         this.name = name;
         this.buyer = buyer;
@@ -52,6 +55,7 @@ public class Order {
         this.quantityOrdered = quantityOrdered;
         this.price = price;
         this.timeStampOrdered = timeStampOrdered;
+        this.isPendingApproval = isPendingApproval;
         this.dateDesiredByBuyer = dateDesiredByBuyer;
         this.inventory = inventory;
     }
@@ -118,6 +122,14 @@ public class Order {
 
     public void setTimeStampOrdered(LocalDateTime timeStampOrdered) {
         this.timeStampOrdered = timeStampOrdered;
+    }
+
+    public boolean isPendingApproval() {
+        return isPendingApproval;
+    }
+
+    public void setPendingApproval(boolean pendingApproval) {
+        isPendingApproval = pendingApproval;
     }
 
     public String getDateDesiredByBuyer() {
