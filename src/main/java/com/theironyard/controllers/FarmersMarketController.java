@@ -2,12 +2,9 @@ package com.theironyard.controllers;
 
 import com.theironyard.entities.Category;
 import com.theironyard.entities.Inventory;
-import com.theironyard.entities.Purchase;
+import com.theironyard.entities.Order;
 import com.theironyard.entities.User;
-import com.theironyard.services.CategoryRepository;
-import com.theironyard.services.InventoryRepository;
-import com.theironyard.services.PurchaseRepository;
-import com.theironyard.services.UserRepository;
+import com.theironyard.services.*;
 import com.theironyard.utilities.PasswordStorage;
 import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,10 +37,13 @@ public class FarmersMarketController {
     InventoryRepository inventories;
 
     @Autowired
-    PurchaseRepository purchases;
+    CategoryRepository categories;
 
     @Autowired
-    CategoryRepository categories;
+    OrderRepository orders;
+
+    @Autowired
+    SoldRepository sales;
 
     Server dbui = null;
 
@@ -59,18 +58,17 @@ public class FarmersMarketController {
     }
 
     @PostConstruct
-    public void constructAdmin() throws PasswordStorage.CannotPerformOperationException {
+    public void constructAdminAndTestUsers() throws PasswordStorage.CannotPerformOperationException {
         if (users.findByUserName("Admin") == null) {
-            User user = new User("Admin", PasswordStorage.createHash("admin"), "Admin", "FarmersMarket", "Here", "888-888-8888", "FarmersMarket@FarmersMarket.com", "admin");
+            User user = new User("Admin", PasswordStorage.createHash("admin"),"Admin","FarmersMarket", "Here", "888-888-8888", "FarmersMarket@FarmersMarket.com", true);
             users.save(user);
+            User user2 = new User("HankFarming", PasswordStorage.createHash("hank"), "Farmer", "Hank Farms", "Charleston", "999-999-9999", "Hank@Hank.com", true);
+            users.save(user2);
+            User user3 = new User("FrankStore", PasswordStorage.createHash("frank"), "Buyer", "Frank's Store", "Charleston", "777-989-9998", "Frank@Frank.com", true);
+            users.save(user3);
         }
     }
 
-//    @PostConstruct
-//    public void constructFarmer() {
-//
-//    }
-//
 //    @PostConstruct
 //    public void constructInventory(){
 //
@@ -238,54 +236,50 @@ public class FarmersMarketController {
         return categories.findByCategoryNameStartingWith(letter);
     }
 
-    //Purchases routes:
-    // GET route FOR THE ADMIN
-    //DELETE route which can only be called on validated ones
-    //PUT route for farmer to validate order
+//    @RequestMapping(path = "/orders/{pending}", method = RequestMethod.GET)
+//    public ArrayList<Order> getOrdersPending(HttpSession session, @PathVariable("pending") boolean pending) {
+//        String userName = (String) session.getAttribute("userName");
+//        User user = users.findByUserName(userName);
+//        ArrayList<Order> orderList = new ArrayList<Order>();
+//        if(user.getUserType().equals("Farmer")) {
+//            orderList = orders.findByIsPendingApprovalAndFarmer(pending, user.getUserName());
+//        }
+//        else if (user.getUserType().equals("Buyer")) {
+//            orderList = orders.findByIsPendingApprovalAndBuyer(pending, user.getUserName());
+//        }
+//        return orderList;
+//    }
+//
+//    @RequestMapping(path = "/orders", method = RequestMethod.POST)
+//    public void createOrder(HttpSession session, @RequestBody Order order) {
+//        order.setTimeStampOrdered(LocalDateTime.now());
+//        orders.save(order);
+//    }
+//
+//    @RequestMapping(path = "/orders/{id}", method = RequestMethod.DELETE)
+//    public void deleteOrder(HttpSession session, @PathVariable("id") int id) throws Exception {
+//        if(orders.findOne(id).isPendingApproval() == false) {
+//            throw new Exception("invalid request");
+//        }
+//        orders.delete(id);
+//    }
+//
+//    @RequestMapping(path = "/orders/{userId}", method = RequestMethod.GET)
+//    public ArrayList<Order> getUserOrders(HttpSession session, @PathVariable("userId") int id) throws Exception {
+//        String userName = (String) session.getAttribute("userName");
+//        User user = users.findByUserName(userName);
+//
+//        if(!user.getUserType().equals("Admin")){
+//            throw new Exception("insufficient permisions");
+//        }
+//        User checkedUser = users.findOne(id);
+//
+//        return orders.findByFarmerOrBuyer(checkedUser.getUserName(), checkedUser.getUserName());
+//    }
+
 
     // frontend will handle the buyers' order validation by just not sending the validated (GET route) to backend until the buyer clicks "confirm"
     // need to explain to frontend that they should display a purchse button next to each item
     // when deleting a user or inventory object, need to figure out the parenthood/cascading
-
-    @RequestMapping(path = "/purchases/{pending}", method = RequestMethod.GET)
-    public ArrayList<Purchase> getPurchasesPending(HttpSession session, @PathVariable("pending") boolean pending) {
-        String userName = (String) session.getAttribute("userName");
-        User user = users.findByUserName(userName);
-        ArrayList<Purchase> purchaseList = new ArrayList<Purchase>();
-        if(user.getUserType().equals("Farmer")) {
-            purchaseList = purchases.findByIsPendingApprovalAndFarmer(pending, user.getUserName());
-        }
-        else if (user.getUserType().equals("Buyer")) {
-            purchaseList = purchases.findByIsPendingApprovalAndBuyer(pending, user.getUserName());
-        }
-        return purchaseList;
-    }
-
-    @RequestMapping(path = "/purchases", method = RequestMethod.POST)
-    public void createPurchase(HttpSession session, @RequestBody Purchase purchase) {
-        purchase.setTimeStamp(LocalDateTime.now());
-        purchases.save(purchase);
-    }
-
-    @RequestMapping(path = "/purchases/{id}", method = RequestMethod.DELETE)
-    public void deletePurchase(HttpSession session, @PathVariable("id") int id) throws Exception {
-        if(purchases.findOne(id).isPendingApproval() == false) {
-            throw new Exception("invalid request");
-        }
-        purchases.delete(id);
-    }
-
-    @RequestMapping(path = "/purchases/{user}", method = RequestMethod.GET)
-    public ArrayList<Purchase> getUserPurchases(HttpSession session, @PathVariable("id") int id) throws Exception {
-        String userName = (String) session.getAttribute("userName");
-        User user = users.findByUserName(userName);
-
-        if(!user.getUserType().equals("Admin")){
-            throw new Exception("insufficient permisions");
-        }
-        User checkedUser = users.findOne(id);
-
-        return purchases.findByFarmerOrBuyer(checkedUser.getUserName(), checkedUser.getUserName());
-    }
 
 }

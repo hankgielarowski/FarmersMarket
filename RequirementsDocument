@@ -91,7 +91,7 @@ Buyers
 -   can delete their account
 searches through online inventory of available produce and can search/filter by produce sub-categories, once they click on a subcategory, it takes the buyer to a page that lists links of all available produce in that sub-category. They can order from that page, or they can click on the link which takes them to that Farmer’s page of inventory, where they can also order.
 can search by Farmer if they want to see the inventory of a particular Farmer
-- can type in an integer next to each listed item to purchase X amount of an item, then clicks on an “order” button at the bottom of the list, which will be automatically accepted and then will change the current amount of that item’s inventory. should be allowed to order more that one item at a time from that list. 
+- can type in an integer next to each listed item to order X amount of an item, then clicks on an “order” button at the bottom of the list, which will be automatically accepted and then will change the current amount of that item’s inventory. should be allowed to order more that one item at a time from that list.
 - can view a list of all inventory that they have ordered which shows quantity and from which farmer they purchased it from.
 - can post on the public forum page
 - stretch goal, can send direct messages to farmers
@@ -102,7 +102,7 @@ All Stories:
 2. Admin’s Home Page (Control Panel)
 3. Buyer’s Home Page (combines both the overall category view and also the list view once a category is select that portion of the page changes)
 4. Farmer’s Home Page
-5. Buyer’s Profile Page (contact info and purchase history)
+5. Buyer’s Profile Page (contact info and order history)
 6. List of All Farmers Page
 7. stretch goal: Public Forum Page
 
@@ -196,7 +196,7 @@ buyer has a profile page that shows their contact info which they can edit from 
 also shows a list of all items they have purchased
 they cannot view other buyer’s pages
 
-Value Statement: Buyer is able to their purchase history, and this is also the buyers way to display their contact info to farmers
+Value Statement: Buyer is able to their order history, and this is also the buyers way to display their contact info to farmers
 	
 Acceptance Criteria:
 ?
@@ -250,7 +250,7 @@ Admin’s view of Buyer’s Home page
 View: 
 Admin view of a particular Buyer’s page appears the exact same as that particular Buyer would see it.
 
-Value Statement: Allows Admin to view a buyer’s purchase history
+Value Statement: Allows Admin to view a buyer’s order history
 
 Acceptance Criteria: ?
 
