@@ -8,20 +8,31 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
   $scope.user = AuthService.currentUser();
   FarmersService.getUser()
   .then(function(data) {
-    // console.log("THIS SHOULD BE USERS", data);
-    // console.log("TEST: ",AuthService.currentUser());
 
-})
+    })
+// FarmersService.getOneInventory(id)
+// .then(function(data){
+//
+// })
+
 $scope.createInventory = function(inventory) {
   inventory.price = parseInt(inventory.price);
   inventory.quantityAvailable = parseInt(inventory.quantityAvailable);
   inventory.user = null;
   console.log("LASTLY", inventory);
   FarmersService.createInventory(inventory)
-  .success(function(res){
+  .then(function(res){
     console.log("SUCCES", res);
+    window.corn = res.data;
+    FarmersService.getOneInventory(res.data.category, res.data)
+    .then(function(data){
+      $scope.inventory = data.data;
+      console.log("YYAY SHIT",data);
+    })
   })
 }
+
+
 $scope.getAllInventory = function(inventory) {
   FarmersService.getAllInventory()
   .then(function(data){

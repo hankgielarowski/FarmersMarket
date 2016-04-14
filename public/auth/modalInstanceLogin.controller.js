@@ -23,7 +23,7 @@ angular
 
    $uibModalInstance.close();
  };
- 
+
 
 
  $scope.cancel = function () {

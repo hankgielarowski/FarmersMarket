@@ -199,13 +199,19 @@ public class FarmersMarketController {
         return (List<Inventory>) inventories.findAll();
     }
 
-    // show all inventory by category findByCategory
-    @RequestMapping(path = "/inventory/{category}", method = RequestMethod.GET)
+
+    @RequestMapping(path = "/inventory/user/{userName}", method = RequestMethod.GET)
+    public ArrayList<Inventory> getAllInventoryByUser(@PathVariable("userName") String userName) {
+        User user = users.findByUserName(userName);
+        return inventories.findByUser(user);
+    }
+
+    @RequestMapping(path = "/inventory/category/{category}", method = RequestMethod.GET)
     public ArrayList<Inventory> getAllInventoryByCategory(@PathVariable("category") String category, HttpSession session) {
         return (ArrayList<Inventory>) inventories.findByCategory(category);
     }
 
-    //is getOne needed?
+    //is get one needed??
     @RequestMapping(path = "/inventory/{id}", method = RequestMethod.GET)
     public Inventory getOneInventory(@PathVariable("id") int id) {
         return inventories.findOne(id);
@@ -222,7 +228,6 @@ public class FarmersMarketController {
         inventories.delete(id);
     }
 
-    //is this one written right? to edit an inventory item...
     @RequestMapping(path = "/inventory/{id}", method = RequestMethod.PUT)
     public void updateInventory(@RequestBody Inventory inventory, @PathVariable("id") int id) {
         inventories.save(inventory);

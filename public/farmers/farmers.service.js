@@ -1,6 +1,6 @@
 angular
   .module('farmers.module')
-  .service('FarmersService', function($http){
+  .service('FarmersService', function($http,$window){
 
         function getUser() {
           return $http.get('/users');
@@ -11,14 +11,22 @@ angular
         }
 
         function getAllInventory(inventory){
-          return $http.get('/inventory', inventory);
+          console.log("ALL the corn", inventory);
+          return $http.get('/inventory');
+        }
+        function getOneInventory(id, inventory){
+          console.log("got me some corn", inventory);
+          return $http.get('/inventory/' + id);
         }
 
-
+        function getAllInventoryByCategory(type) {
+          return $http.get('/inventory/' + type);
+        }
         return {
           getUser: getUser,
           createInventory:createInventory,
-          getAllInventory: getAllInventory
+          getAllInventory: getAllInventory,
+          getOneInventory: getOneInventory,
+          getAllInventoryByCategory: getAllInventoryByCategory
         }
-
   })
