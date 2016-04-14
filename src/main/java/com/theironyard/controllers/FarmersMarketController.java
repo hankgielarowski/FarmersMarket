@@ -114,15 +114,14 @@ public class FarmersMarketController {
     }
 
     @RequestMapping(path = "/users/{id}", method = RequestMethod.DELETE)
-    public void deleteUser(@PathVariable("id") int id, HttpSession session) {
+    public void deleteUser(@PathVariable("id") int id, HttpSession session) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-        if(user.getUserType().equals("Admin")) {
-            users.delete(id);
+        if(!user.getUserType().equals("Admin") || user.getValid()) {
+            throw new Exception("Cannot Delete this User");
         }
-        else if(user.getId() == id) {
-            users.delete(id);
-        }
+
+        users.delete(id);
     }
 
     @RequestMapping(path = "/users", method = RequestMethod.GET)
@@ -220,6 +219,12 @@ public class FarmersMarketController {
 
     @RequestMapping(path = "/inventory/{id}", method = RequestMethod.DELETE)
     public void deleteInventory(@PathVariable("id") int id) {
+        List<Order> deleteOrderList = orders.findByIsPendingApprovalAndInventory(true, inventories.findOne(id));
+
+        for(Order order : deleteOrderList) {
+            orders.delete(order);
+        }
+
         inventories.delete(id);
     }
 
@@ -244,25 +249,42 @@ public class FarmersMarketController {
         User user = users.findByUserName(userName);
         ArrayList<Order> orderList = new ArrayList<Order>();
         if(user.getUserType().equals("Farmer")) {
-            orderList = orders.findByIsPendingApprovalAndFarmer(pending, user.getUserName());
+            orderList = orders.findByIsPendingApprovalAndFarmer(pending, user);
         }
         else if (user.getUserType().equals("Buyer")) {
-            orderList = orders.findByIsPendingApprovalAndBuyer(pending, user.getUserName());
+            orderList = orders.findByIsPendingApprovalAndBuyer(pending, user);
         }
         return orderList;
     }
 
     @RequestMapping(path = "/orders", method = RequestMethod.POST)
-    public void createOrder(HttpSession session, @RequestBody Order order) {
+    public void createOrder(HttpSession session, @RequestBody Order order) throws Exception {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+
+        if(!user.getUserType().equals("Buyer") && !user.getUserType().equals("Admin")){
+            throw new Exception("Invalid User Permissions");
+        }
+
         order.setTimeStampOrdered(LocalDateTime.now());
         orders.save(order);
     }
 
     @RequestMapping(path = "/orders/{id}", method = RequestMethod.DELETE)
     public void deleteOrder(HttpSession session, @PathVariable("id") int id) throws Exception {
-        if(orders.findOne(id).isPendingApproval() == false) {
-            throw new Exception("invalid request");
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+
+        Order order = orders.findOne(id);
+
+        if(!user.getUserType().equals("Admin") && user != order.getFarmer() && user != order.getBuyer()) {
+            throw new Exception("Invalid User Permissions");
         }
+
+        if(!orders.findOne(id).isPendingApproval()) {
+            throw new Exception("Invalid Request: Order is already approved");
+        }
+
         orders.delete(id);
     }
 
@@ -272,11 +294,51 @@ public class FarmersMarketController {
         User user = users.findByUserName(userName);
 
         if(!user.getUserType().equals("Admin")){
-            throw new Exception("insufficient permisions");
+            throw new Exception("Insufficient Permissions");
         }
         User checkedUser = users.findOne(id);
 
-        return orders.findByFarmerOrBuyer(checkedUser.getUserName(), checkedUser.getUserName());
+        return orders.findByFarmerOrBuyer(checkedUser, checkedUser);
+    }
+
+    @RequestMapping(path = "/orders/authorize/{id}", method = RequestMethod.GET)
+    public void authorizeOrder(HttpSession session, @PathVariable("id") int id) throws Exception {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName("userName");
+
+        if (user != orders.findOne(id).getFarmer() && !user.getUserType().equals("Admin")){
+            throw new Exception("Invalid User Permissions");
+        }
+
+        Order order = orders.findOne(id);
+        Inventory inventory = order.getInventory();
+
+        if(inventory.getQuantityAvailable() < order.getQuantityOrdered()) {
+            throw new Exception("Invalid Order: Quantity Requested too High");
+        }
+
+        inventory.setQuantityAvailable(inventory.getQuantityAvailable() - order.getQuantityOrdered());
+
+        order.setPendingApproval(false);
+        order.setTimeStampOrdered(LocalDateTime.now());
+
+//        if(inventory.getQuantityAvailable() == 0) {
+//            List<Order> deleteOrderList = orders.findByIsPendingApprovalAndInventory(true, inventories.findOne(id));
+//
+//            for(Order order2 : deleteOrderList) {
+//                orders.delete(order2);
+//            }
+//
+//            inventories.delete(inventory);
+//        }
+//        else {
+//            inventories.save(inventory);
+//        }
+
+        inventories.save(inventory);
+
+        orders.save(order);
+
     }
 
 
