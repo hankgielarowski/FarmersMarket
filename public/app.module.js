@@ -33,10 +33,10 @@ angular
       templateUrl: "buyers-profile/views/buyers-profile.html",
       controller: "BuyersProfileController"
     })
-    .when('/farmers-profile', {
-      templateUrl: "farmers-profile/views/farmers-profile.html",
-      controller: "FarmersProfileController"
-    })
+    // .when('/farmers-profile', {
+    //   templateUrl: "farmers-profile/views/farmers-profile.html",
+    //   controller: "FarmersProfileController"
+    // })
 })
 .config(function($authProvider) {
   $authProvider.loginUrl = '/login';

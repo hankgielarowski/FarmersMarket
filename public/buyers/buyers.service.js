@@ -5,7 +5,7 @@ angular
         function getUser() {
           return $http.get('/users');
         }
-
+        
 
         return {
           getUser: getUser
