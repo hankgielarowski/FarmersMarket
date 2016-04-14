@@ -24,6 +24,7 @@ FarmersService.getAllInventoryByUser($scope.user.id)
 })
 
 $scope.createInventory = function(inventory) {
+  inventory.category = JSON.stringify(inventory)
   inventory.price = parseInt(inventory.price);
   inventory.quantityAvailable = parseInt(inventory.quantityAvailable);
   inventory.user = null;
