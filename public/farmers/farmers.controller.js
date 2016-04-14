@@ -1,22 +1,23 @@
-angular
+  angular
 .module("farmers.module")
 .controller("FarmersController", FarmersController);
 
-FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmersService", "AuthService"];
+FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmersService", "AuthService","BuyersService"];
 
-function FarmersController($scope, $http, $location, $q, $rootScope, FarmersService, AuthService){
+function FarmersController($scope, $http, $location, $q, $rootScope, FarmersService, AuthService, BuyersService){
   $scope.user = AuthService.currentUser();
   $scope.myProducts;
-  FarmersService.getUser()
-  .then(function(data) {
-
-    })
+  $scope.categories = [];
+  // FarmersService.getUser()
+  // .then(function(data) {
+  //
+  //   })
 // FarmersService.getOneInventory(id)
 // .then(function(data){
 //
 // })
 
-FarmersService.getAllInventoryByUser($scope.user.userName)
+FarmersService.getAllInventoryByUser($scope.user.id)
 .then(function(data){
   $scope.myProducts = data.data;
   console.log("YYAY SHIT",$scope.myProducts);
@@ -36,10 +37,9 @@ $scope.createInventory = function(inventory) {
 }
 
 
-$scope.getAllCategories = function(inventory) {
-  FarmersService.getAllCategories()
+  BuyersService.getAllCategories()
   .then(function(data){
-
+    console.log("CATEGOREIS", data);
+    $scope.categories = data.data;
   })
-}
 }
