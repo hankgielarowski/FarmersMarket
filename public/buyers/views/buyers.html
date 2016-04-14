@@ -23,7 +23,7 @@
           <li>{{inventory.name}}</li>
           <li>{{inventory.quantityAvailable}} lb</li>
           <li>$ {{inventory.price}}</li>
-          <li>{{user.userName}}</li>
+          <li>{{inventory.user.userName}}</li>
         </ul>
 
     </div>
@@ -32,15 +32,12 @@
 
 <div class="container-allInv">
   <div class="row">
-    <h4 class="text-danger"> Farmer Inventory </h4>
-    <div class="col-md-12" ng-repeat="inventory in myProducts | filter:search">
+    <h4 class="text-danger"> Category </h4>
+    <div class="col-md-12" ng-repeat="category in categories">
 
         <ul>
-          <li>{{inventory.category}}</li>
-          <li>{{inventory.name}}</li>
-          <li>{{inventory.quantityAvailable}} lb</li>
-          <li>$ {{inventory.price}}</li>
-          <li>{{user.userName}}</li>
+          <li><img ng-src="imagesCategories/{{category.imageCategory}}" alt=""></li>
+          <li>{{category.categoryName}}</li>
         </ul>
 
     </div>

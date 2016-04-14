@@ -8,10 +8,7 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
 
   $scope.user = AuthService.currentUser();
   $scope.myProducts;
-  BuyersService.getUser()
-  .then(function(data) {
-
-    })
+// on image
   BuyersService.getAllInventoryByCategory()
   .then(function(data){
     $scope.myProducts = data.data;
@@ -23,11 +20,10 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
     window.stuff = data.data;
   })
 
-}
+    BuyersService.getAllCategories()
+    .then(function(data){
+      $scope.categories = data.data;
+      console.log(data)
+    })
 
-$scope.getAllInventory = function(inventory) {
-  FarmersService.getAllInventory()
-  .then(function(data){
-
-  })
 }
