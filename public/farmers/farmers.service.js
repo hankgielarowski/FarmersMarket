@@ -1,10 +1,10 @@
 angular
   .module('farmers.module')
   .service('FarmersService', function($http,$window){
-
-        function getUser() {
-          return $http.get('/users');
-        }
+        //
+        // function getUser() {
+        //   return $http.get('/users');
+        // }
         function createInventory(inventory){
           console.log("fuck: ", inventory);
           return $http.post('/inventory/', inventory);
@@ -23,7 +23,7 @@ angular
         //   return $http.get('/inventory/' + type);
         // }
         return {
-          getUser: getUser,
+          // getUser: getUser,
           createInventory:createInventory,
           getAllInventory: getAllInventory,
           getAllInventoryByUser:getAllInventoryByUser

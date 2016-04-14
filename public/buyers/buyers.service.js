@@ -2,20 +2,18 @@ angular
   .module('buyers.module')
   .service('BuyersService', function($http){
 
-    function getUser() {
-      return $http.get('/users');
-    }
 
     function getAllInventoryByCategory(inventory, category){
       return $http.get('/inventory');
     }
 
-
+    function getAllCategories(){
+      return $http.get('/categories');
+    }
 
         return {
-          getUser: getUser,
           getAllInventoryByCategory: getAllInventoryByCategory,
-
+          getAllCategories: getAllCategories
 
         }
 

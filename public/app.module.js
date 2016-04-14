@@ -10,7 +10,7 @@ angular
   "ngRoute",
   'ui.bootstrap',
   'admin.module' ,
-  'buyers.module' ,
+  'buyers.module',
   'buyers-profile.module',
   'farmers.module',
   'farmers-profile.module',
@@ -30,10 +30,10 @@ angular
     //   templateUrl: "buyers/views/buyers.html",
     //   controller: "BuyersController"
     // })
-    .when('/buyers-profile', {
-      templateUrl: "buyers-profile/views/buyers-profile.html",
-      controller: "BuyersProfileController"
-    })
+    // .when('/buyers-profile', {
+    //   templateUrl: "buyers-profile/views/buyers-profile.html",
+    //   controller: "BuyersProfileController"
+    // })
     // .when('/farmers-profile', {
     //   templateUrl: "farmers-profile/views/farmers-profile.html",
     //   controller: "FarmersProfileController"
