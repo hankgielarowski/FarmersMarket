@@ -291,6 +291,13 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
 
 }
 
+$scope.getAllInventory = function(inventory) {
+  FarmersService.getAllInventory()
+  .then(function(data){
+
+  })
+}
+
 },{}],16:[function(require,module,exports){
 var angular = require("angular");
 require("angular-route");
@@ -319,10 +326,9 @@ angular
           return $http.get('/users');
         }
 
-
         return {
-          getUser: getUser
-
+          getUser: getUser,
+          getAllInventory: getAllInventory
         }
 
   })

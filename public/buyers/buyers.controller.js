@@ -12,3 +12,10 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
   })
 
 }
+
+$scope.getAllInventory = function(inventory) {
+  FarmersService.getAllInventory()
+  .then(function(data){
+
+  })
+}
