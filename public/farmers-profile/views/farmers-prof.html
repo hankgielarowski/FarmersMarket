@@ -4,9 +4,21 @@
       <article class="value">
         <p class="farmerProfile">
           {{user.companyName}}
-          </p>
         </p>
       </article>
+      <h1>what the hell</h1>
     </div>
+  </div>
+</div>
+<div class="row">
+<div class="col-md-12" id="right">
+  <div class="well">
+    <h4 class="text-success"> Goods Available </h4>
+    <ul ng-repeat="thing in myProducts">
+      <li>{{thing.category}}</li>
+      <li>{{thing.name}}</li>
+      <li>{{thing.quantityAvailable}} lb</li>
+      <li>$ {{thing.price}}</li>
+    </ul>
   </div>
 </div>

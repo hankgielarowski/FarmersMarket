@@ -6,8 +6,17 @@ angular
           return $http.get('/users');
         }
 
-return {
-  getUser:getUser
+        function getAllInventoryByUser(userName){
+          console.log("got me some corn", userName);
+          return $http.get('/inventory/user/' + userName);
+        }
 
+
+
+
+return {
+  getUser:getUser,
+  getAllInventoryByUser:getAllInventoryByUser
   }
+
 })

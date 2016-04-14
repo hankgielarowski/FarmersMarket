@@ -22,8 +22,9 @@ require('./admin.module');
 require('./admin.service');
 
 },{"./admin.controller":1,"./admin.module":2,"./admin.service":3}],5:[function(require,module,exports){
-var angular = require("angular");
+var _ = require("underscore");
 
+var angular = require("angular");
 require("angular-route");
 require("angular-ui-bootstrap");
 require("satellizer");
@@ -66,6 +67,11 @@ angular
   $authProvider.loginUrl = '/login';
   $authProvider.signupUrl = '/users';
 })
+.constant('_', window._)
+.run(function ($rootScope) {
+   $rootScope._ = window._;
+});
+
 
 
 require('./admin');
@@ -76,7 +82,7 @@ require('./home');
 require('./farmers');
 require('./auth');
 
-},{"./admin":4,"./auth":8,"./buyers":18,"./buyers-profile":14,"./farmers":26,"./farmers-profile":22,"./home":29,"angular":36,"angular-route":32,"angular-ui-bootstrap":34,"satellizer":37}],6:[function(require,module,exports){
+},{"./admin":4,"./auth":8,"./buyers":18,"./buyers-profile":14,"./farmers":26,"./farmers-profile":22,"./home":29,"angular":36,"angular-route":32,"angular-ui-bootstrap":34,"satellizer":37,"underscore":38}],6:[function(require,module,exports){
 var angular = require('angular');
 var _ = require("underscore");
 
@@ -249,13 +255,25 @@ angular
 .module("buyers.module")
 .controller("BuyersController", BuyersController);
 
-BuyersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyersService"];
+BuyersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyersService", "AuthService","_"];
 
-function BuyersController($scope, $http, $location, $q, $rootScope, BuyersService){
+function BuyersController($scope, $http, $location, $q, $rootScope, BuyersService, AuthService,_){
+
+  $scope.user = AuthService.currentUser();
+  $scope.myProducts;
   BuyersService.getUser()
   .then(function(data) {
-    console.log("THIS SHOULD BE USERS", data);
 
+    })
+  BuyersService.getAllInventoryByCategory()
+  .then(function(data){
+    $scope.myProducts = data.data;
+    console.log("GROUB", _.groupBy(data.data,'category'));
+    var cats = Object.keys(_.groupBy(data.data,'category'))
+    console.log(cats);
+
+    // console.log("YAY shit", _.groupBy(data.data,'category'));
+    window.stuff = data.data;
   })
 
 }
@@ -291,14 +309,21 @@ angular
   .module('buyers.module')
   .service('BuyersService', function($http){
 
-        function getUser() {
-          return $http.get('/users');
-        }
+    function getUser() {
+      return $http.get('/users');
+    }
+
+    function getAllInventoryByCategory(inventory, category){
+      return $http.get('/inventory');
+    }
+
 
 
         return {
           getUser: getUser,
-          getAllInventory: getAllInventory
+          getAllInventoryByCategory: getAllInventoryByCategory,
+
+
         }
 
   })
@@ -321,7 +346,11 @@ function FarmersProfileController($scope, $http, FarmersProfileService, AuthServ
   .then(function(data) {
 
     })
-
+    FarmersProfileService.getAllInventoryByUser($scope.user.userName)
+    .then(function(data){
+      $scope.myProducts = data.data;
+      console.log("YYAY SHIT",$scope.myProducts);
+    })
 
 
 }
@@ -333,7 +362,7 @@ angular
 ])
 .config(function($routeProvider) {
   $routeProvider
-    .when('/farmers-profile',{
+    .when('/farmers-profile/:id/',{
       templateUrl: "views/farmers-profile.html",
       controller: "FarmersProfileController"
     })
@@ -348,10 +377,19 @@ angular
           return $http.get('/users');
         }
 
-return {
-  getUser:getUser
+        function getAllInventoryByUser(userName){
+          console.log("got me some corn", userName);
+          return $http.get('/inventory/user/' + userName);
+        }
 
+
+
+
+return {
+  getUser:getUser,
+  getAllInventoryByUser:getAllInventoryByUser
   }
+
 })
 
 },{}],22:[function(require,module,exports){
@@ -369,6 +407,7 @@ FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope",
 
 function FarmersController($scope, $http, $location, $q, $rootScope, FarmersService, AuthService){
   $scope.user = AuthService.currentUser();
+  $scope.myProducts;
   FarmersService.getUser()
   .then(function(data) {
 
@@ -377,6 +416,12 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
 // .then(function(data){
 //
 // })
+
+FarmersService.getAllInventoryByUser($scope.user.userName)
+.then(function(data){
+  $scope.myProducts = data.data;
+  console.log("YYAY SHIT",$scope.myProducts);
+})
 
 $scope.createInventory = function(inventory) {
   inventory.price = parseInt(inventory.price);
@@ -387,17 +432,13 @@ $scope.createInventory = function(inventory) {
   .then(function(res){
     console.log("SUCCES", res);
     window.corn = res.data;
-    FarmersService.getOneInventory(res.data.category, res.data)
-    .then(function(data){
-      $scope.inventory = data.data;
-      console.log("YYAY SHIT",data);
-    })
+
   })
 }
 
 
-$scope.getAllInventory = function(inventory) {
-  FarmersService.getAllInventory()
+$scope.getAllCategories = function(inventory) {
+  FarmersService.getAllCategories()
   .then(function(data){
 
   })
@@ -439,20 +480,20 @@ angular
           console.log("ALL the corn", inventory);
           return $http.get('/inventory');
         }
-        function getOneInventory(id, inventory){
-          console.log("got me some corn", inventory);
-          return $http.get('/inventory/' + id);
+        function getAllInventoryByUser(userName){
+          console.log("got me some corn", userName);
+          return $http.get('/inventory/user/' + userName);
         }
 
-        function getAllInventoryByCategory(type) {
-          return $http.get('/inventory/' + type);
-        }
+        // function getAllInventoryByCategory(type) {
+        //   return $http.get('/inventory/' + type);
+        // }
         return {
           getUser: getUser,
           createInventory:createInventory,
           getAllInventory: getAllInventory,
-          getOneInventory: getOneInventory,
-          getAllInventoryByCategory: getAllInventoryByCategory
+          getAllInventoryByUser:getAllInventoryByUser
+          // getAllInventoryByCategory: getAllInventoryByCategory
         }
   })
 
