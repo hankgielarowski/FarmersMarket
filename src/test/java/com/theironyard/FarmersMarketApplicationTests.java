@@ -111,7 +111,7 @@ public class FarmersMarketApplicationTests {
         Assert.assertTrue(users.findByUserName("Alice").getValid());
     }
 
-    /*
+
     @Test
     public void test5CreateInventory() throws Exception {
         Inventory inventory = new Inventory();
@@ -163,6 +163,7 @@ public class FarmersMarketApplicationTests {
     public void test8DeleteInventory() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/inventory/1")
+                        .sessionAttr("userName", "Alice")
         );
         Assert.assertTrue(inventories.count() == 0);
     }
@@ -175,6 +176,6 @@ public class FarmersMarketApplicationTests {
 //        Assert.assertTrue(users.count() == 1);
 //    }
 
-*/
+
 
 }

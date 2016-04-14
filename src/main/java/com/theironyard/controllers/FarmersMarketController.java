@@ -239,7 +239,7 @@ public class FarmersMarketController {
 
         User user2 = users.findOne(id);
 
-        if(!user.getUserType().equals("Admin") && (!user.getUserType().equals("Buyer") || !user.getValid()) && (user != user2 || !user.getUserType().equals("Farmer"))){
+        if(!user.getUserType().equals("Admin") && (!user.getUserType().equals("Buyer") || !user.getValid()) && (user.getId() != user2.getId() || !user.getUserType().equals("Farmer"))){
             throw new Exception("Invalid User Permissions");
         }
 
@@ -269,7 +269,7 @@ public class FarmersMarketController {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
 
-        if(!user.getUserType().equals("Admin") && (user.getUserType().equals("Farmer") || user != inventories.findOne(id).getUser())){
+        if(!user.getUserType().equals("Admin") && (!user.getUserType().equals("Farmer") || user.getId() != inventories.findOne(id).getUser().getId())){
             throw new Exception("Invalid User Request");
         }
 
@@ -287,7 +287,7 @@ public class FarmersMarketController {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
 
-        if(!user.getUserType().equals("Admin") && (user.getUserType().equals("Farmer") || user != inventories.findOne(id).getUser())){
+        if(!user.getUserType().equals("Admin") && (!user.getUserType().equals("Farmer") || user.getId() != inventories.findOne(id).getUser().getId())){
             throw new Exception("Invalid User Request");
         }
 
@@ -341,7 +341,7 @@ public class FarmersMarketController {
 
         Order order = orders.findOne(id);
 
-        if(!user.getUserType().equals("Admin") && user != order.getFarmer() && user != order.getBuyer()) {
+        if(!user.getUserType().equals("Admin") && user.getId() != order.getFarmer().getId() && user.getId() != order.getBuyer().getId()) {
             throw new Exception("Invalid User Permissions");
         }
 
@@ -370,7 +370,7 @@ public class FarmersMarketController {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName("userName");
 
-        if (user != orders.findOne(id).getFarmer() && !user.getUserType().equals("Admin")){
+        if (user.getId() != orders.findOne(id).getFarmer().getId() && !user.getUserType().equals("Admin")){
             throw new Exception("Invalid User Permissions");
         }
 
