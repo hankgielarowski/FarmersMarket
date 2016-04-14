@@ -59,7 +59,7 @@ public class FarmersMarketController {
         if (users.findByUserName("Admin") == null) {
             User user = new User("Admin", PasswordStorage.createHash("admin"),"Admin","FarmersMarket", "Here", "888-888-8888", "FarmersMarket@FarmersMarket.com", true);
             users.save(user);
-            User user2 = new User("HankFarm", PasswordStorage.createHash("hank"), "Farmer", "Hank Farms", "Charleston", "999-999-9999", "Hank@Hank.com", true);
+            User user2 = new User("HankFarmer", PasswordStorage.createHash("hank"), "Farmer", "Hank Farms", "Charleston", "999-999-9999", "Hank@Hank.com", true);
             users.save(user2);
             User user3 = new User("FrankBuyer", PasswordStorage.createHash("frank"), "Buyer", "Frank's Store", "Charleston", "777-989-9998", "Frank@Frank.com", true);
             users.save(user3);
