@@ -1,3 +1,31 @@
+<!-- <div class="container-category">
+  <div class="row">
+    <div class="col-md-12" id="farmer-right">
+      <h1>Hank</h1>
+      <div class="radio">
+        <ul>
+          <li><input type="radio" name="veg" value="tomatoes" id="tomatoes"/>
+            <label for="tomatoes">Tomatoes</label>
+          </li>
+          <li><input type="radio" name="veg" value="potatoes" id="potatoes"/>
+            <label for="potatoes">Potatoes</label>
+          </li>
+          <li><input type="radio" name="veg" value="corn" id="corn"/>
+            <label for="corn">Corn</label>
+          </li>
+          <li><input type="radio" name="veg" value="letuce" id="letuce"/>
+            <label for="letuce">Letuce</label>
+          </li>
+          <li><input type="radio" name="veg" value="mushrooms" id="mushrooms"/>
+            <label for="mushrooms">Mushrooms</label>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
 <div class="container-farm">
 
 <div class="row">
@@ -7,32 +35,31 @@
         <div class="well">
           <h4 class="text-danger">Goods For Sale</h4>
             <ul>
-              <form class="signin-form" ng-submit="createInventory(item)">
-                <input id="category" class="form-control" type="text" placeholder="Category" name="userType" ng-model="item.category">
-                <input id="type" class="form-control" type="text" placeholder="Type" name="userType" ng-model="item.name">
-                <input id="amount" class="form-control" type="text" placeholder="Amount" name="userType" ng-model="item.quantityAvailable">
-                <input id="amount" class="form-control" type="text" placeholder="Market Price" name="userType" ng-model="item.price" >
+              <form class="signin-form" ng-submit="createInventory(list)">
+                <input id="category" class="form-control" type="text" placeholder="Category" name="userType" ng-model="list.category">
+                <input id="type" class="form-control" type="text" placeholder="Type" name="userType" ng-model="list.name">
+                <input id="amount" class="form-control" type="text" placeholder="Amount" name="userType" ng-model="list.quantityAvailable">
+                <input id="amount" class="form-control" type="text" placeholder="Market Price" name="userType" ng-model="list.price" >
                 <!-- <input style="display:none" ng-show="user" accept=""id="amount" class="form-control" type="text" name="userType" ng-model="user" placeholder="{{user.userName}}"> -->
                 <input class="btn btn-default btn-register" type="submit" value="Post Products" name="commit" >
               </form>
             </ul>
         </div>
       </div>
-      <div class="col-md-6" id="right">
+      <div class="col-md-6" id="right" ng-show="inventory">
         <div class="well">
           <h4 class="text-success"> Goods Available </h4>
           <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
+            <li>{{inventory.category}}</li>
+            <li>{{inventory.name}}</li>
+            <li>{{inventory.quantityAvailable}} lb</li>
+            <li>$ {{inventory.price}}</li>
           </ul>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 </div>
 
 
@@ -78,5 +105,4 @@
     </div>
   </div>
 </div>
-
 </div>

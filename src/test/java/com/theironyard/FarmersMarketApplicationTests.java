@@ -1,14 +1,9 @@
 package com.theironyard;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theironyard.entities.Inventory;
 import com.theironyard.entities.User;
-import com.theironyard.services.CategoryRepository;
-import com.theironyard.services.InventoryRepository;
-import com.theironyard.services.PurchaseRepository;
-import com.theironyard.services.UserRepository;
-import com.theironyard.utilities.PasswordStorage;
+import com.theironyard.services.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -42,10 +37,10 @@ public class FarmersMarketApplicationTests {
     InventoryRepository inventories;
 
     @Autowired
-    PurchaseRepository purchases;
+    CategoryRepository categories;
 
     @Autowired
-    CategoryRepository categories;
+    OrderRepository orders;
 
     @Autowired
     WebApplicationContext wap;
@@ -54,6 +49,8 @@ public class FarmersMarketApplicationTests {
 
     @Before
     public void before() {
+//        users.deleteAll();
+//        inventories.deleteAll();
         mockMvc = MockMvcBuilders.webAppContextSetup(wap).build();
     }
 
@@ -67,22 +64,22 @@ public class FarmersMarketApplicationTests {
                         .content(json)
                         .contentType("application/json")
         );
-        Assert.assertTrue(users.count() == 2);
+        Assert.assertTrue(users.count() == 4);
     }
 
     @Test
     public void test2UpdateUser() throws Exception {
-        User user = users.findOne(2);
+        User user = users.findOne(4);
         user.setCompanyName("Rawl Produce");
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(user);
         mockMvc.perform(
-                MockMvcRequestBuilders.put("/users/2")
+                MockMvcRequestBuilders.put("/users/4")
                         .content(json)
                         .contentType("application/json")
                         .sessionAttr("userName", "Alice")
         );
-        Assert.assertTrue(users.findOne(2).getCompanyName().equals("Rawl Produce"));
+        Assert.assertTrue(users.findOne(4).getCompanyName().equals("Rawl Produce"));
     }
 
     @Test

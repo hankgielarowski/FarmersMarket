@@ -6,6 +6,7 @@ angular
           return $http.get('/users');
         }
 
+
         return {
           getUser: getUser,
           getAllInventory: getAllInventory

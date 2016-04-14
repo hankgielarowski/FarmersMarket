@@ -113,6 +113,8 @@ color: whitesmoke;
 
 
 
+
+
 footer {
   height: 70px;
   border: 2px solid red;
@@ -136,7 +138,7 @@ footer li {
 
 .container-farm {
   width: 100%;
-  height: 700px;
+  height: 318px;
 }
 
 .box {
@@ -207,6 +209,30 @@ footer li {
     background: #375989;
 }
 
+.container-category {
+  width: 100%;
+  height: 300px;
+}
+
+#farmer-right {
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  overflow-y: scroll;
+  border: 2px solid red;
+}
+
+.radio li {
+  list-style: none;
+  display: inline-block;
+  padding-left: 50px;
+}
+
+.radio li label{
+  padding: 0;
+}
 
 #left {
    position: absolute;
@@ -232,4 +258,8 @@ footer li {
 
  #left li{
    list-style: none;
+ }
+
+ .container-farmer-profile-bg {
+   background-image: image(http://www.schwabinsagency.com/img/~www.schwabinsagency.com/farm%20pic.jpg);
  }

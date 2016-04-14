@@ -57,10 +57,10 @@ angular
       templateUrl: "buyers-profile/views/buyers-profile.html",
       controller: "BuyersProfileController"
     })
-    .when('/farmers-profile', {
-      templateUrl: "farmers-profile/views/farmers-profile.html",
-      controller: "FarmersProfileController"
-    })
+    // .when('/farmers-profile', {
+    //   templateUrl: "farmers-profile/views/farmers-profile.html",
+    //   controller: "FarmersProfileController"
+    // })
 })
 .config(function($authProvider) {
   $authProvider.loginUrl = '/login';
@@ -94,40 +94,9 @@ angular
     })
 
 
-    $scope.createUser = function (user) {
-      $auth.signup(user)
-      .success(function(res){
-        console.log(res);
-        if(res.userType === 'Farmer') {
-          $location.path("/farmers/"+ res.id);
-        } else if (res.userType === 'Buyer') {
-          $location.path("/buyers/" + res.id);
-        }
-      })
-      .error(function(err) {
-        console.log("SHIT", err);
-      });
-      $uibModalInstance.close();
-    };
-
     $scope.logOutUser = function(user) {
       $auth.logout();
     }
-
-  // $scope.loginUser = function (user) {
-  //      AuthService.login(user).success(function (res) {
-  //        $location.path('/users/' + res.id)
-  //      })
-  //    }
-  //
-  //    if($routeParams.userId) {
-  //      AuthService.getOneFarmer($routeParams.userId).then(function (currentUser) {
-  //        $scope.currentuser = currentUser;
-  //      });
-  //    }
-
-
-
 
 }
 
@@ -214,7 +183,7 @@ angular
 
    $uibModalInstance.close();
  };
- 
+
 
 
  $scope.cancel = function () {
@@ -326,6 +295,7 @@ angular
           return $http.get('/users');
         }
 
+
         return {
           getUser: getUser,
           getAllInventory: getAllInventory
@@ -339,8 +309,24 @@ require('./buyers.controller');
 require('./buyers.service');
 
 },{"./buyers.controller":15,"./buyers.module":16,"./buyers.service":17}],19:[function(require,module,exports){
-arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],20:[function(require,module,exports){
+angular
+.module("farmers-profile.module")
+.controller("FarmersProfileController", FarmersProfileController);
+
+FarmersProfileController.$inject = ["$scope", "$http", "FarmersProfileService", "AuthService"]
+
+function FarmersProfileController($scope, $http, FarmersProfileService, AuthService){
+  $scope.user = AuthService.currentUser();
+  FarmersProfileService.getUser()
+  .then(function(data) {
+
+    })
+
+
+
+}
+
+},{}],20:[function(require,module,exports){
 angular
 .module("farmers-profile.module", [
   "ngRoute"
@@ -354,10 +340,24 @@ angular
 })
 
 },{}],21:[function(require,module,exports){
-arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],22:[function(require,module,exports){
-require('./farmers-profile.controller');
+angular
+  .module('farmers-profile.module')
+  .service('FarmersProfileService', function($http,$window){
+
+        function getUser() {
+          return $http.get('/users');
+        }
+
+return {
+  getUser:getUser
+
+  }
+})
+
+},{}],22:[function(require,module,exports){
+
 require('./farmers-profile.module');
+require('./farmers-profile.controller');
 require('./farmers-profile.service');
 
 },{"./farmers-profile.controller":19,"./farmers-profile.module":20,"./farmers-profile.service":21}],23:[function(require,module,exports){
@@ -371,20 +371,31 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
   $scope.user = AuthService.currentUser();
   FarmersService.getUser()
   .then(function(data) {
-    // console.log("THIS SHOULD BE USERS", data);
-    // console.log("TEST: ",AuthService.currentUser());
 
-})
+    })
+// FarmersService.getOneInventory(id)
+// .then(function(data){
+//
+// })
+
 $scope.createInventory = function(inventory) {
   inventory.price = parseInt(inventory.price);
   inventory.quantityAvailable = parseInt(inventory.quantityAvailable);
   inventory.user = null;
   console.log("LASTLY", inventory);
   FarmersService.createInventory(inventory)
-  .success(function(res){
+  .then(function(res){
     console.log("SUCCES", res);
+    window.corn = res.data;
+    FarmersService.getOneInventory(res.data.category, res.data)
+    .then(function(data){
+      $scope.inventory = data.data;
+      console.log("YYAY SHIT",data);
+    })
   })
 }
+
+
 $scope.getAllInventory = function(inventory) {
   FarmersService.getAllInventory()
   .then(function(data){
@@ -397,7 +408,6 @@ $scope.getAllInventory = function(inventory) {
 var angular = require("angular");
 require("angular-route");
 require("angular-ui-bootstrap");
-
 
 angular
 .module("farmers.module", [
@@ -415,7 +425,7 @@ angular
 },{"angular":36,"angular-route":32,"angular-ui-bootstrap":34}],25:[function(require,module,exports){
 angular
   .module('farmers.module')
-  .service('FarmersService', function($http){
+  .service('FarmersService', function($http,$window){
 
         function getUser() {
           return $http.get('/users');
@@ -426,16 +436,24 @@ angular
         }
 
         function getAllInventory(inventory){
-          return $http.get('/inventory', inventory);
+          console.log("ALL the corn", inventory);
+          return $http.get('/inventory');
+        }
+        function getOneInventory(id, inventory){
+          console.log("got me some corn", inventory);
+          return $http.get('/inventory/' + id);
         }
 
-
+        function getAllInventoryByCategory(type) {
+          return $http.get('/inventory/' + type);
+        }
         return {
           getUser: getUser,
           createInventory:createInventory,
-          getAllInventory: getAllInventory
+          getAllInventory: getAllInventory,
+          getOneInventory: getOneInventory,
+          getAllInventoryByCategory: getAllInventoryByCategory
         }
-
   })
 
 },{}],26:[function(require,module,exports){
