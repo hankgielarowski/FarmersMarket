@@ -4,7 +4,7 @@ angular
 ])
 .config(function($routeProvider) {
   $routeProvider
-    .when('/farmers-profile',{
+    .when('/farmers-profile/:id/',{
       templateUrl: "views/farmers-profile.html",
       controller: "FarmersProfileController"
     })

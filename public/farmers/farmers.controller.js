@@ -6,6 +6,7 @@ FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope",
 
 function FarmersController($scope, $http, $location, $q, $rootScope, FarmersService, AuthService){
   $scope.user = AuthService.currentUser();
+  $scope.myProducts;
   FarmersService.getUser()
   .then(function(data) {
 
@@ -14,6 +15,12 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
 // .then(function(data){
 //
 // })
+
+FarmersService.getAllInventoryByUser($scope.user.userName)
+.then(function(data){
+  $scope.myProducts = data.data;
+  console.log("YYAY SHIT",$scope.myProducts);
+})
 
 $scope.createInventory = function(inventory) {
   inventory.price = parseInt(inventory.price);
@@ -24,17 +31,13 @@ $scope.createInventory = function(inventory) {
   .then(function(res){
     console.log("SUCCES", res);
     window.corn = res.data;
-    FarmersService.getOneInventory(res.data.category, res.data)
-    .then(function(data){
-      $scope.inventory = data.data;
-      console.log("YYAY SHIT",data);
-    })
+
   })
 }
 
 
-$scope.getAllInventory = function(inventory) {
-  FarmersService.getAllInventory()
+$scope.getAllCategories = function(inventory) {
+  FarmersService.getAllCategories()
   .then(function(data){
 
   })
