@@ -46,14 +46,14 @@
             </ul>
         </div>
       </div>
-      <div class="col-md-6" id="right" ng-show="inventory">
+      <div class="col-md-6" id="right">
         <div class="well">
           <h4 class="text-success"> Goods Available </h4>
-          <ul>
-            <li>{{inventory.category}}</li>
-            <li>{{inventory.name}}</li>
-            <li>{{inventory.quantityAvailable}} lb</li>
-            <li>$ {{inventory.price}}</li>
+          <ul ng-repeat="thing in myProducts">
+            <li>{{thing.category}}</li>
+            <li>{{thing.name}}</li>
+            <li>{{thing.quantityAvailable}} lb</li>
+            <li>$ {{thing.price}}</li>
           </ul>
         </div>
       </div>

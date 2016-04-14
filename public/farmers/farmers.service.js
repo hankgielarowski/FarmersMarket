@@ -14,19 +14,19 @@ angular
           console.log("ALL the corn", inventory);
           return $http.get('/inventory');
         }
-        function getOneInventory(id, inventory){
-          console.log("got me some corn", inventory);
-          return $http.get('/inventory/' + id);
+        function getAllInventoryByUser(userName){
+          console.log("got me some corn", userName);
+          return $http.get('/inventory/user/' + userName);
         }
 
-        function getAllInventoryByCategory(type) {
-          return $http.get('/inventory/' + type);
-        }
+        // function getAllInventoryByCategory(type) {
+        //   return $http.get('/inventory/' + type);
+        // }
         return {
           getUser: getUser,
           createInventory:createInventory,
           getAllInventory: getAllInventory,
-          getOneInventory: getOneInventory,
-          getAllInventoryByCategory: getAllInventoryByCategory
+          getAllInventoryByUser:getAllInventoryByUser
+          // getAllInventoryByCategory: getAllInventoryByCategory
         }
   })
