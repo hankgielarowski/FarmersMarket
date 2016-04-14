@@ -114,15 +114,14 @@ public class FarmersMarketController {
     }
 
     @RequestMapping(path = "/users/{id}", method = RequestMethod.DELETE)
-    public void deleteUser(@PathVariable("id") int id, HttpSession session) {
+    public void deleteUser(@PathVariable("id") int id, HttpSession session) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-        if(user.getUserType().equals("Admin")) {
-            users.delete(id);
+        if(!user.getUserType().equals("Admin") || user.getValid()) {
+            throw new Exception("Cannot Delete this User");
         }
-        else if(user.getId() == id) {
-            users.delete(id);
-        }
+
+        users.delete(id);
     }
 
     @RequestMapping(path = "/users", method = RequestMethod.GET)
@@ -274,7 +273,7 @@ public class FarmersMarketController {
         Order order = orders.findOne(id);
 
         if(!user.getUserType().equals("Admin") && user != order.getFarmer() && user != order.getBuyer()) {
-            throw new Exception("Invalid User Persmissions");
+            throw new Exception("Invalid User Permissions");
         }
 
         if(!orders.findOne(id).isPendingApproval()) {
@@ -315,15 +314,23 @@ public class FarmersMarketController {
 
         inventory.setQuantityAvailable(inventory.getQuantityAvailable() - order.getQuantityOrdered());
 
-        if(inventory.getQuantityAvailable() == 0) {
-            inventories.delete(inventory);
-        }
-        else {
-            inventories.save(inventory);
-        }
-
         order.setPendingApproval(false);
         order.setTimeStampOrdered(LocalDateTime.now());
+
+//        if(inventory.getQuantityAvailable() == 0) {
+//            List<Order> deleteOrderList = orders.findByIsPendingApprovalAndInventory(true, inventories.findOne(id));
+//
+//            for(Order order2 : deleteOrderList) {
+//                orders.delete(order2);
+//            }
+//
+//            inventories.delete(inventory);
+//        }
+//        else {
+//            inventories.save(inventory);
+//        }
+
+        inventories.save(inventory);
 
         orders.save(order);
 
