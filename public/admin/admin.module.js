@@ -1,4 +1,3 @@
-
 angular
 .module("admin.module", [
   "ngRoute"

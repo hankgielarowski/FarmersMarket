@@ -196,5 +196,16 @@ footer li {
 #left li {
   list-style: none; }
 
+.container-search {
+  width: 100%; }
+
+.container-allInv {
+  width: 100%;
+  margin: 0 auto;
+  height: 600px; }
+
+.row-inv {
+  margin: 0 !important; }
+
 .container-farmer-profile-bg {
-  background-image: image(); }
+  background-image: image("http://www.schwabinsagency.com/img/~www.schwabinsagency.com/farm%20pic.jpg"); }
