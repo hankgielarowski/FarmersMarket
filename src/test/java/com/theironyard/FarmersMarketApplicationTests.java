@@ -118,7 +118,7 @@ public class FarmersMarketApplicationTests {
         inventory.setCategory("Banana");
         inventory.setName("Golden Yellow Bananas");
         inventory.setQuantityAvailable(9);
-        inventory.setPrice(2.55);
+        inventory.setPrice(2.85);
         inventory.setUser(users.findByUserName("Alice"));
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(inventory);
@@ -128,22 +128,22 @@ public class FarmersMarketApplicationTests {
                         .contentType("application/json")
                         .sessionAttr("userName", "Alice")
         );
-        Assert.assertTrue(inventories.count() == 1);
+        Assert.assertTrue(inventories.count() == 2);
     }
     @Test
     public void test6UpdateInventory() throws Exception {
-        Inventory i = inventories.findOne(1);
+        Inventory i = inventories.findOne(2);
         i.setCategory("Tomato");
         System.out.println();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(i);
         mockMvc.perform(
-                MockMvcRequestBuilders.put("/inventory/1")
+                MockMvcRequestBuilders.put("/inventory/2")
                         .content(json)
                         .contentType("application/json")
                         .sessionAttr("userName", "Alice")
         );
-        Assert.assertTrue(inventories.findOne(1).getCategory().equals("Tomato"));
+        Assert.assertTrue(inventories.findOne(2).getCategory().equals("Tomato"));
     }
 
     @Test
@@ -156,16 +156,17 @@ public class FarmersMarketApplicationTests {
 //                        .contentType("application/json")
 //                        .sessionAttr("userName", "Alice")
 //        );
-        Assert.assertTrue(inventories.findByCategory("Tomato").size() == 1);
+        Assert.assertTrue(inventories.findByCategory("Tomato").size() == 1); //does this test actually work?
+        // is it checking the amount of inventory items in that category?
     }
 
     @Test
     public void test8DeleteInventory() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.delete("/inventory/1")
+                MockMvcRequestBuilders.delete("/inventory/2")
                         .sessionAttr("userName", "Alice")
         );
-        Assert.assertTrue(inventories.count() == 0);
+        Assert.assertTrue(inventories.count() == 1);
     }
 
 //     @Test

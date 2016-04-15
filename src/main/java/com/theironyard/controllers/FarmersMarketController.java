@@ -66,10 +66,11 @@ public class FarmersMarketController {
         }
     }
 
-//    @PostConstruct
-//    public void constructInventory(){
-//
-//    }
+    @PostConstruct
+    public void constructInventory(){
+        Inventory inventory = new Inventory("Corn", "golden sweet", 10, 2.55, users.findByUserName("HankFarmer"));
+        inventories.save(inventory);
+    }
 
     @PostConstruct
     public void categoryParse() throws FileNotFoundException {
