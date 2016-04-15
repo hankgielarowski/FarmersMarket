@@ -198,7 +198,7 @@ angular
 });
 
 },{}],10:[function(require,module,exports){
-angular
+angular 
 .module('farmers.module')
 .controller('ModalSignupInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location,$window) {
 
@@ -220,7 +220,7 @@ angular
     });
     $uibModalInstance.close();
   };
-  
+
 
 
   $scope.cancel = function () {
