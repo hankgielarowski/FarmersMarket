@@ -1,22 +1,25 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-// angular
-// .module("admin.module")
-// .controller("AdminController", AdminController);
-//
-// AdminController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "AdminService"];
-//
-// function AdminController($scope, $http, $location, $q, $rootScope, AdminService){
-//
-//
-//   AdminService.getAllUsers()
-//   .then(function(data){
-//     $scope.user = data.data;
-//     console.log("who",data)
-//   })
-//
-// }
+var angular = require('angular');
 
-},{}],2:[function(require,module,exports){
+angular
+  .module("admin.module")
+  .controller("AdminController", AdminController);
+
+  AdminController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "AdminService"];
+
+  function AdminController ($scope, $http, $location, $q, $rootScope, AdminService) {
+
+    AdminService.getAllUsers()
+    .then(function(data){
+      $scope.user = data.data;
+      console.log("who",data)
+    });
+
+  }
+
+},{"angular":36}],2:[function(require,module,exports){
+var angular = require('angular');
+
 angular
 .module("admin.module", [
   "ngRoute"
@@ -29,7 +32,9 @@ angular
     })
 })
 
-},{}],3:[function(require,module,exports){
+},{"angular":36}],3:[function(require,module,exports){
+var angular = require('angular');
+
 angular
   .module('admin.module')
   .service('AdminService', function($http){
@@ -48,9 +53,9 @@ angular
 
   })
 
-},{}],4:[function(require,module,exports){
-require('./admin.controller');
+},{"angular":36}],4:[function(require,module,exports){
 require('./admin.module');
+require('./admin.controller');
 require('./admin.service');
 
 },{"./admin.controller":1,"./admin.module":2,"./admin.service":3}],5:[function(require,module,exports){

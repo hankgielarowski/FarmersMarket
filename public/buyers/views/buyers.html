@@ -32,17 +32,18 @@
 </div> -->
 
 <div class="container-allInv">
+
   <div class="row">
+
     <h4 class="text-danger"> Category </h4>
-    <div class="col-md-4" ng-repeat="category in categories">
-        <ul class="cat-list">
-          <li>
-            <img ng-src="imagesCategories/{{category.imageCategory}}" width="200px" height="auto" alt="">
-          </li>
-          <li>{{category.categoryName}}</li>
-        </ul>
+    <input type="text" ng-model="search">
+    <div style="display:inline-block; padding:10px; margin:10px;border:1px solid red;vertical-align:top;" ng-repeat="category in categories | filter:search">
+        <img ng-src="imagesCategories/{{category.imageCategory}}" style="width:200px;" alt="">
+        <p>{{category.categoryName}}</p>
+
     </div>
   </div>
+
 </div>
 
 
