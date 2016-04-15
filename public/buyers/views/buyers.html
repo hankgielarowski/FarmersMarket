@@ -1,4 +1,4 @@
-<div class="container-search">
+<!-- <div class="container-search">
   <div class="form">
     <div class="row">
       <div class="input-group col-md-4">
@@ -12,7 +12,7 @@
     </div>
   </div>
 </div>
-
+ -->
 
 
 <!-- <div class="container-allInv">
@@ -32,22 +32,61 @@
 </div> -->
 
 <div class="container-allInv">
-
-  <div class="row">
-
-    <h4 class="text-danger"> Category </h4>
-    <input type="text" ng-model="search">
-    <div style="display:inline-block; padding:10px; margin:10px;border:1px solid red;vertical-align:top;" ng-repeat="category in categories | filter:search">
-        <img ng-src="imagesCategories/{{category.imageCategory}}" style="width:200px;" alt="">
-        <p>{{category.categoryName}}</p>
-
-    </div>
+  <h4 class="text-cat"> Category </h4>
+  <div class="container-buyer-all">
+    <div class="container-catAll" ng-repeat="category in categories">
+    <ul class="cat-order" ng-click="showThisCat(category.categoryName)">
+      <a href="">
+        <li class="cat-list">
+          <p>{{category.categoryName}}</p>
+        </li>
+        <li class="cat-list">
+          <img ng-src="imagesCategories/{{category.imageCategory}}" alt="">
+        </li>
+    </a>
+    </ul>
   </div>
-
+  </div>
 </div>
 
 
+<!-- getallinvetorybycatogery -->
+
+<div class="container-invFarm" ng-repeat="category in categories" ng-show="category.categoryName === showCat">
+  <h1>Hello</h1>
+  <p>{{category.categoryName}}</p>
+  <div class="container-invFarmProd" ng-repeat="thing in myProducts | filter:showCat">
+    <ul class="list-prod">
+      <li>{{thing.name}}</li>
+      <li>{{thing.quantityAvailable}} lb</li>
+      <li>$ {{thing.price}}</li>
+      <li>{{thing.user.companyName}}</li>
+      <form class="order-form" ng-submit="createOrder(thing,quantity)">
+        <li>
+          <input id="who" class="form-control" type="text" placeholder="Enter Quantity" name="" ng-model="quantity">
+          <input class="btn btn-sm btn-danger btn-register" type="submit"value="Submit Order" name="">
+        </li>
+      </form>
+
+    </ul>
+  </div>
 
 
+  <div class="container-orderForm">
+    <h1>Orders</h1>
+    <p>{{category.categoryName}}</p>
+    <div class="container-orderList" ng-repeat="thing in orders">
+      <ul class="list-prod">
+        <li>{{thing.name}}</li>
+        <li>{{thing.quantityAvailable}} lb</li>
+        <li>$ {{thing.price}}</li>
+        <li>{{thing.user.companyName}}</li>
+        <form class="order-form">
+        <li>
+          <input class="btn btn-sm btn-danger btn-register" type="submit" value="Submit Order" name="">
+        </li>
+          </form>
 
-<img src="https://www.placecage.com/300/300" alt="" />
+      </ul>
+    </div>
+</div>
