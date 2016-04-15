@@ -22,10 +22,10 @@ angular
       templateUrl: "home/views/home.html",
       controller: "HomeController"
     })
-    .when('/admin', {
-      templateUrl: "admin/views/admin.html",
-      controller: "AdminController"
-    })
+    // .when('/admin', {
+    //   templateUrl: "admin/views/admin.html",
+    //   controller: "AdminController"
+    // })
     // .when('/buyers', {
     //   templateUrl: "buyers/views/buyers.html",
     //   controller: "BuyersController"

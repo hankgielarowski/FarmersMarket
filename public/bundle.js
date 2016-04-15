@@ -1,7 +1,22 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+// angular
+// .module("admin.module")
+// .controller("AdminController", AdminController);
+//
+// AdminController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "AdminService"];
+//
+// function AdminController($scope, $http, $location, $q, $rootScope, AdminService){
+//
+//
+//   AdminService.getAllUsers()
+//   .then(function(data){
+//     $scope.user = data.data;
+//     console.log("who",data)
+//   })
+//
+// }
 
 },{}],2:[function(require,module,exports){
-
 angular
 .module("admin.module", [
   "ngRoute"
@@ -15,8 +30,25 @@ angular
 })
 
 },{}],3:[function(require,module,exports){
-arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],4:[function(require,module,exports){
+angular
+  .module('admin.module')
+  .service('AdminService', function($http){
+
+
+    function getAllUsers(users){
+      console.log("I am a user", users)
+      return $http.get('/users');
+    }
+
+
+        return {
+          getAllUsers:getAllUsers
+
+        }
+
+  })
+
+},{}],4:[function(require,module,exports){
 require('./admin.controller');
 require('./admin.module');
 require('./admin.service');
@@ -46,10 +78,10 @@ angular
       templateUrl: "home/views/home.html",
       controller: "HomeController"
     })
-    .when('/admin', {
-      templateUrl: "admin/views/admin.html",
-      controller: "AdminController"
-    })
+    // .when('/admin', {
+    //   templateUrl: "admin/views/admin.html",
+    //   controller: "AdminController"
+    // })
     // .when('/buyers', {
     //   templateUrl: "buyers/views/buyers.html",
     //   controller: "BuyersController"
