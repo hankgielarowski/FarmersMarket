@@ -1,23 +1,24 @@
 <div class="container-search">
-  <div class="row">
-    <div class="input-group col-md-12">
-      <input type="text" class="search-inv form-control" placeholder="Search Inventory" ng-model="search.category">
-      <span class="input-group-btn">
-        <button class="btn btn-danger" type="button">
-          <span class="glyphicon glphicon-search"></span>
-        </button>
-      </span>
+  <div class="form">
+    <div class="row">
+      <div class="input-group col-md-4">
+        <input type="text" class="search-inv form-control" placeholder="Search Inventory" ng-model="search.category">
+        <span class="input-group-btn">
+          <button class="btn btn-danger" type="button">
+            <span class="glyphicon glphicon-search"></span>
+          </button>
+        </span>
+      </div>
     </div>
   </div>
 </div>
 
 
 
-<div class="container-allInv">
+<!-- <div class="container-allInv">
   <div class="row">
     <h4 class="text-danger"> Farmer Inventory </h4>
     <div class="col-md-12" ng-repeat="inventory in myProducts | filter:search">
-
         <ul>
           <li>{{inventory.category}}</li>
           <li>{{inventory.name}}</li>
@@ -28,18 +29,18 @@
 
     </div>
   </div>
-</div>
+</div> -->
 
 <div class="container-allInv">
   <div class="row">
     <h4 class="text-danger"> Category </h4>
-    <div class="col-md-12" ng-repeat="category in categories">
-
-        <ul>
-          <li><img ng-src="imagesCategories/{{category.imageCategory}}" alt=""></li>
+    <div class="col-md-4" ng-repeat="category in categories">
+        <ul class="cat-list">
+          <li>
+            <img ng-src="imagesCategories/{{category.imageCategory}}" width="200px" height="auto" alt="">
+          </li>
           <li>{{category.categoryName}}</li>
         </ul>
-
     </div>
   </div>
 </div>
