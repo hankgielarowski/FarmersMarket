@@ -24,15 +24,15 @@ FarmersService.getAllInventoryByUser($scope.user.id)
 })
 
 $scope.createInventory = function(inventory) {
-  inventory.category = JSON.stringify(inventory)
+  inventory.category = inventory.category.categoryName
   inventory.price = parseInt(inventory.price);
   inventory.quantityAvailable = parseInt(inventory.quantityAvailable);
   inventory.user = null;
-  console.log("LASTLY", inventory);
   FarmersService.createInventory(inventory)
   .then(function(res){
-    console.log("SUCCES", res);
-    window.corn = res.data;
+    // console.log("SUCCES", res);
+    // window.corn = res.data;
+    $scope.myProducts.push(inventory);
 
   })
 }

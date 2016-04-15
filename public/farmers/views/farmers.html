@@ -37,7 +37,7 @@
             <ul>
               <form class="signin-form" ng-submit="createInventory(list)">
                 <!-- <input id="category" class="form-control" type="text" placeholder="Category" name="userType" ng-model="list.category"> -->
-                <select ng-options="category.categoryName for category in categories" ng-model="list.categoryName.categoryName"></select>
+                <select ng-options="category.categoryName for category in categories" ng-model="list.category"></select>
                 <input id="type" class="form-control" type="text" placeholder="Type" name="userType" ng-model="list.name">
                 <input id="amount" class="form-control" type="text" placeholder="Amount" name="userType" ng-model="list.quantityAvailable">
                 <input id="amount" class="form-control" type="text" placeholder="Market Price" name="userType" ng-model="list.price" >
