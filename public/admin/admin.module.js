@@ -6,8 +6,8 @@ angular
 ])
 .config(function($routeProvider) {
   $routeProvider
-    .when('/admin',{
-      templateUrl: "views/admin.html",
+    .when('/admin/:id/',{
+      templateUrl: "./admin/views/admin.html",
       controller: "AdminController"
     })
 })

@@ -12,9 +12,12 @@ angular
      AuthService.user = res;
      if(res.userType === 'Farmer') {
        $location.path("/farmers/"+ res.id);
-     } else if (res.userType === 'Buyer') {
+     }  if(res.userType === 'Buyer') {
        $location.path("/buyers/" + res.id);
+     } else if(res.userType === 'Admin') {
+       $location.path("/admin/" + res.id)
      }
+
    })
    .error(function(err) {
      console.log("SHIT", err);
