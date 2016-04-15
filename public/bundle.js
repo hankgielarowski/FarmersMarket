@@ -340,10 +340,15 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
 
   $scope.user = AuthService.currentUser();
   $scope.myProducts;
+
+  $scope.showThisCat = function(category) {
+    $scope.showCat = category;
+  }
 // on image
   BuyersService.getAllInventoryByCategory()
   .then(function(data){
     $scope.myProducts = data.data;
+    console.log("PRDS", data.data);
     console.log("GROUB", _.groupBy(data.data,'category'));
     var cats = Object.keys(_.groupBy(data.data,'category'))
     console.log(cats);
@@ -357,6 +362,27 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       $scope.categories = data.data;
       console.log(data)
     })
+
+    $scope.createOrder = function(order,quantity) {
+      console.log("WHAT ARE WE SENDING", order);
+      console.log("HOW MUCH", quantity);
+      console.log("LOGINUSERS", window.localStorage.getItem('mahUser'))
+
+      var thingToSend = {
+        quantity: quantity,
+        category: order
+      };
+      BuyersService.createOrder(thingToSend)
+      .then(function(data){
+        $scope.order = data.data;
+        console.log("hanky panky", data)
+      })
+    }
+
+
+
+
+
 
 }
 
@@ -393,11 +419,20 @@ angular
       return $http.get('/categories');
     }
 
+    // function getAllInventoryByCategory(category){
+    //   return $http.get('/inventory/category/' + category);
+    // }
+    function createOrder(order){
+      return $http.post('/orders',order);
+    }
+
         return {
           getAllInventoryByCategory: getAllInventoryByCategory,
-          getAllCategories: getAllCategories
+          getAllCategories: getAllCategories,
+          createOrder:createOrder
 
         }
+
 
   })
 
@@ -482,6 +517,7 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
   $scope.user = AuthService.currentUser();
   $scope.myProducts;
   $scope.categories = [];
+
   // FarmersService.getUser()
   // .then(function(data) {
   //
@@ -507,6 +543,8 @@ $scope.createInventory = function(inventory) {
     // console.log("SUCCES", res);
     // window.corn = res.data;
     $scope.myProducts.push(inventory);
+    $scope.list = {};
+
 
   })
 }

@@ -50,11 +50,11 @@
       <div class="col-md-6" id="right">
         <div class="well">
           <h4 class="text-success"> Goods Available </h4>
-          <ul ng-repeat="thing in myProducts">
-            <li>{{thing.category}}</li>
-            <li>{{thing.name}}</li>
-            <li>{{thing.quantityAvailable}} lb</li>
-            <li>$ {{thing.price}}</li>
+          <ul ng-repeat="product in myProducts track by $index">
+            <li>{{::product.category}}</li>
+            <li>{{::product.name}}</li>
+            <li>{{::product.quantityAvailable}} lb</li>
+            <li>$ {{::product.price}}</li>
           </ul>
         </div>
       </div>

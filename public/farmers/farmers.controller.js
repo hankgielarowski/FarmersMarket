@@ -8,6 +8,7 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
   $scope.user = AuthService.currentUser();
   $scope.myProducts;
   $scope.categories = [];
+
   // FarmersService.getUser()
   // .then(function(data) {
   //
@@ -33,6 +34,8 @@ $scope.createInventory = function(inventory) {
     // console.log("SUCCES", res);
     // window.corn = res.data;
     $scope.myProducts.push(inventory);
+    $scope.list = {};
+
 
   })
 }
