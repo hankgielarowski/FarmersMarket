@@ -26,8 +26,8 @@ angular
 ])
 .config(function($routeProvider) {
   $routeProvider
-    .when('/admin',{
-      templateUrl: "views/admin.html",
+    .when('/admin/:id/',{
+      templateUrl: "./admin/views/admin.html",
       controller: "AdminController"
     })
 })
@@ -215,9 +215,12 @@ angular
      AuthService.user = res;
      if(res.userType === 'Farmer') {
        $location.path("/farmers/"+ res.id);
-     } else if (res.userType === 'Buyer') {
+     }  if(res.userType === 'Buyer') {
        $location.path("/buyers/" + res.id);
+     } else if(res.userType === 'Admin') {
+       $location.path("/admin/" + res.id)
      }
+
    })
    .error(function(err) {
      console.log("SHIT", err);
@@ -235,7 +238,7 @@ angular
 });
 
 },{}],10:[function(require,module,exports){
-angular 
+angular
 .module('farmers.module')
 .controller('ModalSignupInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location,$window) {
 
@@ -245,11 +248,13 @@ angular
       console.log("CREATED",res);
       $window.localStorage.setItem('mahUser', JSON.stringify(res));
       AuthService.user = res;
-      if(res.userType === 'Farmer') {
-        $location.path("/farmers/"+ res.id);
-      } else if (res.userType === 'Buyer') {
-        $location.path("/buyers/" + res.id);
-      }
+      alert("You Have Signed Up.  You WIll Be Granted Access Upon Administration Approval")
+
+      // if(res.userType === 'Farmer') {
+      //   $location.path("/farmers/"+ res.id);
+      // } else if (res.userType === 'Buyer') {
+      //   $location.path("/buyers/" + res.id);
+      // }
     })
 
     .error(function(err) {

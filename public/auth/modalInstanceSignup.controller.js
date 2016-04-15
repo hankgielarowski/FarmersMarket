@@ -1,4 +1,4 @@
-angular 
+angular
 .module('farmers.module')
 .controller('ModalSignupInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location,$window) {
 
@@ -8,11 +8,13 @@ angular
       console.log("CREATED",res);
       $window.localStorage.setItem('mahUser', JSON.stringify(res));
       AuthService.user = res;
-      if(res.userType === 'Farmer') {
-        $location.path("/farmers/"+ res.id);
-      } else if (res.userType === 'Buyer') {
-        $location.path("/buyers/" + res.id);
-      }
+      alert("You Have Signed Up.  You WIll Be Granted Access Upon Administration Approval")
+
+      // if(res.userType === 'Farmer') {
+      //   $location.path("/farmers/"+ res.id);
+      // } else if (res.userType === 'Buyer') {
+      //   $location.path("/buyers/" + res.id);
+      // }
     })
 
     .error(function(err) {
