@@ -6,7 +6,6 @@ angular
         //   return $http.get('/users');
         // }
         function createInventory(inventory){
-          console.log("fuck: ", inventory);
           return $http.post('/inventory/', inventory);
         }
 
