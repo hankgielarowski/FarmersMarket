@@ -18,10 +18,15 @@ angular
       return $http.post('/orders',order);
     }
 
+    // function getUserOrders(userName){
+    //   return $http.get('/orders/' + userName);
+    // }
+
         return {
           getAllInventoryByCategory: getAllInventoryByCategory,
           getAllCategories: getAllCategories,
-          createOrder:createOrder
+          createOrder:createOrder,
+          // getUserOrders: getUserOrders
 
         }
 

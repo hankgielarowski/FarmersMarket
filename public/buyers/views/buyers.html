@@ -54,8 +54,7 @@
 <!-- getallinvetorybycatogery -->
 
 <div class="container-invFarm" ng-repeat="category in categories" ng-show="category.categoryName === showCat">
-  <h1>Hello</h1>
-  <p>{{category.categoryName}}</p>
+  <p id="cat-name">{{category.categoryName}}</p>
   <div class="container-invFarmProd" ng-repeat="thing in myProducts | filter:showCat">
     <ul class="list-prod">
       <li>{{thing.name}}</li>
@@ -77,8 +76,7 @@
     <h1>Orders</h1>
     <p>{{category.categoryName}}</p>
     <div class="container-orderList" ng-repeat="thing in orders">
-      <ul class="list-prod">
-        <li>{{thing.categoryName}}</li>
+      <ul class="order-prod">
         <li>{{thing.name}}</li>
         <li>{{thing.userType}}</li>
         <li>{{thing.quantityAvailable}} lb</li>
