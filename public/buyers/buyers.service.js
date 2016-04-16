@@ -11,10 +11,19 @@ angular
       return $http.get('/categories');
     }
 
+    // function getAllInventoryByCategory(category){
+    //   return $http.get('/inventory/category/' + category);
+    // }
+    function createOrder(order){
+      return $http.post('/orders',order);
+    }
+
         return {
           getAllInventoryByCategory: getAllInventoryByCategory,
-          getAllCategories: getAllCategories
+          getAllCategories: getAllCategories,
+          createOrder:createOrder
 
         }
+
 
   })

@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = FarmersMarketApplication.class)
@@ -49,13 +50,11 @@ public class FarmersMarketApplicationTests {
 
     @Before
     public void before() {
-//        users.deleteAll();
-//        inventories.deleteAll();
         mockMvc = MockMvcBuilders.webAppContextSetup(wap).build();
     }
 
     @Test
-    public void test1CreateUser() throws Exception {
+    public void test1CreateUser() throws Exception { //(POST route: /users)
         User user = new User("Alice", "password", "password", "Farmer", "Limehouse Produce", "charleston", "8888", "alice@alice");
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(user);
@@ -68,7 +67,27 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void test2UpdateUser() throws Exception {
+    public void test2GetOneUser() throws Exception { //(GET route: /users/{id})
+    User user = users.findByUserName("Alice");
+    Assert.assertTrue(user.getUserName().equals("Alice"));
+    }
+
+//    -getValidatingUsers (GET route: /users/validate)
+
+    @Test
+    public void test2ValidateUser() throws Exception { //(POST route: /users/validate/{id})
+        ObjectMapper mapper = new ObjectMapper();
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/users/validate/4")
+                        .sessionAttr("userName", "Admin")
+        );
+        Assert.assertTrue(users.findByUserName("Alice").getValid());
+    }
+
+//    -getUsersInCategory (GET route: /users/category/{category})
+
+    @Test
+    public void test3UpdateUser() throws Exception { //(PUT route: /users/{id})
         User user = users.findOne(4);
         user.setCompanyName("Rawl Produce");
         ObjectMapper mapper = new ObjectMapper();
@@ -83,7 +102,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void test3Login() throws Exception {
+    public void test4Login() throws Exception { //(POST route: /login)
         User user = new User();
         user.setUserName("Alice");
         user.setPasswordHash("password");
@@ -102,23 +121,12 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void test4ValidateUser() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        mockMvc.perform(
-                MockMvcRequestBuilders.put("/users/validate/4")
-                        .sessionAttr("userName", "Admin")
-        );
-        Assert.assertTrue(users.findByUserName("Alice").getValid());
-    }
-
-
-    @Test
-    public void test5CreateInventory() throws Exception {
+    public void test5CreateInventory() throws Exception { //(POST route: /inventory)
         Inventory inventory = new Inventory();
         inventory.setCategory("Banana");
         inventory.setName("Golden Yellow Bananas");
         inventory.setQuantityAvailable(9);
-        inventory.setPrice(2.55);
+        inventory.setPrice(2.85);
         inventory.setUser(users.findByUserName("Alice"));
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(inventory);
@@ -128,26 +136,29 @@ public class FarmersMarketApplicationTests {
                         .contentType("application/json")
                         .sessionAttr("userName", "Alice")
         );
-        Assert.assertTrue(inventories.count() == 1);
+        Assert.assertTrue(inventories.count() == 2);
     }
     @Test
-    public void test6UpdateInventory() throws Exception {
-        Inventory i = inventories.findOne(1);
+    public void test6UpdateInventory() throws Exception { //(PUT route: /inventory/{id})
+        Inventory i = inventories.findOne(2);
         i.setCategory("Tomato");
         System.out.println();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(i);
         mockMvc.perform(
-                MockMvcRequestBuilders.put("/inventory/1")
+                MockMvcRequestBuilders.put("/inventory/2")
                         .content(json)
                         .contentType("application/json")
                         .sessionAttr("userName", "Alice")
         );
-        Assert.assertTrue(inventories.findOne(1).getCategory().equals("Tomato"));
+        Assert.assertTrue(inventories.findOne(2).getCategory().equals("Tomato"));
     }
 
+//    -createInventoryByAdmin (POST route: /inventory/user/{id}
+//    -updateInventoryByAdmin (PUT route: /inventory/{id})
+
     @Test
-    public void test7FindByCategory() throws Exception {
+    public void test7FindInventoryByCategory() throws Exception { //(GET route: /inventory/category/{category})
 //        ObjectMapper mapper = new ObjectMapper();
 //        String json = mapper.writeValueAsString(inventories.findAll());
 //        mockMvc.perform(
@@ -156,26 +167,43 @@ public class FarmersMarketApplicationTests {
 //                        .contentType("application/json")
 //                        .sessionAttr("userName", "Alice")
 //        );
-        Assert.assertTrue(inventories.findByCategory("Tomato").size() == 1);
+        Assert.assertTrue(inventories.findByCategory("Tomato").size() == 1); //does this test actually work?
+        // is it checking the amount of inventory items in that category?
     }
 
     @Test
-    public void test8DeleteInventory() throws Exception {
+    public void test8DeleteInventoryByUser() throws Exception { //(DELETE route: /inventory/{id})
         mockMvc.perform(
-                MockMvcRequestBuilders.delete("/inventory/1")
+                MockMvcRequestBuilders.delete("/inventory/2")
                         .sessionAttr("userName", "Alice")
         );
-        Assert.assertTrue(inventories.count() == 0);
+        Assert.assertTrue(inventories.count() == 1);
     }
 
+
+//    -deleteInventoryByAdmin (DELETE route: /inventory/{id})
+//    -getAllCategories (GET route: /categories)
+//    -getCategoriesByLetter (GET route: /categories/{letter})
+//    -createOrderByUser (POST route: /orders)
+//    -createOderByAdmin (POST route: /orders)
+//    -getOrdersPending(GET route: /orders/{pending})
+//    -deleteOderByUser (DELETE route: /orders/{id})
+//    -deleteOrderByAdmin (DELETE route: /orders/{id})
+//    -createOrderByUser (POST route: /orders)
+//    -authorizeOrderByUser (GET route: /orders/authorize/{id})
+//    -createOrderByUser (POST route: /orders)
+//    -authorizeOrderByAdmin (GET route: /orders/authorize/{id})
+//    -getOrderHistoryForFarmer *
+//    -getOderHistoryForBuyer *
+//    -logout (POST route: /logout)
+//    -deleteUserDeniedByAdmin (DELETE route: /users/{id})
+
 //     @Test
-//    public void test7DeleteUser() throws Exception {
+//    public void test#DeleteUserDeniedByAdmin() throws Exception { //(DELETE route: /users/{id})
 //        mockMvc.perform(
 //                MockMvcRequestBuilders.delete("/users/2")
 //        );
 //        Assert.assertTrue(users.count() == 1);
 //    }
-
-
 
 }

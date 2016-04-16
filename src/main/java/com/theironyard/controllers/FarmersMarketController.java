@@ -66,10 +66,11 @@ public class FarmersMarketController {
         }
     }
 
-//    @PostConstruct
-//    public void constructInventory(){
-//
-//    }
+    @PostConstruct
+    public void constructInventory(){
+        Inventory inventory = new Inventory("Corn", "golden sweet", 10, 2.55, users.findByUserName("HankFarmer"));
+        inventories.save(inventory);
+    }
 
     @PostConstruct
     public void categoryParse() throws FileNotFoundException {
@@ -114,7 +115,7 @@ public class FarmersMarketController {
     }
 
     @RequestMapping(path = "/users/{id}", method = RequestMethod.DELETE)
-    public void deleteUser(@PathVariable("id") int id, HttpSession session) throws Exception {
+    public void deleteUserDeniedByAdmin(@PathVariable("id") int id, HttpSession session) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
         if(!user.getUserType().equals("Admin") || user.getValid()) {
@@ -123,6 +124,8 @@ public class FarmersMarketController {
 
         users.delete(id);
     }
+
+    //deleteUserHiddenByAdminOrUser
 
     @RequestMapping(path = "/users", method = RequestMethod.GET)
     public ArrayList<User> getAllUsers(HttpSession session) throws Exception {
@@ -208,7 +211,7 @@ public class FarmersMarketController {
     }
 
     @RequestMapping(path = "/inventory/user/{id}", method = RequestMethod.POST)
-    public Inventory createInventoryAdmin(@RequestBody Inventory inventory, HttpSession session, @PathVariable("id") int id) throws Exception {
+    public Inventory createInventoryByAdmin(@RequestBody Inventory inventory, HttpSession session, @PathVariable("id") int id) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
 
@@ -226,6 +229,7 @@ public class FarmersMarketController {
         return inventory;
     }
 
+    //not going to use "/inventory" GET all?
     @RequestMapping(path = "/inventory", method = RequestMethod.GET)
     public List<Inventory> getAllInventory() {
         return (List<Inventory>) inventories.findAll();
@@ -301,7 +305,7 @@ public class FarmersMarketController {
     }
 
     @RequestMapping(path = "/categories/{letter}", method = RequestMethod.GET)
-    public ArrayList<Category> getCategoryByLetter(HttpSession session, @PathVariable("letter") String letter) {
+    public ArrayList<Category> getCategoriesByLetter(HttpSession session, @PathVariable("letter") String letter) {
         return categories.findByCategoryNameStartingWith(letter);
     }
 
