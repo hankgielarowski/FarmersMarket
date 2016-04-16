@@ -379,12 +379,7 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       var thingToSend = {
         quantity: quantity,
         category: order,
-<<<<<<< HEAD
-        
 
-=======
-        timeStampOrdered: timeStampOrdered
->>>>>>> 67ba5363f65253047c7f5d81c20caad3d87807f0
       };
       BuyersService.createOrder(thingToSend)
       .then(function(data){
@@ -441,6 +436,10 @@ angular
     // }
     function createOrder(order){
       return $http.post('/orders',order);
+    }
+
+    function getOrdersPending(order){
+      return $http.get('/orders')
     }
 
     // function getUserOrders(userName){
