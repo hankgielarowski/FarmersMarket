@@ -42,6 +42,7 @@
         </li>
         <li class="cat-list">
           <img ng-src="imagesCategories/{{category.imageCategory}}" alt="">
+          <img ng-src="imagesCategories/Tits.jpg" alt="">
         </li>
     </a>
     </ul>
@@ -77,15 +78,66 @@
     <div class="container-orderList" ng-repeat="thing in orders">
       <ul class="order-prod">
         <li>{{thing.name}}</li>
+        <li>{{thing.userType}}</li>
         <li>{{thing.quantityAvailable}} lb</li>
         <li>$ {{thing.price}}</li>
+        <li>{{thing.timeStampOrdered}}</li>
         <li>{{thing.user.companyName}}</li>
         <form class="order-form">
         <li>
+          <!-- delete button -->
           <input class="btn btn-sm btn-danger btn-register" type="submit" value="Submit Order" name="">
         </li>
           </form>
 
       </ul>
     </div>
+</div>
+
+<div class="container-farm">
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-6" id="left">
+        <div class="well">
+          <h4 class="text-danger">Product Orders</h4>
+            <ul>
+              <li>{{thing.name}} , $ {{thing.price}} , {{thing.timeStampOrdered}} , {{thing.user.companyName}}</li>
+
+
+
+
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+            </ul>
+        </div>
+      </div>
+      <div class="col-md-6" id="right">
+        <div class="well">
+          <h4 class="text-success"> Approved Orders </h4>
+          <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </div>

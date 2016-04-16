@@ -18,6 +18,10 @@ angular
       return $http.post('/orders',order);
     }
 
+    function getOrdersPending(order){
+      return $http.get('/orders')
+    }
+
     // function getUserOrders(userName){
     //   return $http.get('/orders/' + userName);
     // }

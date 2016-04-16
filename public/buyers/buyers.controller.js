@@ -42,7 +42,7 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       var thingToSend = {
         quantity: quantity,
         category: order,
-        timeStampOrdered: timeStampOrdered
+
       };
       BuyersService.createOrder(thingToSend)
       .then(function(data){
