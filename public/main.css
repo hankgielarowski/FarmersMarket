@@ -196,9 +196,6 @@ footer li {
 #left li {
   list-style: none; }
 
-.container-search {
-  width: 100%; }
-
 .container-allInv {
   width: 100%;
   margin: 0 auto; }
@@ -210,6 +207,7 @@ footer li {
 .container-catAll {
   display: inline-block;
   width: 19%;
+  margin-bottom: 4%;
   vertical-align: top; }
 
 .text-cat {
@@ -237,17 +235,24 @@ footer li {
   color: #9C8332; }
 
 .cat-list img {
-  width: 100px;
-  height: 100px; }
+  width: 170px;
+  height: 150px; }
 
 .container-invFarm {
   width: 100%;
   margin: 0 auto;
   border-top: 1px solid red; }
 
-.container-invAllProd {
+.container-invFarmProd {
   height: 240px;
+  display: inline-block;
   overflow-y: scroll; }
+
+#cat-name {
+  text-align: center;
+  font-size: 2.5em;
+  color: #73B370;
+  padding-bottom: 2%; }
 
 .list-prod {
   list-style: none;
