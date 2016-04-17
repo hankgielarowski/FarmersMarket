@@ -368,34 +368,36 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       console.log(data)
     })
 
-    $scope.createOrder = function(order,quantity) {
+  $scope.createOrder = function(order){
+    // var timeStampOrdered = new Date().toJSON().slice(0,10);
+    //   return timeStampOrdered
+    order.category = order.category.categoryName;
+    order.quantityAvailable = parseInt(order.quantityAvailable);
+    order.user = null;
+    oreder.timeStampOrdered = null;
+    BuyersService.createOrder(order)
+    .then(function(res){
+      console.log("SUCCES", res);
+    
+      $scope.myProducts.push(order);
+      $scope.list = {};
+
+
       console.log("WHAT ARE WE SENDING", order);
       console.log("HOW MUCH", quantity);
       console.log("LOGINUSERS", window.localStorage.getItem('mahUser'));
       var timeStampOrdered = new Date().toJSON().slice(0,10);
-      console.log("time", timeStampOrdered);
-      return timeStampOrdered
+      // console.log("time", timeStampOrdered);
+      // return timeStampOrdered
 
-      var thingToSend = {
-        quantity: quantity,
-        category: order,
+})
+      // BuyersService.getOrdersPending($scope.user.id)
+      // .then(function(data){
+      //   $scope.orders = data.data;
+      //   console.log("ORDERS!!!",$scope.orders);
+      // })
 
-      };
-      BuyersService.createOrder(thingToSend)
-      .then(function(data){
-        $scope.order = data.data;
-        console.log("hanky panky", data)
-      })
     }
-
-    // BuyersService.getUserOrders()
-    // .then(function(data){
-    //   $scope.order = data.data;
-    //   console.log("ORDER ME", data);
-    // })
-
-
-
 }
 
 },{}],16:[function(require,module,exports){
@@ -435,11 +437,14 @@ angular
     //   return $http.get('/inventory/category/' + category);
     // }
     function createOrder(order){
+      console.log("posted orders!!!!", order);
       return $http.post('/orders',order);
     }
 
-    function getOrdersPending(order){
-      return $http.get('/orders')
+    function getUserOrders(userName){
+      console.log("The shits", userName);
+      return $http.get('/orders' + userName)
+
     }
 
     // function getUserOrders(userName){
@@ -450,6 +455,7 @@ angular
           getAllInventoryByCategory: getAllInventoryByCategory,
           getAllCategories: getAllCategories,
           createOrder:createOrder,
+          getUserOrders:getUserOrders
           // getUserOrders: getUserOrders
 
         }

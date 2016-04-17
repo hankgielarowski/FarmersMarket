@@ -15,11 +15,14 @@ angular
     //   return $http.get('/inventory/category/' + category);
     // }
     function createOrder(order){
+      console.log("posted orders!!!!", order);
       return $http.post('/orders',order);
     }
 
-    function getOrdersPending(order){
-      return $http.get('/orders')
+    function getUserOrders(userName){
+      console.log("The shits", userName);
+      return $http.get('/orders' + userName)
+
     }
 
     // function getUserOrders(userName){
@@ -30,6 +33,7 @@ angular
           getAllInventoryByCategory: getAllInventoryByCategory,
           getAllCategories: getAllCategories,
           createOrder:createOrder,
+          getUserOrders:getUserOrders
           // getUserOrders: getUserOrders
 
         }
