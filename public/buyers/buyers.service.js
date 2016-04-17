@@ -19,7 +19,8 @@ angular
     }
 
     function getOrdersPending(order){
-      return $http.get('/orders')
+      console.log("NEED SOME ORDERS", order)
+      return $http.get('/orders', order);
     }
 
     // function getUserOrders(userName){
@@ -30,6 +31,7 @@ angular
           getAllInventoryByCategory: getAllInventoryByCategory,
           getAllCategories: getAllCategories,
           createOrder:createOrder,
+          getOrdersPending: getOrdersPending
           // getUserOrders: getUserOrders
 
         }

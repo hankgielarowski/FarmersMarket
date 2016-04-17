@@ -8,6 +8,7 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
 
   $scope.user = AuthService.currentUser();
   $scope.myProducts;
+  // $scope.order;
 
   $scope.showThisCat = function(category) {
     $scope.showCat = category;
@@ -39,23 +40,22 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       console.log("time", timeStampOrdered);
       return timeStampOrdered
 
-      var thingToSend = {
-        quantity: quantity,
-        category: order,
+      // var thingToSend = {
+      //   quantity: quantity,
+      //   category: order,
+      //
+      // };
 
-      };
-      BuyersService.createOrder(thingToSend)
+      BuyersService.getOrdersPending()
       .then(function(data){
+        console.log("ORDER ME", data);
         $scope.order = data.data;
-        console.log("hanky panky", data)
+
       })
+
     }
 
-    // BuyersService.getUserOrders()
-    // .then(function(data){
-    //   $scope.order = data.data;
-    //   console.log("ORDER ME", data);
-    // })
+
 
 
 
