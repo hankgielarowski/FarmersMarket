@@ -5,16 +5,19 @@ angular
 BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService"]
 
 function BuyersProfileController($scope, $http, BuyersProfileService, AuthService){
-  $scope.user = AuthService.currentUser();
-  // BuyersProfileService.getUser()
-  // .then(function(data) {
-  //
-  //   })
-  //   BuyersProfileService.getAllInventoryByUser($scope.user.userName)
-  //   .then(function(data){
-  //     $scope.myProducts = data.data;
-  //     console.log("YYAY SHIT",$scope.myProducts);
-  //   })
+  $scope.shit = AuthService.currentUser(user);
+  console.log("I am user", user );
 
+  $scope.editUser = function() {
+    console.log("WHAT UP");
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: './buyers-profile/views/modaledit.html',
+      controller: 'ModalInstanceEditBuyerController',
+      size: 'sm',
+      resolve: {
 
+      }
+    });
+  }
 }

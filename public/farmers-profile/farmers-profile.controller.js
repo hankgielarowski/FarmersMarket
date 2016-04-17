@@ -6,13 +6,14 @@ FarmersProfileController.$inject = ["$scope", "$http", "FarmersProfileService", 
 
 function FarmersProfileController($scope, $http, FarmersProfileService, AuthService, $uibModal){
   $scope.user = AuthService.currentUser();
+  console.log("CHOKE RICHARD",AuthService.currentUser());
 
   $scope.editUser = function() {
     console.log("WHAT UP");
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: './farmers-profile/views/modaledit.html',
-      controller: 'ModalInstanceEditController',
+      controller: 'ModalInstanceEditFarmerController',
       size: 'sm',
       resolve: {
 
