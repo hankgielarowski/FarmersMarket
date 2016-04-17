@@ -60,5 +60,6 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       //   console.log("ORDERS!!!",$scope.orders);
       // })
 
-    }
+      }
+
 }
