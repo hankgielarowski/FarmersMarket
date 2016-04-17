@@ -34,13 +34,14 @@ angular
     }
 
     $scope.goToProfile = function(user) {
-      var user= AuthService.user.userName
+      var shit= AuthService.user
       console.log("woo",AuthService.user);
-        // .success(function(res) {
-          $location.path("/farmers-profile/" + user);
-        // })
+        if(shit.userType === "Farmer"){
+          $location.path("/farmers-profile/" + shit.id)
+    } else if(shit.userType === "Buyer"){
+        $location.path("/buyers-profile/" + shit.id)
     }
-
+}
     $scope.toggleAnimation = function () {
       $scope.animationsEnabled = !$scope.animationsEnabled;
     };

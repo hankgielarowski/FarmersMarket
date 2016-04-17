@@ -1,4 +1,4 @@
-angular.module('farmers-profile.module').controller('ModalInstanceEditController', function($scope, $uibModalInstance, FarmersProfileService, $location, $window, AuthService) {
+angular.module('buyers-profile.module').controller('ModalInstanceEditBuyerController', function($scope, $uibModalInstance, BuyersProfileControllerProfileService, $location, $window, AuthService) {
 
 $scope.user = AuthService.currentUser();
 

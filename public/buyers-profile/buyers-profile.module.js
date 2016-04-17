@@ -5,7 +5,7 @@ angular
 .config(function($routeProvider) {
   $routeProvider
     .when('/buyers-profile',{
-      templateUrl: "views/buyers-profile.html",
+      templateUrl: "./buyers-profile/views/buyers-profile.html",
       controller: "BuyersProfileController"
     })
 })
