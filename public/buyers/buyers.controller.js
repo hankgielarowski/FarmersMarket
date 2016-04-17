@@ -8,7 +8,6 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
 
   $scope.user = AuthService.currentUser();
   $scope.myProducts;
-  // $scope.order;
 
   $scope.showThisCat = function(category) {
     $scope.showCat = category;
@@ -32,31 +31,35 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       console.log(data)
     })
 
-    $scope.createOrder = function(order,quantity) {
+  $scope.createOrder = function(order){
+    // var timeStampOrdered = new Date().toJSON().slice(0,10);
+    //   return timeStampOrdered
+    order.category = order.category.categoryName;
+    order.quantityAvailable = parseInt(order.quantityAvailable);
+    order.user = null;
+    oreder.timeStampOrdered = null;
+    BuyersService.createOrder(order)
+    .then(function(res){
+      console.log("SUCCES", res);
+
+      $scope.myProducts.push(order);
+      $scope.list = {};
+
+
       console.log("WHAT ARE WE SENDING", order);
       console.log("HOW MUCH", quantity);
       console.log("LOGINUSERS", window.localStorage.getItem('mahUser'));
       var timeStampOrdered = new Date().toJSON().slice(0,10);
-      console.log("time", timeStampOrdered);
-      return timeStampOrdered
+      // console.log("time", timeStampOrdered);
+      // return timeStampOrdered
 
-      // var thingToSend = {
-      //   quantity: quantity,
-      //   category: order,
-      //
-      // };
+})
+      // BuyersService.getOrdersPending($scope.user.id)
+      // .then(function(data){
+      //   $scope.orders = data.data;
+      //   console.log("ORDERS!!!",$scope.orders);
+      // })
 
-      BuyersService.getOrdersPending()
-      .then(function(data){
-        console.log("ORDER ME", data);
-        $scope.order = data.data;
-
-      })
-
+      }
     }
-
-
-
-
-
 }
