@@ -34,10 +34,11 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
   $scope.createOrder = function(order){
     // var timeStampOrdered = new Date().toJSON().slice(0,10);
     //   return timeStampOrdered
+    console.log($scope.myProducts);
     order.category = order.category;
-    order.quantityAvailable = parseInt(order.quantityAvailable);
+    
     order.quantityOrdered = order.quantityOrdered;
-    order.inventory = order.inventory;
+    order.inventory = $scope.myProducts[0];
     BuyersService.createOrder(order)
     .then(function(res){
       console.log("SUCCES", res);
@@ -60,5 +61,6 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       //   console.log("ORDERS!!!",$scope.orders);
       // })
 
-    }
+      }
+
 }
