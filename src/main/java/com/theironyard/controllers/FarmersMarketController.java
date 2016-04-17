@@ -325,8 +325,8 @@ public class FarmersMarketController {
         return orderList;
     }
 
-    @RequestMapping(path = "/orders", method = RequestMethod.POST)
-    public void createOrder(HttpSession session, @RequestBody Order order) throws Exception {
+    @RequestMapping(path = "/orders/{invId}", method = RequestMethod.POST)
+    public void createOrder(HttpSession session, @RequestBody Order order, @PathVariable("invId") int invId) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
 
@@ -334,14 +334,15 @@ public class FarmersMarketController {
             throw new Exception("Invalid User Permissions");
         }
 
+        order.setInventory(inventories.findOne(invId));
         order.setBuyer(user);
         order.setFarmer(order.getInventory().getUser());
         order.setTimeStampOrdered(LocalDateTime.now());
         orders.save(order);
     }
 
-    @RequestMapping(path = "/orders/admin/{buyerId}" , method = RequestMethod.POST)
-    public void createOrderAdmin(HttpSession session, @RequestBody Order order, @PathVariable("buyerId") int id) throws Exception {
+    @RequestMapping(path = "/orders/admin/{buyerId}/{invId}" , method = RequestMethod.POST)
+    public void createOrderAdmin(HttpSession session, @RequestBody Order order, @PathVariable("buyerId") int id, @PathVariable("invId") int invId) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
 
@@ -349,6 +350,7 @@ public class FarmersMarketController {
             throw new Exception("Insufficient Permissions");
         }
 
+        order.setInventory(inventories.findOne(invId));
         order.setFarmer(order.getInventory().getUser());
         order.setBuyer(users.findOne(id));
         order.setTimeStampOrdered(LocalDateTime.now());
