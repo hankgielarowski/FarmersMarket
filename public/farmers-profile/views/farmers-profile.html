@@ -1,0 +1,22 @@
+<article class="value">
+  <p class="farmerProfile">
+    {{user.companyName}}
+  </p>
+  <button type="button" class="btn btn-danger navbar-right login" ng-click="editUser()">Sign Up</button>
+</article>
+
+<!-- farmer inv  -->
+
+<div class="row">
+<div class="col-md-12" id="goods">
+  <div class="well">
+    <h4 class="text-success"> Goods Available </h4>
+    <ul ng-repeat="thing in myProducts">
+      <li>{{thing.category}}</li>
+      <li>{{thing.name}}</li>
+      <li>{{thing.quantityAvailable}} lb</li>
+      <li>$ {{thing.price}}</li>
+    </ul>
+  </div>
+</div>
+</div>

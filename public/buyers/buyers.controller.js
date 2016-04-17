@@ -61,5 +61,5 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       // })
 
       }
-    }
+     
 }

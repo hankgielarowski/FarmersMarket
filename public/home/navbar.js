@@ -33,6 +33,14 @@ angular
         })
     }
 
+    $scope.goToProfile = function(user) {
+      var user= AuthService.user.userName
+      console.log("woo",AuthService.user);
+        // .success(function(res) {
+          $location.path("/farmers-profile/" + user);
+        // })
+    }
+
     $scope.toggleAnimation = function () {
       $scope.animationsEnabled = !$scope.animationsEnabled;
     };

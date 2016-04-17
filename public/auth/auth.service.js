@@ -13,6 +13,11 @@ angular
       return false;
     }
 
+    function goToProfile(user){
+      console.log("PRofile", user);
+      return $http.get("/users");
+    }
+
     function loginUser(user){
       console.log("ARE YOU HAPPENING?");
       return $http.post('/login', user);
@@ -36,6 +41,10 @@ angular
       }
     }
 
+    function editUser(user) {
+      return $http.put('/users/' + user.id, user);
+    }
+
 
     return {
       getUser:getUser,
@@ -44,6 +53,8 @@ angular
       createUser: createUser,
       user: null,
       isAuthenticated: isAuthenticated,
-      currentUser: currentUser
+      currentUser: currentUser,
+      goToProfile:goToProfile,
+      editUser: editUser
     }
 })
