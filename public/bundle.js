@@ -382,22 +382,22 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
   $scope.createOrder = function(order){
     // var timeStampOrdered = new Date().toJSON().slice(0,10);
     //   return timeStampOrdered
-    order.category = order.category.categoryName;
+    order.category = order.category;
     order.quantityAvailable = parseInt(order.quantityAvailable);
-    order.user = null;
-    oreder.timeStampOrdered = null;
+    order.quantityOrdered = order.quantityOrdered;
+    order.inventory = order.inventory;
     BuyersService.createOrder(order)
     .then(function(res){
       console.log("SUCCES", res);
 
-      $scope.myProducts.push(order);
-      $scope.list = {};
+      $scope.order.push(order);
+      $scope.thing = {};
 
 
       console.log("WHAT ARE WE SENDING", order);
       console.log("HOW MUCH", quantity);
       console.log("LOGINUSERS", window.localStorage.getItem('mahUser'));
-      var timeStampOrdered = new Date().toJSON().slice(0,10);
+      // var timeStampOrdered = new Date().toJSON().slice(0,10);
       // console.log("time", timeStampOrdered);
       // return timeStampOrdered
 
@@ -409,7 +409,7 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       // })
 
       }
-     
+
 }
 
 },{}],16:[function(require,module,exports){
