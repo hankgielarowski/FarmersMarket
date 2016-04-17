@@ -325,7 +325,7 @@ public class FarmersMarketController {
         return orderList;
     }
 
-    @RequestMapping(path = "/orders/", method = RequestMethod.POST)
+    @RequestMapping(path = "/orders", method = RequestMethod.POST)
     public void createOrder(HttpSession session, @RequestBody Order order) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
