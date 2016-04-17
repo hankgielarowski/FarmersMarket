@@ -169,6 +169,7 @@ public class FarmersMarketApplicationTests {
 //        );
         Assert.assertTrue(inventories.findByCategory("Tomato").size() == 1); //does this test actually work?
         // is it checking the amount of inventory items in that category?
+        //this test is a placeholder that I'm going to work on redoing soon
     }
 
     @Test
