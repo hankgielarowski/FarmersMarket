@@ -325,15 +325,32 @@ public class FarmersMarketController {
         return orderList;
     }
 
-    @RequestMapping(path = "/orders", method = RequestMethod.POST)
+    @RequestMapping(path = "/orders/", method = RequestMethod.POST)
     public void createOrder(HttpSession session, @RequestBody Order order) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
 
-        if((!user.getUserType().equals("Buyer") || !user.getValid()) && !user.getUserType().equals("Admin")){
+        if((!user.getUserType().equals("Buyer") || !user.getValid())){
             throw new Exception("Invalid User Permissions");
         }
 
+        order.setBuyer(user);
+        order.setFarmer(order.getInventory().getUser());
+        order.setTimeStampOrdered(LocalDateTime.now());
+        orders.save(order);
+    }
+
+    @RequestMapping(path = "/orders/admin/{buyerId}" , method = RequestMethod.POST)
+    public void createOrderAdmin(HttpSession session, @RequestBody Order order, @PathVariable("buyerId") int id) throws Exception {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+
+        if(!user.getUserType().equals("Admin")) {
+            throw new Exception("Insufficient Permissions");
+        }
+
+        order.setFarmer(order.getInventory().getUser());
+        order.setBuyer(users.findOne(id));
         order.setTimeStampOrdered(LocalDateTime.now());
         orders.save(order);
     }
@@ -369,7 +386,7 @@ public class FarmersMarketController {
         return orders.findByFarmerOrBuyer(checkedUser, checkedUser);
     }
 
-    @RequestMapping(path = "/orders/authorize/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/orders/authorize/{id}", method = RequestMethod.PUT)
     public void authorizeOrder(HttpSession session, @PathVariable("id") int id) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName("userName");
