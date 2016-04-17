@@ -1,0 +1,31 @@
+<div id="profileEdit">
+      <div class="modal-header">
+          <h3 class="modal-title">Sign-Up Form</h3>
+      </div>
+      <div class="modal-body">
+      <div class="box">
+        <div class="content register-box">
+          <div class="form">
+            <form class="editUser-form" ng-submit="editUser(user)">
+              <input id="userName" class="form-control" type="text" value="{{user.Name}}" name="userName" ng-model="user.userName">
+              <!-- <input id="password" class="form-control" type="password" value="{{user.Password}}" name="password" ng-model="user.passwordHash">
+              <input id="password_confirmation" class="form-control" type="password" value="Confirm Password" name="password_confirmation" ng-model="user.passwordValidate"> -->
+              <input id="companyName" class="form-control" type="text" value="{{user.CompanyName}}" name="companyName" ng-model="user.companyName">
+              <input id="location" class="form-control" type="text" value="{{user.Address}}" name="location" ng-model="user.location">
+              <input id="phoneNumber" class="form-control" type="text" value="{{user.PhoneNumber}}" name="phoneNumber" ng-model="user.phone">
+              <input id="email" class="form-control" type="text" value="{{user.Email}}" name="email" ng-model="user.email">
+
+              <input class="btn btn-default btn-register" type="submit" value="Edit" name="commit" >
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="modal-footer">
+
+          <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+      </div>
+      </div>
+
+      </div>

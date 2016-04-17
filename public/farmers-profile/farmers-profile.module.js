@@ -8,4 +8,4 @@ angular
       templateUrl: "./farmers-profile/views/farmers-profile.html",
       controller: "FarmersProfileController"
     })
-})  
+}) 

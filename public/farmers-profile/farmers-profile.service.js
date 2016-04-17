@@ -15,4 +15,4 @@ return {
   getAllInventoryByUser:getAllInventoryByUser
   }
 
-})
+}) 

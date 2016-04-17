@@ -2,4 +2,4 @@
 require('./farmers-profile.module');
 require('./farmers-profile.controller');
 require('./farmers-profile.service');
-require('./modalInstanceEdit.controller');
+require('./modalInstanceEditFarmer.controller');
