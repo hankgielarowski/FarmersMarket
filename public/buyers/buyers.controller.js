@@ -13,6 +13,7 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
   $scope.showThisCat = function(category) {
     $scope.showCat = category;
   }
+  
 // on image
   BuyersService.getAllInventoryByCategory()
   .then(function(data){
@@ -21,21 +22,16 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
     console.log("GROUB", _.groupBy(data.data,'category'));
     var cats = Object.keys(_.groupBy(data.data,'category'))
     console.log(cats);
-
-    // console.log("YAY shit", _.groupBy(data.data,'category'));
-    window.stuff = data.data;
   })
 
     BuyersService.getAllCategories()
     .then(function(data){
       $scope.categories = data.data;
-      console.log(data)
     })
 
   $scope.createOrder = function(order){
     console.log($scope.myProducts);
     order.category = order.category;
-
     order.quantityOrdered = order.quantityOrdered;
     order.inventory = $scope.myProducts[0];
     BuyersService.createOrder(order)
@@ -43,11 +39,8 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       console.log("SUCCES", res);
 
       $scope.pendingOrders.push(order);
-      $scope.thing = {};    
+      $scope.thing = {};
 
 })
-
-
       }
-
 }

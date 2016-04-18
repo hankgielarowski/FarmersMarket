@@ -10,6 +10,7 @@ angular
           console.log("ALL the corn", inventory);
           return $http.get('/inventory');
         }
+        
         function getAllInventoryByUser(userName){
           console.log("got me some corn", userName);
           return $http.get('/inventory/user/' + userName);
@@ -19,6 +20,6 @@ angular
           createInventory:createInventory,
           getAllInventory: getAllInventory,
           getAllInventoryByUser:getAllInventoryByUser
-          
+
         }
   })
