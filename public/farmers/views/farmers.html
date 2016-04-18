@@ -1,6 +1,4 @@
-
 <div class="container-farm">
-
 <div class="row">
   <div class="col-md-12">
     <div class="row">
@@ -9,12 +7,10 @@
           <h4 class="text-danger">Goods For Sale</h4>
             <ul>
               <form class="signin-form" ng-submit="createInventory(list)">
-
                 <select ng-options="category.categoryName for category in categories" ng-model="list.category"></select>
                 <input id="type" class="form-control" type="text" placeholder="Type" name="userType" ng-model="list.name">
                 <input id="amount" class="form-control" type="text" placeholder="Amount" name="userType" ng-model="list.quantityAvailable">
-                <input id="amount" class="form-control" type="text" placeholder="Market Price" name="userType" ng-model="list.price" >
-            
+                <input id="amount" class="form-control" type="text" placeholder="Market Price" name="userType" ng-model="list.price">
                 <input class="btn btn-default btn-register" type="submit" value="Post Products" name="commit" >
               </form>
             </ul>
@@ -38,8 +34,7 @@
 
 
 <div class="container-farm">
-
-<div class="row">
+ <div class="row">
   <div class="col-md-12">
     <div class="row">
       <div class="col-md-6" id="left">

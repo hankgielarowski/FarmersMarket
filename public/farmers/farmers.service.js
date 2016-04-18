@@ -15,12 +15,10 @@ angular
           return $http.get('/inventory/user/' + userName);
         }
 
-
         return {
-
           createInventory:createInventory,
           getAllInventory: getAllInventory,
           getAllInventoryByUser:getAllInventoryByUser
-          
+
         }
   })
