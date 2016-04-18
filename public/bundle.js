@@ -601,6 +601,10 @@ $scope.createInventory = function(inventory) {
     console.log("CATEGOREIS", data);
     $scope.categories = data.data;
   })
+  BuyersService.getOrdersPending(true).then(function(data) {
+      console.log("ARE PENDING", data.data);
+      $scope.pendingOrders = data.data;
+  })
 }
 
 },{}],26:[function(require,module,exports){
@@ -634,15 +638,21 @@ angular
           console.log("ALL the corn", inventory);
           return $http.get('/inventory');
         }
+
         function getAllInventoryByUser(userName){
           console.log("got me some corn", userName);
           return $http.get('/inventory/user/' + userName);
         }
 
+        function getOrdersPending(pending){
+          return $http.get('/orders/' + pending)
+        }
+
         return {
           createInventory:createInventory,
           getAllInventory: getAllInventory,
-          getAllInventoryByUser:getAllInventoryByUser
+          getAllInventoryByUser:getAllInventoryByUser,
+          getOrdersPending:getOrdersPending
 
         }
   })
