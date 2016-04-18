@@ -34,29 +34,18 @@
 
 
 <div class="container-farm">
+<<<<<<< HEAD
+<div class="row">
+=======
  <div class="row">
+>>>>>>> dc8bba30372c07350c82a1f9bec85fc949dee174
   <div class="col-md-12">
     <div class="row">
       <div class="col-md-6" id="left">
         <div class="well">
           <h4 class="text-danger">Product Orders</h4>
-            <ul>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
+            <ul ng-repeat="thing in pendingOrders track by $index">
+              <li>{{thing.category}} , {{thing.name}} , $ {{thing.price}} , {{thing.user.userName}} , {{thing.quantityOrdered}} lbs</li>
             </ul>
         </div>
       </div>

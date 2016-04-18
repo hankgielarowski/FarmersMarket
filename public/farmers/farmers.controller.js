@@ -32,4 +32,8 @@ $scope.createInventory = function(inventory) {
     console.log("CATEGOREIS", data);
     $scope.categories = data.data;
   })
+  BuyersService.getOrdersPending(true).then(function(data) {
+      console.log("ARE PENDING", data.data);
+      $scope.pendingOrders = data.data;
+  })
 }

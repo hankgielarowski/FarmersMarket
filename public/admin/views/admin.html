@@ -1,17 +1,37 @@
+
+<div class="container-fluid">
+  <div class="container-viewUsers">
+    <ul class="viewUsersButton">
+      <li>
+        <button type="button" class="btn btn-danger" ng-click="viewFarmers()">View all Farmers</button>
+      </li>
+        <button type="button" class="btn btn-danger" ng-click="viewBuyers()">View all Buyers</button>
+      <li></li>
+    </ul>
+  </div>
 <div class="row">
   <div class="col-md-12" id="allUsers">
     <div class="well">
       <h4 class="text-success"> All Pending Users </h4>
-      <ul>
-        <li>{{category.categoryName}}</li>
-
+      <ul ng-repeat="user in users">
+        <li ng-click="validateUser(user)">{{user.companyName}}
+          <button type="button" class="btn btn-danger" ng-click="validateUser(user)">Approve User</button>
+          <button type="button" class="btn btn-danger" ng-click="deleteUserDeniedByAdmin(user)">Delete User</button>
+        </li>
       </ul>
     </div>
   </div>
 </div>
 
+<div class="row">
+  <div class="col-6-md">
+
+  </div>
+  <div class="col-6-md">
+
+  </div>
+</div>
 
 
 
-
-<img src="https://www.placecage.com/300/300" alt="" />
+</div>

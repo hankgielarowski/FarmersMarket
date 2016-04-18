@@ -52,11 +52,11 @@
       <div class="col-md-6" id="left">
         <div class="well" >
           <h4 class="text-danger">Pending Orders</h4>
-          <div class="orderStuff" ng-repeat="thing in pendingOrders">
+          <div class="orderStuff" ng-repeat="thing in pendingOrders track by $index">
 
 
             <ul class ="pendingOrders" >
-              <li>{{thing.name}} , $ {{thing.price}} , {{thing.timeStampOrdered}} , {{thing.user.companyName}}</li>
+              <li>{{thing.category}} , {{thing.name}} , $ {{thing.price}} , {{thing.user.userName}} , {{thing.quantityOrdered}} lbs</li>
 
             </ul>
             </div>
