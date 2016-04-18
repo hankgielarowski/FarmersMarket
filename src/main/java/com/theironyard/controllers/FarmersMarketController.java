@@ -285,6 +285,13 @@ public class FarmersMarketController {
             orders.delete(order);
         }
 
+        List<Order> saveOrderList = orders.findByIsPendingApprovalAndInventory(false, inventories.findOne(id));
+
+        for(Order order : saveOrderList) {
+            order.setInventory(null);
+            orders.save(order);
+        }
+
         inventories.delete(id);
     }
 

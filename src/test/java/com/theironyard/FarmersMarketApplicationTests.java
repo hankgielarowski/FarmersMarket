@@ -286,21 +286,29 @@ public class FarmersMarketApplicationTests {
         Assert.assertTrue(orders.count() == 1);
     }
 
-//    -authorizeOrderByFarmerOrAdmin (PUT route: /orders/authorize/{id})
+    @Test
+    public void testB6authorizeOrderByFarmerOrAdmin() throws Exception { //(PUT route: /orders/authorize/{id})
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/orders/authorize/2")
+                        .sessionAttr("userName", "Alice")
+        );
+        Assert.assertTrue(!orders.findOne(2).isPendingApproval());
+    }
 
 
 
     @Test
-    public void testB6DeleteInventoryUser() throws Exception { //(DELETE route: /inventory/{id})
+    public void testB7DeleteInventoryUser() throws Exception { //(DELETE route: /inventory/{id})
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/inventory/2")
                         .sessionAttr("userName", "Alice")
         );
-        Assert.assertTrue(inventories.findByUser(users.findByUserName("Alice")).size() == 1);
+        Assert.assertTrue(inventories.findByUser(users.findByUserName("Alice")).size() == 1 && orders.count() == 1);
     }
 
     @Test
-    public void testB7DeleteInventoryAdmin() throws Exception { //(DELETE route: /inventory/{id})
+    public void testB8DeleteInventoryAdmin() throws Exception { //(DELETE route: /inventory/{id})
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/inventory/3")
                         .sessionAttr("userName", "Admin")
@@ -311,14 +319,5 @@ public class FarmersMarketApplicationTests {
 //    -getOrderHistoryForFarmer *
 //    -getOderHistoryForBuyer *
 //    -logout (POST route: /logout)
-//    -deleteUserDeniedByAdmin (DELETE route: /users/{id})
-
-//     @Test
-//    public void test#DeleteUserDeniedByAdmin() throws Exception { //(DELETE route: /users/{id})
-//        mockMvc.perform(
-//                MockMvcRequestBuilders.delete("/users/2")
-//        );
-//        Assert.assertTrue(users.count() == 1);
-//    }
 
 }
