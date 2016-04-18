@@ -15,6 +15,19 @@ angular
       console.log("who",data)
     });
 
+<<<<<<< HEAD
+    $scope.validateUser = function(user) {
+      AdminService.validateUser(user)
+      .then (function(data){
+        console.log("ldlkdaftujhasdfg",data);
+      })
+
+    }
+}
+  //   $scope.deleteUserDeniedByAdmin = function (user)
+  //     this.destroy(user);
+  // }
+=======
     $scope.validateUser = function(user, index) {
       AdminService.validateUser(user)
       .then(function(data){
@@ -50,6 +63,7 @@ angular
 
 
 }
+>>>>>>> 43aa41418511fe49519b1d0eb91ae976e6c0c976
 
 },{"angular":38}],2:[function(require,module,exports){
 var angular = require('angular');
@@ -83,6 +97,17 @@ angular
       return $http.put('/users/validate/' + user.id)
     }
 
+<<<<<<< HEAD
+    // function deleteUserDeniedByAdmin(user) {
+    //   return $http.put('/users/validate/' + user.id)
+    // }
+
+
+        return {
+          getvalidateUser:getvalidateUser,
+          validateUser:validateUser
+        }
+=======
     function deleteUser(user) {
       return $http.delete('/users/'+ user.id)
     }
@@ -98,6 +123,7 @@ angular
       deleteUser:deleteUser,
       getUsersInCategory:getUsersInCategory
     }
+>>>>>>> 43aa41418511fe49519b1d0eb91ae976e6c0c976
 
   })
 
@@ -653,6 +679,16 @@ $scope.createInventory = function(inventory) {
       console.log("ARE PENDING", data.data);
       $scope.pendingOrders = data.data;
   })
+<<<<<<< HEAD
+  $scope.authorizeOrder = function(pending){
+    FarmersService.authorizeOrder(pending)
+    .then (function(data){
+      console.log("Authorized Bitch!!",data);
+    })
+  }
+
+=======
+>>>>>>> 43aa41418511fe49519b1d0eb91ae976e6c0c976
 }
 
 },{}],26:[function(require,module,exports){
@@ -697,11 +733,23 @@ angular
           return $http.get('/orders/' + pending)
         }
 
+<<<<<<< HEAD
+        function authorizeOrder(pending){
+          return $http.put('/orders/authorize/' + pending.id)
+        }
+
+=======
+>>>>>>> 43aa41418511fe49519b1d0eb91ae976e6c0c976
         return {
           createInventory:createInventory,
           getAllInventory: getAllInventory,
           getAllInventoryByUser:getAllInventoryByUser,
+<<<<<<< HEAD
+          getOrdersPending:getOrdersPending,
+          authorizeOrder:authorizeOrder
+=======
           getOrdersPending:getOrdersPending
+>>>>>>> 43aa41418511fe49519b1d0eb91ae976e6c0c976
 
         }
   })

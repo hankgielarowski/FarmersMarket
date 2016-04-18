@@ -36,4 +36,11 @@ $scope.createInventory = function(inventory) {
       console.log("ARE PENDING", data.data);
       $scope.pendingOrders = data.data;
   })
+  $scope.authorizeOrder = function(pending){
+    FarmersService.authorizeOrder(pending)
+    .then (function(data){
+      console.log("Authorized Bitch!!",data);
+    })
+  }
+
 }

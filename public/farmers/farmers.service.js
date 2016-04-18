@@ -21,11 +21,16 @@ angular
           return $http.get('/orders/' + pending)
         }
 
+        function authorizeOrder(pending){
+          return $http.put('/orders/authorize/' + pending.id)
+        }
+
         return {
           createInventory:createInventory,
           getAllInventory: getAllInventory,
           getAllInventoryByUser:getAllInventoryByUser,
-          getOrdersPending:getOrdersPending
+          getOrdersPending:getOrdersPending,
+          authorizeOrder:authorizeOrder
 
         }
   })
