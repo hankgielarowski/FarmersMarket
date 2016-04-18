@@ -393,7 +393,7 @@ public class FarmersMarketController {
     @RequestMapping(path = "/orders/authorize/{id}", method = RequestMethod.PUT)
     public void authorizeOrder(HttpSession session, @PathVariable("id") int id) throws Exception {
         String userName = (String) session.getAttribute("userName");
-        User user = users.findByUserName("userName");
+        User user = users.findByUserName(userName);
 
         if (user.getId() != orders.findOne(id).getFarmer().getId() && !user.getUserType().equals("Admin")){
             throw new Exception("Invalid User Permissions");
