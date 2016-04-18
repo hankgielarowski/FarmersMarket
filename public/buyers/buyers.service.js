@@ -2,7 +2,6 @@ angular
   .module('buyers.module')
   .service('BuyersService', function($http){
 
-
     function getAllInventoryByCategory(inventory, category){
       return $http.get('/inventory');
     }
@@ -16,16 +15,16 @@ angular
       return $http.post('/orders/' + order.id, order);
     }
 
-    function getUserOrders(userName){
-      console.log("The shits", userName);
-      return $http.get('/orders' + userName)
-
+    function getOrdersPending(pending){
+      return $http.get('/orders/' + pending)
     }
+
 
         return {
           getAllInventoryByCategory: getAllInventoryByCategory,
           getAllCategories: getAllCategories,
           createOrder:createOrder,
-          getUserOrders:getUserOrders
+          getOrdersPending:getOrdersPending
+
         }
   })

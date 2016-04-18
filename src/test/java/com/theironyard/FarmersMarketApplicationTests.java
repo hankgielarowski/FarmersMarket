@@ -1,6 +1,7 @@
 package com.theironyard;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.theironyard.entities.Category;
 import com.theironyard.entities.Inventory;
 import com.theironyard.entities.User;
 import com.theironyard.services.*;
@@ -23,7 +24,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = FarmersMarketApplication.class)
@@ -63,7 +66,7 @@ public class FarmersMarketApplicationTests {
                         .content(json)
                         .contentType("application/json")
         );
-        Assert.assertTrue(users.count() == 4);
+        Assert.assertTrue(users.count() == 5);
     }
 
     @Test
@@ -72,13 +75,37 @@ public class FarmersMarketApplicationTests {
     Assert.assertTrue(user.getUserName().equals("Alice"));
     }
 
-//    -getValidatingUsers (GET route: /users/validate)
+//    @Test
+//    public void test2GetValidatingUsers() throws Exception { //(GET route: /users/validate)
+//        ResultActions resAct =
+//            mockMvc.perform(
+//                    MockMvcRequestBuilders.get("/users/validate")
+//                            .sessionAttr("userName", "Admin")
+//            );
+//        MvcResult result = resAct.andReturn();
+//        String returnString = result.getResponse().getContentAsString();
+//
+//        Scanner fileScanner = new Scanner();
+//        while (fileScanner.hasNext()) {
+//            String[] line = returnString.split(",");
+//
+//            for(String stringLine : line) {
+//                String[] column = stringLine.split(": ");
+//            }
+//
+//
+//            Category c = new Category(column[0], column[1]);
+//
+//
+//        Assert.assertTrue(users.findByIsValid(true).size() == 3);
+//        }
+//    }
 
     @Test
     public void test2ValidateUser() throws Exception { //(POST route: /users/validate/{id})
         ObjectMapper mapper = new ObjectMapper();
         mockMvc.perform(
-                MockMvcRequestBuilders.put("/users/validate/4")
+                MockMvcRequestBuilders.put("/users/validate/5")
                         .sessionAttr("userName", "Admin")
         );
         Assert.assertTrue(users.findByUserName("Alice").getValid());
@@ -88,17 +115,17 @@ public class FarmersMarketApplicationTests {
 
     @Test
     public void test3UpdateUser() throws Exception { //(PUT route: /users/{id})
-        User user = users.findOne(4);
+        User user = users.findOne(5);
         user.setCompanyName("Rawl Produce");
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(user);
         mockMvc.perform(
-                MockMvcRequestBuilders.put("/users/4")
+                MockMvcRequestBuilders.put("/users/5")
                         .content(json)
                         .contentType("application/json")
                         .sessionAttr("userName", "Alice")
         );
-        Assert.assertTrue(users.findOne(4).getCompanyName().equals("Rawl Produce"));
+        Assert.assertTrue(users.findOne(5).getCompanyName().equals("Rawl Produce"));
     }
 
     @Test
