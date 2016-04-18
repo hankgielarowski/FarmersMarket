@@ -63,6 +63,8 @@ public class FarmersMarketController {
             users.save(user2);
             User user3 = new User("FrankBuyer", PasswordStorage.createHash("frank"), "Buyer", "Frank's Store", "Charleston", "777-989-9998", "Frank@Frank.com", true);
             users.save(user3);
+            User user4 = new User("RichPending", PasswordStorage.createHash("rich"), "Buyer", "Rich Stores", "Chucktown", "989-000-1234", "rich@rich.com", false);
+            users.save(user4);
         }
     }
 
@@ -330,7 +332,7 @@ public class FarmersMarketController {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
 
-        if((!user.getUserType().equals("Buyer") || !user.getValid())){
+        if((!user.getUserType().equals("Buyer") || !user.getValid())){ //shouldlnt this say "true" inside it?
             throw new Exception("Invalid User Permissions");
         }
 
@@ -375,7 +377,7 @@ public class FarmersMarketController {
         orders.delete(id);
     }
 
-    @RequestMapping(path = "/orders/{userId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/orders/user/{userId}", method = RequestMethod.GET)
     public ArrayList<Order> getUserOrders(HttpSession session, @PathVariable("userId") int id) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
