@@ -651,6 +651,7 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
   $scope.user = AuthService.currentUser();
   $scope.myProducts;
   $scope.categories = [];
+  $scope.approvedOrders = [];
 
 FarmersService.getAllInventoryByUser($scope.user.id)
 .then(function(data){
@@ -683,6 +684,7 @@ $scope.createInventory = function(inventory) {
     FarmersService.authorizeOrder(pending)
     .then (function(data){
       console.log("Authorized Bitch!!",data);
+        $scope.approvedOrders.push(pending);
     })
   }
 
