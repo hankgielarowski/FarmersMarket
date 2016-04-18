@@ -11,6 +11,7 @@ angular
           return $http.get('/inventory');
         }
 
+
         function getAllInventoryByUser(userName){
           console.log("got me some corn", userName);
           return $http.get('/inventory/user/' + userName);
