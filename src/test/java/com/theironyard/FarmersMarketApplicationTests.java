@@ -145,7 +145,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void test7CreateInventory() throws Exception { //(POST route: /inventory)
+    public void test7CreateInventoryUser() throws Exception { //(POST route: /inventory)
         Inventory inventory = new Inventory();
         inventory.setCategory("Banana");
         inventory.setName("Golden Yellow Bananas");
@@ -164,7 +164,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void test8UpdateInventory() throws Exception { //(PUT route: /inventory/{id})
+    public void test8UpdateInventoryUser() throws Exception { //(PUT route: /inventory/{id})
         Inventory i = inventories.findOne(2);
         i.setCategory("Tomato");
         System.out.println();
@@ -180,7 +180,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void test9CreateInventoryByAdmin() throws Exception { //(POST route: /inventory/user/{id})
+    public void test9CreateInventoryAdmin() throws Exception { //(POST route: /inventory/user/{id})
         Inventory inventory = new Inventory();
         inventory.setCategory("Banana");
         inventory.setName("Chiquitta Bananas");
@@ -198,7 +198,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void testB1UpdateInventoryByAdmin() throws Exception { //(PUT route: /inventory/{id})
+    public void testB1UpdateInventoryAdmin() throws Exception { //(PUT route: /inventory/{id})
         Inventory i = inventories.findOne(2);
         i.setCategory("Corn");
         System.out.println();
@@ -228,26 +228,70 @@ public class FarmersMarketApplicationTests {
 //        //this test is a placeholder that I'm going to work on redoing soon
 //    }
 
-//    @Test
-//    public void testB3CreateOrderByUser() throws Exception { //(POST route: /orders/{invId})
-//        Order order = new Order();
-//        order.setCategory("Banana");
-//        order.setName("Golden Yellow Bananas");
-//        order.setQuantityOrdered(7);
-//        order.setPrice(2.85);
-//        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(order);
-//        mockMvc.perform(
-//                MockMvcRequestBuilders.post("/orders/2")
-//                        .content(json)
-//                        .contentType("application/json")
-//                        .sessionAttr("userName", "Alice")
-//        );
-//        Assert.assertTrue(orders.count() == 1);
-//    }
+//    -getAllCategories (GET route: /categories)
+
+
+//    -getCategoriesByLetter (GET route: /categories/{letter})
+
 
     @Test
-    public void testB4DeleteInventoryByUser() throws Exception { //(DELETE route: /inventory/{id})
+    public void testB3CreateOrderUser() throws Exception { //(POST route: /orders/{invId})
+        User user = new User("Bob", "password", "password", "Buyer", "Bob Store", "charleston", "8888", "bob@bob");
+        user.setValid(true);
+        users.save(user);
+
+        Order order = new Order();
+        order.setCategory("Banana");
+        order.setName("Golden Yellow Bananas");
+        order.setQuantityOrdered(2);
+        order.setPrice(2.85);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(order);
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/orders/2")
+                        .content(json)
+                        .contentType("application/json")
+                        .sessionAttr("userName", "Bob")
+        );
+        Assert.assertTrue(orders.count() == 1);
+    }
+
+    @Test
+    public void testB4CreateOrderAdmin() throws Exception { //(POST route: /orders/admin/{buyerId}/{invId})
+        Order order = new Order();
+        order.setCategory("Banana");
+        order.setName("Golden Yellow Bananas");
+        order.setQuantityOrdered(3);
+        order.setPrice(2.85);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(order);
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/orders/admin/6/2")
+                        .content(json)
+                        .contentType("application/json")
+                        .sessionAttr("userName", "Admin")
+        );
+        Assert.assertTrue(orders.count() == 2);
+    }
+
+//    -getOrdersPending(GET route: /orders/{pending})
+
+
+    @Test
+    public void testB5DeletePendingOrderFarmerOrBuyerOrAdmin() throws Exception { //(DELETE route: /orders/{id})
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/orders/1")
+                .sessionAttr("userName", "Alice")
+        );
+        Assert.assertTrue(orders.count() == 1);
+    }
+
+//    -authorizeOrderByFarmerOrAdmin (PUT route: /orders/authorize/{id})
+
+
+
+    @Test
+    public void testB6DeleteInventoryUser() throws Exception { //(DELETE route: /inventory/{id})
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/inventory/2")
                         .sessionAttr("userName", "Alice")
@@ -256,7 +300,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void testB5DeleteInventoryByAdmin() throws Exception { //(DELETE route: /inventory/{id})
+    public void testB7DeleteInventoryAdmin() throws Exception { //(DELETE route: /inventory/{id})
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/inventory/3")
                         .sessionAttr("userName", "Admin")
@@ -264,20 +308,6 @@ public class FarmersMarketApplicationTests {
         Assert.assertTrue(inventories.findByUser(users.findByUserName("Alice")).size() == 0);
     }
 
-//    -getAllCategories (GET route: /categories)
-
-
-//    -getCategoriesByLetter (GET route: /categories/{letter})
-
-
-//    -createOderByAdmin (POST route: /orders)
-//    -getOrdersPending(GET route: /orders/{pending})
-//    -deleteOderByUser (DELETE route: /orders/{id})
-//    -deleteOrderByAdmin (DELETE route: /orders/{id})
-//    -createOrderByUser (POST route: /orders)
-//    -authorizeOrderByUser (GET route: /orders/authorize/{id})
-//    -createOrderByUser (POST route: /orders)
-//    -authorizeOrderByAdmin (GET route: /orders/authorize/{id})
 //    -getOrderHistoryForFarmer *
 //    -getOderHistoryForBuyer *
 //    -logout (POST route: /logout)

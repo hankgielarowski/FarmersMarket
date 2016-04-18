@@ -120,7 +120,7 @@ public class FarmersMarketController {
     public void deleteUserDeniedByAdmin(@PathVariable("id") int id, HttpSession session) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-        if(!user.getUserType().equals("Admin") || user.getValid()) {
+        if(!user.getUserType().equals("Admin") || !user.getValid()) {
             throw new Exception("Cannot Delete this User");
         }
 
