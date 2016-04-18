@@ -14,9 +14,9 @@ angular
     // function getAllInventoryByCategory(category){
     //   return $http.get('/inventory/category/' + category);
     // }
-    function createOrder(order){
+    function createOrder(order, id){
       console.log("posted orders!!!!", order);
-      return $http.post('/orders',order);
+      return $http.post('/orders/' + order.id, order);
     }
 
     function getUserOrders(userName){
