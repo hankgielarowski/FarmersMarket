@@ -2,9 +2,9 @@ angular
 .module("farmers-profile.module")
 .controller("FarmersProfileController", FarmersProfileController);
 
-FarmersProfileController.$inject = ["$scope", "$http", "FarmersProfileService", "AuthService", "$uibModal"]
+FarmersProfileController.$inject = ["$scope", "$http", "FarmersProfileService", "AuthService", "$uibModal", "$routeParams"]
 
-function FarmersProfileController($scope, $http, FarmersProfileService, AuthService, $uibModal){
+function FarmersProfileController($scope, $http, FarmersProfileService, AuthService, $uibModal, $routeParams){
   $scope.user = AuthService.currentUser();
   console.log("CHOKE RICHARD",AuthService.currentUser());
 
@@ -20,6 +20,11 @@ function FarmersProfileController($scope, $http, FarmersProfileService, AuthServ
       }
     });
   }
+
+    FarmersProfileService.getProfile($routeParams.farmerId).then(function (farmer) {
+      console.log(farmer);
+      $scope.farmer = farmer.data;
+    })
     FarmersProfileService.getAllInventoryByUser($scope.user.id)
     .then(function(data){
       $scope.myProducts = data.data;
@@ -27,4 +32,4 @@ function FarmersProfileController($scope, $http, FarmersProfileService, AuthServ
     })
 
 
-}
+} 
