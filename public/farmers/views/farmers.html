@@ -9,12 +9,10 @@
           <h4 class="text-danger">Goods For Sale</h4>
             <ul>
               <form class="signin-form" ng-submit="createInventory(list)">
-                <!-- <input id="category" class="form-control" type="text" placeholder="Category" name="userType" ng-model="list.category"> -->
                 <select ng-options="category.categoryName for category in categories" ng-model="list.category"></select>
                 <input id="type" class="form-control" type="text" placeholder="Type" name="userType" ng-model="list.name">
                 <input id="amount" class="form-control" type="text" placeholder="Amount" name="userType" ng-model="list.quantityAvailable">
-                <input id="amount" class="form-control" type="text" placeholder="Market Price" name="userType" ng-model="list.price" >
-                <!-- <input style="display:none" ng-show="user" accept=""id="amount" class="form-control" type="text" name="userType" ng-model="user" placeholder="{{user.userName}}"> -->
+                <input id="amount" class="form-control" type="text" placeholder="Market Price" name="userType" ng-model="list.price">
                 <input class="btn btn-default btn-register" type="submit" value="Post Products" name="commit" >
               </form>
             </ul>

@@ -33,8 +33,6 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
     })
 
   $scope.createOrder = function(order){
-    // var timeStampOrdered = new Date().toJSON().slice(0,10);
-    //   return timeStampOrdered
     console.log($scope.myProducts);
     order.category = order.category;
 
@@ -45,22 +43,10 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       console.log("SUCCES", res);
 
       $scope.pendingOrders.push(order);
-      $scope.thing = {};
-
-      //
-      // console.log("WHAT ARE WE SENDING", order);
-      // console.log("HOW MUCH", quantity);
-      // console.log("LOGINUSERS", window.localStorage.getItem('mahUser'));
-      // var timeStampOrdered = new Date().toJSON().slice(0,10);
-      // console.log("time", timeStampOrdered);
-      // return timeStampOrdered
+      $scope.thing = {};    
 
 })
-      // BuyersService.getOrdersPending($scope.user.id)
-      // .then(function(data){
-      //   $scope.orders = data.data;
-      //   console.log("ORDERS!!!",$scope.orders);
-      // })
+
 
       }
 

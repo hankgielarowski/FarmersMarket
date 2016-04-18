@@ -407,8 +407,6 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
     })
 
   $scope.createOrder = function(order){
-    // var timeStampOrdered = new Date().toJSON().slice(0,10);
-    //   return timeStampOrdered
     console.log($scope.myProducts);
     order.category = order.category;
 
@@ -419,22 +417,10 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
       console.log("SUCCES", res);
 
       $scope.pendingOrders.push(order);
-      $scope.thing = {};
-
-      //
-      // console.log("WHAT ARE WE SENDING", order);
-      // console.log("HOW MUCH", quantity);
-      // console.log("LOGINUSERS", window.localStorage.getItem('mahUser'));
-      // var timeStampOrdered = new Date().toJSON().slice(0,10);
-      // console.log("time", timeStampOrdered);
-      // return timeStampOrdered
+      $scope.thing = {};    
 
 })
-      // BuyersService.getOrdersPending($scope.user.id)
-      // .then(function(data){
-      //   $scope.orders = data.data;
-      //   console.log("ORDERS!!!",$scope.orders);
-      // })
+
 
       }
 
@@ -473,9 +459,6 @@ angular
       return $http.get('/categories');
     }
 
-    // function getAllInventoryByCategory(category){
-    //   return $http.get('/inventory/category/' + category);
-    // }
     function createOrder(order, id){
       console.log("posted orders!!!!", order);
       return $http.post('/orders/' + order.id, order);
@@ -487,20 +470,12 @@ angular
 
     }
 
-    // function getUserOrders(userName){
-    //   return $http.get('/orders/' + userName);
-    // }
-
         return {
           getAllInventoryByCategory: getAllInventoryByCategory,
           getAllCategories: getAllCategories,
           createOrder:createOrder,
           getUserOrders:getUserOrders
-          // getUserOrders: getUserOrders
-
         }
-
-
   })
 
 },{}],19:[function(require,module,exports){
@@ -614,15 +589,6 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
   $scope.myProducts;
   $scope.categories = [];
 
-  // FarmersService.getUser()
-  // .then(function(data) {
-  //
-  //   })
-// FarmersService.getOneInventory(id)
-// .then(function(data){
-//
-// })
-
 FarmersService.getAllInventoryByUser($scope.user.id)
 .then(function(data){
   $scope.myProducts = data.data;
@@ -636,15 +602,10 @@ $scope.createInventory = function(inventory) {
   inventory.user = null;
   FarmersService.createInventory(inventory)
   .then(function(res){
-    // console.log("SUCCES", res);
-    // window.corn = res.data;
     $scope.myProducts.push(inventory);
     $scope.list = {};
-
-
   })
 }
-
 
   BuyersService.getAllCategories()
   .then(function(data){
@@ -675,10 +636,7 @@ angular
 angular
   .module('farmers.module')
   .service('FarmersService', function($http,$window){
-        //
-        // function getUser() {
-        //   return $http.get('/users');
-        // }
+
         function createInventory(inventory){
           return $http.post('/inventory/', inventory);
         }
@@ -692,15 +650,11 @@ angular
           return $http.get('/inventory/user/' + userName);
         }
 
-        // function getAllInventoryByCategory(type) {
-        //   return $http.get('/inventory/' + type);
-        // }
         return {
-          // getUser: getUser,
           createInventory:createInventory,
           getAllInventory: getAllInventory,
           getAllInventoryByUser:getAllInventoryByUser
-          // getAllInventoryByCategory: getAllInventoryByCategory
+          
         }
   })
 
