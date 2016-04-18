@@ -14,9 +14,9 @@
     <div class="well">
       <h4 class="text-success"> All Pending Users </h4>
       <ul ng-repeat="user in users">
-        <li ng-click="validateUser(user)">{{user.companyName}}
-          <button type="button" class="btn btn-danger" ng-click="validateUser(user)">Approve User</button>
-          <button type="button" class="btn btn-danger" ng-click="deleteUserDeniedByAdmin(user)">Delete User</button>
+        <li>{{user.companyName}}
+          <button type="button" class="btn btn-danger btn-sm" ng-click="validateUser(user, $index)">Approve User</button>
+          <button type="button" class="btn btn-danger btn-sm" ng-click="deleteUserDeniedByAdmin(user, $index)">Delete User</button>
         </li>
       </ul>
     </div>

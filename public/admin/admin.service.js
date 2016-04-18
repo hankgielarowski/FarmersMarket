@@ -14,14 +14,16 @@ angular
       return $http.put('/users/validate/' + user.id)
     }
 
-    // function deleteUserDeniedByAdmin(user) {
-    //   return $http.put('/users/validate/' + user.id)
-    // }
+    function deleteUser(user) {
+      return $http.delete('/users/'+ user.id)
+    }
 
 
-        return {
-          getvalidateUser:getvalidateUser,
-          validateUser:validateUser
-        }
+
+    return {
+      getvalidateUser:getvalidateUser,
+      validateUser:validateUser,
+      deleteUser:deleteUser
+    }
 
   })

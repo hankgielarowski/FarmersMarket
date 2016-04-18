@@ -14,14 +14,21 @@ angular
       console.log("who",data)
     });
 
-    $scope.validateUser = function(user) {
+    $scope.validateUser = function(user, index) {
       AdminService.validateUser(user)
-      .then (function(data){
+      .then(function(data){
         console.log("ldlkdaftujhasdfg",data);
+        $scope.users.splice(index, 1)
       })
 
     }
 
-    $scope.deleteUserDeniedByAdmin = function (user)
-      this.destroy(user);
-  }
+    $scope.deleteUserDeniedByAdmin = function (user, index) {
+      AdminService.deleteUser (user)
+      .then(function(data){
+        $scope.users.splice(index, 1)
+      })
+};
+
+
+}
