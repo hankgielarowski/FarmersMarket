@@ -19,6 +19,6 @@ angular
           createInventory:createInventory,
           getAllInventory: getAllInventory,
           getAllInventoryByUser:getAllInventoryByUser
-          
+
         }
   })

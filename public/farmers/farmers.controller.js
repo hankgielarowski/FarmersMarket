@@ -19,7 +19,7 @@ $scope.createInventory = function(inventory) {
   inventory.category = inventory.category.categoryName
   inventory.price = parseInt(inventory.price);
   inventory.quantityAvailable = parseInt(inventory.quantityAvailable);
-  inventory.user = null;
+  inventory.user= null;
   FarmersService.createInventory(inventory)
   .then(function(res){
     $scope.myProducts.push(inventory);
