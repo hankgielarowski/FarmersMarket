@@ -1,10 +1,13 @@
-<article class="buyer-prof">
-  <p class="buyerProfile">
-    {{user.companyName}}
-    {{user.location}}
-    {{user.phone}}
-    {{user.email}}
-  </p>
-  <button type="button" class="btn btn-danger navbar-right login" ng-click="editUser()">Edit Profile</button>
-</article>
-<h1>what the fuck</h1>
+<div class="contianer-buyerProfile">
+  <div class="row">
+    <div class="col-md-12 buyerProfile">
+      <ul class="list-group profileList">
+        <li class="list-group-item new">{{user.companyName}}</li>
+        <li class="list-group-item new">{{user.location}}</li>
+        <li class="list-group-item new">{{user.phone}}</li>
+        <li class="list-group-item new">{{user.email}}</li>
+        <li class="list-group-item new"><button type="button" class="btn btn-info" ng-click="editUser()">Edit Profile</button></li>
+      </ul>
+    </div>
+  </div>
+</div>
