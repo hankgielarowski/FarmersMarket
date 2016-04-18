@@ -24,7 +24,7 @@ angular
     }
 
     $scope.deleteUserDeniedByAdmin = function (user, index) {
-      AdminService.deleteUser (user)
+      AdminService.deleteUser(user)
       .then(function(data){
         $scope.users.splice(index, 1)
       })

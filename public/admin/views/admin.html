@@ -13,7 +13,7 @@
   <div class="col-md-12" id="allUsers">
     <div class="well">
       <h4 class="text-success"> All Pending Users </h4>
-      <ul ng-repeat="user in users">
+      <ul class="adminUserList" ng-repeat="user in users">
         <li>{{user.companyName}}
           <button type="button" class="btn btn-danger btn-sm" ng-click="validateUser(user, $index)">Approve User</button>
           <button type="button" class="btn btn-danger btn-sm" ng-click="deleteUserDeniedByAdmin(user, $index)">Delete User</button>
