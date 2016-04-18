@@ -14,14 +14,38 @@ angular
       console.log("who",data)
     });
 
-    $scope.validateUser = function(user) {
+    $scope.validateUser = function(user, index) {
       AdminService.validateUser(user)
-      .then (function(data){
+      .then(function(data){
         console.log("ldlkdaftujhasdfg",data);
+        $scope.users.splice(index, 1)
       })
-
     }
+
+
+    $scope.deleteUserDeniedByAdmin = function (user, index) {
+      AdminService.deleteUser(user)
+      .then(function(data){
+        $scope.users.splice(index, 1)
+      })
+    };
+
+    $scope.getCatUsers = function(cat) {
+      console.log("WE ARE GETTING SHIT?", cat)
+      AdminService.getUsersInCategory(cat)
+      .then(function(data){
+          $scope.farmers = data.data.filter(function(el) {
+            return el.userType = "Farmer";
+          })
+
+          $scope.buyers = data.data.filter(function(el) {
+            return el.userType = "Buyer";
+          })
+      }).catch(function(err) {
+        console.log("SHIT", err);
+      });
+    }
+
+
+
 }
-  //   $scope.deleteUserDeniedByAdmin = function (user)
-  //     this.destroy(user);
-  // }

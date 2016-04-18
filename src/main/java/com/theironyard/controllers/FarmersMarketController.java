@@ -120,7 +120,7 @@ public class FarmersMarketController {
     public void deleteUserDeniedByAdmin(@PathVariable("id") int id, HttpSession session) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-        if(!user.getUserType().equals("Admin") || user.getValid()) {
+        if(!user.getUserType().equals("Admin") || !user.getValid()) {
             throw new Exception("Cannot Delete this User");
         }
 
@@ -285,6 +285,13 @@ public class FarmersMarketController {
             orders.delete(order);
         }
 
+        List<Order> saveOrderList = orders.findByIsPendingApprovalAndInventory(false, inventories.findOne(id));
+
+        for(Order order : saveOrderList) {
+            order.setInventory(null);
+            orders.save(order);
+        }
+
         inventories.delete(id);
     }
 
@@ -393,7 +400,7 @@ public class FarmersMarketController {
     @RequestMapping(path = "/orders/authorize/{id}", method = RequestMethod.PUT)
     public void authorizeOrder(HttpSession session, @PathVariable("id") int id) throws Exception {
         String userName = (String) session.getAttribute("userName");
-        User user = users.findByUserName("userName");
+        User user = users.findByUserName(userName);
 
         if (user.getId() != orders.findOne(id).getFarmer().getId() && !user.getUserType().equals("Admin")){
             throw new Exception("Invalid User Permissions");
