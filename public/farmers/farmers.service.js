@@ -1,10 +1,7 @@
 angular
   .module('farmers.module')
   .service('FarmersService', function($http,$window){
-        //
-        // function getUser() {
-        //   return $http.get('/users');
-        // }
+
         function createInventory(inventory){
           return $http.post('/inventory/', inventory);
         }
@@ -18,14 +15,10 @@ angular
           return $http.get('/inventory/user/' + userName);
         }
 
-        // function getAllInventoryByCategory(type) {
-        //   return $http.get('/inventory/' + type);
-        // }
         return {
-          // getUser: getUser,
           createInventory:createInventory,
           getAllInventory: getAllInventory,
           getAllInventoryByUser:getAllInventoryByUser
-          // getAllInventoryByCategory: getAllInventoryByCategory
+
         }
   })

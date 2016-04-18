@@ -2,11 +2,13 @@ angular
 .module("buyers-profile.module")
 .controller("BuyersProfileController", BuyersProfileController);
 
-BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService"]
 
-function BuyersProfileController($scope, $http, BuyersProfileService, AuthService){
-  $scope.shit = AuthService.currentUser(user);
-  console.log("I am user", user );
+BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService", "$uibModal"]
+
+
+function BuyersProfileController($scope, $http, BuyersProfileService, AuthService, $uibModal){
+  $scope.user = AuthService.currentUser();
+
 
   $scope.editUser = function() {
     console.log("WHAT UP");
@@ -20,4 +22,9 @@ function BuyersProfileController($scope, $http, BuyersProfileService, AuthServic
       }
     });
   }
+  BuyersProfileService.getAllInventoryByUser($scope.user.id)
+  .then(function(data){
+    $scope.myProducts = data.data;
+
+  })
 }

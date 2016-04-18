@@ -9,15 +9,6 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
   $scope.myProducts;
   $scope.categories = [];
 
-  // FarmersService.getUser()
-  // .then(function(data) {
-  //
-  //   })
-// FarmersService.getOneInventory(id)
-// .then(function(data){
-//
-// })
-
 FarmersService.getAllInventoryByUser($scope.user.id)
 .then(function(data){
   $scope.myProducts = data.data;
@@ -28,18 +19,13 @@ $scope.createInventory = function(inventory) {
   inventory.category = inventory.category.categoryName
   inventory.price = parseInt(inventory.price);
   inventory.quantityAvailable = parseInt(inventory.quantityAvailable);
-  inventory.user = null;
+  inventory.user= null;
   FarmersService.createInventory(inventory)
   .then(function(res){
-    // console.log("SUCCES", res);
-    // window.corn = res.data;
     $scope.myProducts.push(inventory);
     $scope.list = {};
-
-
   })
 }
-
 
   BuyersService.getAllCategories()
   .then(function(data){
