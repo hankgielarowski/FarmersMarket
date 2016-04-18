@@ -15,19 +15,6 @@ angular
       console.log("who",data)
     });
 
-<<<<<<< HEAD
-    $scope.validateUser = function(user) {
-      AdminService.validateUser(user)
-      .then (function(data){
-        console.log("ldlkdaftujhasdfg",data);
-      })
-
-    }
-}
-  //   $scope.deleteUserDeniedByAdmin = function (user)
-  //     this.destroy(user);
-  // }
-=======
     $scope.validateUser = function(user, index) {
       AdminService.validateUser(user)
       .then(function(data){
@@ -43,18 +30,26 @@ angular
         $scope.users.splice(index, 1)
       })
     };
+    $scope.showFarmer = false
+    $scope.showBuyer = false
+
 
     $scope.getCatUsers = function(cat) {
       console.log("WE ARE GETTING SHIT?", cat)
       AdminService.getUsersInCategory(cat)
       .then(function(data){
           $scope.farmers = data.data.filter(function(el) {
-            return el.userType = "Farmer";
+            return el.userType === "Farmer";
           })
 
           $scope.buyers = data.data.filter(function(el) {
-            return el.userType = "Buyer";
+            return el.userType === "Buyer";
           })
+
+          $scope.showFarmer = !$scope.showFarmer
+          $scope.showBuyer = !$scope.showBuyer
+
+
       }).catch(function(err) {
         console.log("SHIT", err);
       });
@@ -62,8 +57,9 @@ angular
 
 
 
+
+
 }
->>>>>>> 43aa41418511fe49519b1d0eb91ae976e6c0c976
 
 },{"angular":38}],2:[function(require,module,exports){
 var angular = require('angular');
@@ -97,17 +93,6 @@ angular
       return $http.put('/users/validate/' + user.id)
     }
 
-<<<<<<< HEAD
-    // function deleteUserDeniedByAdmin(user) {
-    //   return $http.put('/users/validate/' + user.id)
-    // }
-
-
-        return {
-          getvalidateUser:getvalidateUser,
-          validateUser:validateUser
-        }
-=======
     function deleteUser(user) {
       return $http.delete('/users/'+ user.id)
     }
@@ -123,7 +108,6 @@ angular
       deleteUser:deleteUser,
       getUsersInCategory:getUsersInCategory
     }
->>>>>>> 43aa41418511fe49519b1d0eb91ae976e6c0c976
 
   })
 
@@ -361,10 +345,10 @@ angular
 .controller("BuyersProfileController", BuyersProfileController);
 
 
-BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService", "$uibModal"]
+BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService", "$uibModal", "$routeParams"]
 
 
-function BuyersProfileController($scope, $http, BuyersProfileService, AuthService, $uibModal){
+function BuyersProfileController($scope, $http, BuyersProfileService, AuthService, $uibModal, $routeParams){
   $scope.user = AuthService.currentUser();
 
 
@@ -380,10 +364,15 @@ function BuyersProfileController($scope, $http, BuyersProfileService, AuthServic
       }
     });
   }
+
+  BuyersProfileService.getBuyerProfile($routeParams.buyerId).then(function (buyer) {
+    console.log(buyer);
+    $scope.buyer = buyer.data;
+  })
+
   BuyersProfileService.getAllInventoryByUser($scope.user.id)
   .then(function(data){
     $scope.myProducts = data.data;
-
   })
 }
 
@@ -394,7 +383,7 @@ angular
 ])
 .config(function($routeProvider) {
   $routeProvider
-    .when('/buyers-profile/:id/',{
+    .when('/buyers-profile/:buyerId/',{
       templateUrl: "./buyers-profile/views/buyers-profile.html",
       controller: "BuyersProfileController"
     })
@@ -410,11 +399,14 @@ angular
           return $http.get('/inventory/user/' + userName);
         }
 
-
+        function getBuyerProfileUser(id) {
+          return $http.get('/users/' + id);
+        }
 
 
 return {
-  getAllInventoryByUser:getAllInventoryByUser
+  getAllInventoryByUser:getAllInventoryByUser,
+  getBuyerProfile: getBuyerProfileUser
   }
 
 })
@@ -551,9 +543,9 @@ angular
 .module("farmers-profile.module")
 .controller("FarmersProfileController", FarmersProfileController);
 
-FarmersProfileController.$inject = ["$scope", "$http", "FarmersProfileService", "AuthService", "$uibModal"]
+FarmersProfileController.$inject = ["$scope", "$http", "FarmersProfileService", "AuthService", "$uibModal", "$routeParams"]
 
-function FarmersProfileController($scope, $http, FarmersProfileService, AuthService, $uibModal){
+function FarmersProfileController($scope, $http, FarmersProfileService, AuthService, $uibModal, $routeParams){
   $scope.user = AuthService.currentUser();
   console.log("CHOKE RICHARD",AuthService.currentUser());
 
@@ -569,6 +561,11 @@ function FarmersProfileController($scope, $http, FarmersProfileService, AuthServ
       }
     });
   }
+
+    FarmersProfileService.getProfile($routeParams.farmerId).then(function (farmer) {
+      console.log(farmer);
+      $scope.farmer = farmer.data;
+    })
     FarmersProfileService.getAllInventoryByUser($scope.user.id)
     .then(function(data){
       $scope.myProducts = data.data;
@@ -576,7 +573,7 @@ function FarmersProfileController($scope, $http, FarmersProfileService, AuthServ
     })
 
 
-}
+} 
 
 },{}],21:[function(require,module,exports){
 angular
@@ -585,11 +582,11 @@ angular
 ])
 .config(function($routeProvider) {
   $routeProvider
-    .when('/farmers-profile/:id/',{
+    .when('/farmers-profile/:farmerId',{
       templateUrl: "./farmers-profile/views/farmers-profile.html",
       controller: "FarmersProfileController"
     })
-}) 
+})
 
 },{}],22:[function(require,module,exports){
 angular
@@ -602,14 +599,17 @@ angular
           return $http.get('/inventory/user/' + userName);
         }
 
-
+        function getProfileUser(id) {
+          return $http.get('/users/' + id);
+        }
 
 
 return {
-  getAllInventoryByUser:getAllInventoryByUser
+  getAllInventoryByUser:getAllInventoryByUser,
+  getProfile: getProfileUser
   }
 
-}) 
+})
 
 },{}],23:[function(require,module,exports){
 
@@ -679,7 +679,6 @@ $scope.createInventory = function(inventory) {
       console.log("ARE PENDING", data.data);
       $scope.pendingOrders = data.data;
   })
-<<<<<<< HEAD
   $scope.authorizeOrder = function(pending){
     FarmersService.authorizeOrder(pending)
     .then (function(data){
@@ -687,8 +686,6 @@ $scope.createInventory = function(inventory) {
     })
   }
 
-=======
->>>>>>> 43aa41418511fe49519b1d0eb91ae976e6c0c976
 }
 
 },{}],26:[function(require,module,exports){
@@ -733,23 +730,16 @@ angular
           return $http.get('/orders/' + pending)
         }
 
-<<<<<<< HEAD
         function authorizeOrder(pending){
           return $http.put('/orders/authorize/' + pending.id)
         }
 
-=======
->>>>>>> 43aa41418511fe49519b1d0eb91ae976e6c0c976
         return {
           createInventory:createInventory,
           getAllInventory: getAllInventory,
           getAllInventoryByUser:getAllInventoryByUser,
-<<<<<<< HEAD
           getOrdersPending:getOrdersPending,
           authorizeOrder:authorizeOrder
-=======
-          getOrdersPending:getOrdersPending
->>>>>>> 43aa41418511fe49519b1d0eb91ae976e6c0c976
 
         }
   })
