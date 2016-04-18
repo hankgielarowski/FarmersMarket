@@ -18,12 +18,16 @@ angular
       return $http.delete('/users/'+ user.id)
     }
 
-
+    function getUsersInCategory(category){
+      console.log("I ber user")
+      return $http.get('/users/category/' + category);
+    }
 
     return {
       getvalidateUser:getvalidateUser,
       validateUser:validateUser,
-      deleteUser:deleteUser
+      deleteUser:deleteUser,
+      getUsersInCategory:getUsersInCategory
     }
 
   })
