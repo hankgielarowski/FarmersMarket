@@ -286,7 +286,11 @@ angular
 .module("buyers-profile.module")
 .controller("BuyersProfileController", BuyersProfileController);
 
+<<<<<<< HEAD
 BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService" , "$uibModal"]
+=======
+BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService", "$uibModal"]
+>>>>>>> d6e5fad7b2d0d769425850301655fe86201f5de4
 
 function BuyersProfileController($scope, $http, BuyersProfileService, AuthService, $uibModal){
   $scope.user = AuthService.currentUser();
@@ -309,7 +313,10 @@ function BuyersProfileController($scope, $http, BuyersProfileService, AuthServic
     $scope.myProducts = data.data;
 
   })
+<<<<<<< HEAD
 
+=======
+>>>>>>> d6e5fad7b2d0d769425850301655fe86201f5de4
 }
 
 },{}],12:[function(require,module,exports){
@@ -382,6 +389,7 @@ BuyersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", 
 function BuyersController($scope, $http, $location, $q, $rootScope, BuyersService, AuthService, _, $uibModal){
 
   $scope.user = AuthService.currentUser();
+  $scope.pendingOrders = [];
   $scope.myProducts;
 
   $scope.showThisCat = function(category) {
@@ -403,6 +411,7 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
     BuyersService.getAllCategories()
     .then(function(data){
       $scope.categories = data.data;
+<<<<<<< HEAD
 
     })
     $scope.createOrder = function() {
@@ -413,6 +422,42 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
         controller: 'ModalInstanceOrderFormController',
         size: 'sm',
         resolve: {
+=======
+      console.log(data)
+    })
+
+  $scope.createOrder = function(order){
+    // var timeStampOrdered = new Date().toJSON().slice(0,10);
+    //   return timeStampOrdered
+    console.log($scope.myProducts);
+    order.category = order.category;
+
+    order.quantityOrdered = order.quantityOrdered;
+    order.inventory = $scope.myProducts[0];
+    BuyersService.createOrder(order)
+    .then(function(res){
+      console.log("SUCCES", res);
+
+      $scope.pendingOrders.push(order);
+      $scope.thing = {};
+
+      //
+      // console.log("WHAT ARE WE SENDING", order);
+      // console.log("HOW MUCH", quantity);
+      // console.log("LOGINUSERS", window.localStorage.getItem('mahUser'));
+      // var timeStampOrdered = new Date().toJSON().slice(0,10);
+      // console.log("time", timeStampOrdered);
+      // return timeStampOrdered
+
+})
+      // BuyersService.getOrdersPending($scope.user.id)
+      // .then(function(data){
+      //   $scope.orders = data.data;
+      //   console.log("ORDERS!!!",$scope.orders);
+      // })
+
+      }
+>>>>>>> d6e5fad7b2d0d769425850301655fe86201f5de4
 
         }
       });
@@ -457,7 +502,11 @@ angular
     // }
     function createOrder(order, id){
       console.log("posted orders!!!!", order);
+<<<<<<< HEAD
       return $http.post('/orders/' + id, order);
+=======
+      return $http.post('/orders/' + order.id, order);
+>>>>>>> d6e5fad7b2d0d769425850301655fe86201f5de4
     }
 
     function getUserOrders(userName){
@@ -842,12 +891,12 @@ angular
     }
 
     $scope.goToProfile = function(user) {
-      var shit= AuthService.user
+      var profile= AuthService.user
       console.log("woo",AuthService.user);
-        if(shit.userType === "Farmer"){
-          $location.path("/farmers-profile/" + shit.id)
-    } else if(shit.userType === "Buyer"){
-        $location.path("/buyers-profile/" + shit.id)
+        if(profile.userType === "Farmer"){
+          $location.path("/farmers-profile/" + profile.id)
+    } else if(profile.userType === "Buyer"){
+        $location.path("/buyers-profile/" + profile.id)
     }
 }
     $scope.toggleAnimation = function () {

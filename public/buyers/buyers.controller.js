@@ -2,11 +2,12 @@ angular
 .module("buyers.module")
 .controller("BuyersController", BuyersController);
 
-BuyersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyersService", "AuthService","_", "$uibModal"];
+BuyersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyersService", "AuthService","_"];
 
-function BuyersController($scope, $http, $location, $q, $rootScope, BuyersService, AuthService, _, $uibModal){
+function BuyersController($scope, $http, $location, $q, $rootScope, BuyersService, AuthService, _){
 
   $scope.user = AuthService.currentUser();
+  $scope.pendingOrders = [];
   $scope.myProducts;
 
   $scope.showThisCat = function(category) {
@@ -29,17 +30,25 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
     .then(function(data){
       $scope.categories = data.data;
 
+      console.log(data)
     })
-    $scope.createOrder = function() {
-      console.log("WHAT UP");
-      var modalInstance = $uibModal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: './buyers/views/modalOrder.html',
-        controller: 'ModalInstanceOrderFormController',
-        size: 'sm',
-        resolve: {
 
-        }
-      });
-    }
+  $scope.createOrder = function(order){
+
+    console.log($scope.myProducts);
+    order.category = order.category;
+
+    order.quantityOrdered = order.quantityOrdered;
+    order.inventory = $scope.myProducts[0];
+    BuyersService.createOrder(order)
+    .then(function(res){
+      console.log("SUCCES", res);
+
+      $scope.pendingOrders.push(order);
+      $scope.thing = {};
+
+})
+
+      }
+
 }

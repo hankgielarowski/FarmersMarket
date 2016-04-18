@@ -11,12 +11,11 @@ angular
       return $http.get('/categories');
     }
 
-    // function getAllInventoryByCategory(category){
-    //   return $http.get('/inventory/category/' + category);
-    // }
+
     function createOrder(order, id){
       console.log("posted orders!!!!", order);
-      return $http.post('/orders/' + id, order);
+      return $http.post('/orders/' + order.id, order);
+
     }
 
     function getUserOrders(userName){
@@ -25,16 +24,14 @@ angular
 
     }
 
-    // function getUserOrders(userName){
-    //   return $http.get('/orders/' + userName);
-    // }
+
 
         return {
           getAllInventoryByCategory: getAllInventoryByCategory,
           getAllCategories: getAllCategories,
           createOrder:createOrder,
           getUserOrders:getUserOrders
-          // getUserOrders: getUserOrders
+          
 
         }
 

@@ -2,7 +2,9 @@ angular
 .module("buyers-profile.module")
 .controller("BuyersProfileController", BuyersProfileController);
 
-BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService" , "$uibModal"]
+
+BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService", "$uibModal"]
+
 
 function BuyersProfileController($scope, $http, BuyersProfileService, AuthService, $uibModal){
   $scope.user = AuthService.currentUser();
@@ -25,5 +27,4 @@ function BuyersProfileController($scope, $http, BuyersProfileService, AuthServic
     $scope.myProducts = data.data;
 
   })
-
 }
