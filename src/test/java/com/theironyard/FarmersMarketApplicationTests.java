@@ -3,6 +3,7 @@ package com.theironyard;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theironyard.entities.Category;
 import com.theironyard.entities.Inventory;
+import com.theironyard.entities.Order;
 import com.theironyard.entities.User;
 import com.theironyard.services.*;
 import org.junit.Assert;
@@ -76,7 +77,7 @@ public class FarmersMarketApplicationTests {
     }
 
 //    @Test
-//    public void test2GetValidatingUsers() throws Exception { //(GET route: /users/validate)
+//    public void test3GetValidatingUsers() throws Exception { //(GET route: /users/validate)
 //        ResultActions resAct =
 //            mockMvc.perform(
 //                    MockMvcRequestBuilders.get("/users/validate")
@@ -85,24 +86,20 @@ public class FarmersMarketApplicationTests {
 //        MvcResult result = resAct.andReturn();
 //        String returnString = result.getResponse().getContentAsString();
 //
-//        Scanner fileScanner = new Scanner();
+//        Scanner fileScanner = new Scanner(returnString);
 //        while (fileScanner.hasNext()) {
 //            String[] line = returnString.split(",");
 //
 //            for(String stringLine : line) {
 //                String[] column = stringLine.split(": ");
 //            }
-//
-//
 //            Category c = new Category(column[0], column[1]);
-//
-//
-//        Assert.assertTrue(users.findByIsValid(true).size() == 3);
+////        Assert.assertTrue(users.findByUserName("Alice").getValid().equals(false));
 //        }
 //    }
 
     @Test
-    public void test2ValidateUser() throws Exception { //(POST route: /users/validate/{id})
+    public void test4ValidateUser() throws Exception { //(POST route: /users/validate/{id})
         ObjectMapper mapper = new ObjectMapper();
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/users/validate/5")
@@ -114,7 +111,7 @@ public class FarmersMarketApplicationTests {
 //    -getUsersInCategory (GET route: /users/category/{category})
 
     @Test
-    public void test3UpdateUser() throws Exception { //(PUT route: /users/{id})
+    public void test5UpdateUser() throws Exception { //(PUT route: /users/{id})
         User user = users.findOne(5);
         user.setCompanyName("Rawl Produce");
         ObjectMapper mapper = new ObjectMapper();
@@ -129,7 +126,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void test4Login() throws Exception { //(POST route: /login)
+    public void test6Login() throws Exception { //(POST route: /login)
         User user = new User();
         user.setUserName("Alice");
         user.setPasswordHash("password");
@@ -148,7 +145,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void test5CreateInventory() throws Exception { //(POST route: /inventory)
+    public void test7CreateInventory() throws Exception { //(POST route: /inventory)
         Inventory inventory = new Inventory();
         inventory.setCategory("Banana");
         inventory.setName("Golden Yellow Bananas");
@@ -165,8 +162,9 @@ public class FarmersMarketApplicationTests {
         );
         Assert.assertTrue(inventories.count() == 2);
     }
+
     @Test
-    public void test6UpdateInventory() throws Exception { //(PUT route: /inventory/{id})
+    public void test8UpdateInventory() throws Exception { //(PUT route: /inventory/{id})
         Inventory i = inventories.findOne(2);
         i.setCategory("Tomato");
         System.out.println();
@@ -181,38 +179,97 @@ public class FarmersMarketApplicationTests {
         Assert.assertTrue(inventories.findOne(2).getCategory().equals("Tomato"));
     }
 
-//    -createInventoryByAdmin (POST route: /inventory/user/{id}
-//    -updateInventoryByAdmin (PUT route: /inventory/{id})
+    @Test
+    public void test9CreateInventoryByAdmin() throws Exception { //(POST route: /inventory/user/{id})
+        Inventory inventory = new Inventory();
+        inventory.setCategory("Banana");
+        inventory.setName("Chiquitta Bananas");
+        inventory.setQuantityAvailable(11);
+        inventory.setPrice(3.55);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(inventory);
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/inventory/user/5")
+                    .content(json)
+                    .contentType("application/json")
+                    .sessionAttr("userName", "Admin")
+        );
+        Assert.assertTrue(inventories.count() == 3);
+    }
 
     @Test
-    public void test7FindInventoryByCategory() throws Exception { //(GET route: /inventory/category/{category})
+    public void testB1UpdateInventoryByAdmin() throws Exception { //(PUT route: /inventory/{id})
+        Inventory i = inventories.findOne(2);
+        i.setCategory("Corn");
+        System.out.println();
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(i);
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/inventory/2")
+                        .content(json)
+                        .contentType("application/json")
+                        .sessionAttr("userName", "Admin")
+        );
+        Assert.assertTrue(inventories.findOne(2).getCategory().equals("Corn"));
+    }
+
+//    @Test
+//    public void testB2FindInventoryByCategory() throws Exception { //(GET route: /inventory/category/{category})
+////        ObjectMapper mapper = new ObjectMapper();
+////        String json = mapper.writeValueAsString(inventories.findAll());
+////        mockMvc.perform(
+////                MockMvcRequestBuilders.get("/inventory/category/Tomato")
+////                        .content(json)
+////                        .contentType("application/json")
+////                        .sessionAttr("userName", "Alice")
+////        );
+//        Assert.assertTrue(inventories.findByCategory("Tomato").size() == 1); //does this test actually work?
+//        // is it checking the amount of inventory items in that category?
+//        //this test is a placeholder that I'm going to work on redoing soon
+//    }
+
+//    @Test
+//    public void testB3CreateOrderByUser() throws Exception { //(POST route: /orders/{invId})
+//        Order order = new Order();
+//        order.setCategory("Banana");
+//        order.setName("Golden Yellow Bananas");
+//        order.setQuantityOrdered(7);
+//        order.setPrice(2.85);
 //        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(inventories.findAll());
+//        String json = mapper.writeValueAsString(order);
 //        mockMvc.perform(
-//                MockMvcRequestBuilders.get("/inventory/category/Tomato")
+//                MockMvcRequestBuilders.post("/orders/2")
 //                        .content(json)
 //                        .contentType("application/json")
 //                        .sessionAttr("userName", "Alice")
 //        );
-        Assert.assertTrue(inventories.findByCategory("Tomato").size() == 1); //does this test actually work?
-        // is it checking the amount of inventory items in that category?
-        //this test is a placeholder that I'm going to work on redoing soon
-    }
+//        Assert.assertTrue(orders.count() == 1);
+//    }
 
     @Test
-    public void test8DeleteInventoryByUser() throws Exception { //(DELETE route: /inventory/{id})
+    public void testB4DeleteInventoryByUser() throws Exception { //(DELETE route: /inventory/{id})
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/inventory/2")
                         .sessionAttr("userName", "Alice")
         );
-        Assert.assertTrue(inventories.count() == 1);
+        Assert.assertTrue(inventories.findByUser(users.findByUserName("Alice")).size() == 1);
     }
 
+    @Test
+    public void testB5DeleteInventoryByAdmin() throws Exception { //(DELETE route: /inventory/{id})
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/inventory/3")
+                        .sessionAttr("userName", "Admin")
+        );
+        Assert.assertTrue(inventories.findByUser(users.findByUserName("Alice")).size() == 0);
+    }
 
-//    -deleteInventoryByAdmin (DELETE route: /inventory/{id})
 //    -getAllCategories (GET route: /categories)
+
+
 //    -getCategoriesByLetter (GET route: /categories/{letter})
-//    -createOrderByUser (POST route: /orders)
+
+
 //    -createOderByAdmin (POST route: /orders)
 //    -getOrdersPending(GET route: /orders/{pending})
 //    -deleteOderByUser (DELETE route: /orders/{id})
