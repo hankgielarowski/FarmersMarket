@@ -286,11 +286,11 @@ angular
 .module("buyers-profile.module")
 .controller("BuyersProfileController", BuyersProfileController);
 
-BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService"]
+BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService", "$uibModal"]
 
-function BuyersProfileController($scope, $http, BuyersProfileService, AuthService){
-  $scope.shit = AuthService.currentUser(user);
-  console.log("I am user", user );
+function BuyersProfileController($scope, $http, BuyersProfileService, AuthService, $uibModal){
+  $scope.user = AuthService.currentUser();
+
 
   $scope.editUser = function() {
     console.log("WHAT UP");
@@ -304,6 +304,11 @@ function BuyersProfileController($scope, $http, BuyersProfileService, AuthServic
       }
     });
   }
+  BuyersProfileService.getAllInventoryByUser($scope.user.id)
+  .then(function(data){
+    $scope.myProducts = data.data;
+
+  })
 }
 
 },{}],12:[function(require,module,exports){
@@ -313,7 +318,7 @@ angular
 ])
 .config(function($routeProvider) {
   $routeProvider
-    .when('/buyers-profile',{
+    .when('/buyers-profile/:id/',{
       templateUrl: "./buyers-profile/views/buyers-profile.html",
       controller: "BuyersProfileController"
     })
@@ -324,10 +329,6 @@ angular
   .module('buyers-profile.module')
   .service('BuyersProfileService', function($http,$window){
 
-        // function getUser() {
-        //   return $http.get('/users');
-        // }
-
         function getAllInventoryByUser(userName){
           console.log("got me some corn", userName);
           return $http.get('/inventory/user/' + userName);
@@ -337,7 +338,6 @@ angular
 
 
 return {
-  // getUser:getUser,
   getAllInventoryByUser:getAllInventoryByUser
   }
 
@@ -350,7 +350,7 @@ require('./buyers-profile.service');
 require('./modalInstanceEditBuyer.controller');
 
 },{"./buyers-profile.controller":11,"./buyers-profile.module":12,"./buyers-profile.service":13,"./modalInstanceEditBuyer.controller":15}],15:[function(require,module,exports){
-angular.module('buyers-profile.module').controller('ModalInstanceEditBuyerController', function($scope, $uibModalInstance, BuyersProfileControllerProfileService, $location, $window, AuthService) {
+angular.module('buyers-profile.module').controller('ModalInstanceEditBuyerController', function($scope, $uibModalInstance, BuyersProfileService, $location, $window, AuthService) {
 
 $scope.user = AuthService.currentUser();
 
@@ -825,12 +825,12 @@ angular
     }
 
     $scope.goToProfile = function(user) {
-      var shit= AuthService.user
+      var profile= AuthService.user
       console.log("woo",AuthService.user);
-        if(shit.userType === "Farmer"){
-          $location.path("/farmers-profile/" + shit.id)
-    } else if(shit.userType === "Buyer"){
-        $location.path("/buyers-profile/" + shit.id)
+        if(profile.userType === "Farmer"){
+          $location.path("/farmers-profile/" + profile.id)
+    } else if(profile.userType === "Buyer"){
+        $location.path("/buyers-profile/" + profile.id)
     }
 }
     $scope.toggleAnimation = function () {

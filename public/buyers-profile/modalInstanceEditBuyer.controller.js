@@ -1,4 +1,4 @@
-angular.module('buyers-profile.module').controller('ModalInstanceEditBuyerController', function($scope, $uibModalInstance, BuyersProfileControllerProfileService, $location, $window, AuthService) {
+angular.module('buyers-profile.module').controller('ModalInstanceEditBuyerController', function($scope, $uibModalInstance, BuyersProfileService, $location, $window, AuthService) {
 
 $scope.user = AuthService.currentUser();
 

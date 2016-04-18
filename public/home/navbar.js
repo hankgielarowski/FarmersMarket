@@ -34,12 +34,12 @@ angular
     }
 
     $scope.goToProfile = function(user) {
-      var shit= AuthService.user
+      var profile= AuthService.user
       console.log("woo",AuthService.user);
-        if(shit.userType === "Farmer"){
-          $location.path("/farmers-profile/" + shit.id)
-    } else if(shit.userType === "Buyer"){
-        $location.path("/buyers-profile/" + shit.id)
+        if(profile.userType === "Farmer"){
+          $location.path("/farmers-profile/" + profile.id)
+    } else if(profile.userType === "Buyer"){
+        $location.path("/buyers-profile/" + profile.id)
     }
 }
     $scope.toggleAnimation = function () {
