@@ -1,11 +1,9 @@
-
-<div class="container-fluid">
   <div class="container-viewUsers">
-    <ul class="viewUsersButton">
+    <ul class="view-button">
       <li>
-        <button type="button" class="btn btn-danger" ng-click="viewFarmers()">View all Farmers</button>
+        <button type="button" class="btn btn-danger" ng-click="getCatUsers('Farmer')">View all Farmers</button>
       </li>
-        <button type="button" class="btn btn-danger" ng-click="viewBuyers()">View all Buyers</button>
+        <button type="button" class="btn btn-danger" ng-click="getCatUsers('Buyer')">View all Buyers</button>
       <li></li>
     </ul>
   </div>
@@ -13,10 +11,10 @@
   <div class="col-md-12" id="allUsers">
     <div class="well">
       <h4 class="text-success"> All Pending Users </h4>
-      <ul ng-repeat="user in users">
-        <li ng-click="validateUser(user)">{{user.companyName}}
-          <button type="button" class="btn btn-danger" ng-click="validateUser(user)">Approve User</button>
-          <button type="button" class="btn btn-danger" ng-click="deleteUserDeniedByAdmin(user)">Delete User</button>
+      <ul class="adminUserList" ng-repeat="user in users">
+        <li>{{user.companyName}}
+          <button type="button" class="btn btn-danger btn-sm" ng-click="validateUser(user, $index)">Approve User</button>
+          <button type="button" class="btn btn-danger btn-sm" ng-click="deleteUserDeniedByAdmin(user, $index)">Delete User</button>
         </li>
       </ul>
     </div>
@@ -24,13 +22,24 @@
 </div>
 
 <div class="row">
-  <div class="col-6-md">
-
-  </div>
-  <div class="col-6-md">
-
+  <div class="col-12-md">
+    <h1>Farmers List</h1>
+    <ul ng-repeat="person in farmers">
+      <li>{{person.userName}}</li>
+    </ul>
   </div>
 </div>
+
+
+
+<div class="row">
+  <div class="col-12-md">
+    <ul ng-repeat="person in buyer">
+      <li>{{person.userName}}</li>
+    </ul>
+  </div>
+</div>
+
 
 
 
