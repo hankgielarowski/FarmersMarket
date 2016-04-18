@@ -11,6 +11,7 @@ angular
           return $http.get('/inventory');
         }
 
+
         function getAllInventoryByUser(userName){
           console.log("got me some corn", userName);
           return $http.get('/inventory/user/' + userName);
@@ -20,11 +21,16 @@ angular
           return $http.get('/orders/' + pending)
         }
 
+        function authorizeOrder(pending){
+          return $http.put('/orders/authorize/' + pending.id)
+        }
+
         return {
           createInventory:createInventory,
           getAllInventory: getAllInventory,
           getAllInventoryByUser:getAllInventoryByUser,
-          getOrdersPending:getOrdersPending
+          getOrdersPending:getOrdersPending,
+          authorizeOrder:authorizeOrder
 
         }
   })

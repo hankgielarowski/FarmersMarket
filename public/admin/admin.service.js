@@ -5,15 +5,23 @@ angular
   .service('AdminService', function($http){
 
 
-    function getAllUsers(users){
-      console.log("I am a user", users)
-      return $http.get('/users');
+    function getvalidateUser(){
+      console.log("I am a user")
+      return $http.get('/users/validate/');
     }
+
+    function validateUser(user) {
+      return $http.put('/users/validate/' + user.id)
+    }
+
+    // function deleteUserDeniedByAdmin(user) {
+    //   return $http.put('/users/validate/' + user.id)
+    // }
 
 
         return {
-          getAllUsers:getAllUsers
-
+          getvalidateUser:getvalidateUser,
+          validateUser:validateUser
         }
 
   })

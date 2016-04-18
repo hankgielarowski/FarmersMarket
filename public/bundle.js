@@ -9,13 +9,23 @@ angular
 
   function AdminController ($scope, $http, $location, $q, $rootScope, AdminService) {
 
-    AdminService.getAllUsers()
+    AdminService.getvalidateUser()
     .then(function(data){
-      $scope.user = data.data;
+      $scope.users = data.data;
       console.log("who",data)
     });
 
-  }
+    $scope.validateUser = function(user) {
+      AdminService.validateUser(user)
+      .then (function(data){
+        console.log("ldlkdaftujhasdfg",data);
+      })
+
+    }
+}
+  //   $scope.deleteUserDeniedByAdmin = function (user)
+  //     this.destroy(user);
+  // }
 
 },{"angular":38}],2:[function(require,module,exports){
 var angular = require('angular');
@@ -40,15 +50,23 @@ angular
   .service('AdminService', function($http){
 
 
-    function getAllUsers(users){
-      console.log("I am a user", users)
-      return $http.get('/users');
+    function getvalidateUser(){
+      console.log("I am a user")
+      return $http.get('/users/validate/');
     }
+
+    function validateUser(user) {
+      return $http.put('/users/validate/' + user.id)
+    }
+
+    // function deleteUserDeniedByAdmin(user) {
+    //   return $http.put('/users/validate/' + user.id)
+    // }
 
 
         return {
-          getAllUsers:getAllUsers
-
+          getvalidateUser:getvalidateUser,
+          validateUser:validateUser
         }
 
   })
@@ -605,6 +623,13 @@ $scope.createInventory = function(inventory) {
       console.log("ARE PENDING", data.data);
       $scope.pendingOrders = data.data;
   })
+  $scope.authorizeOrder = function(pending){
+    FarmersService.authorizeOrder(pending)
+    .then (function(data){
+      console.log("Authorized Bitch!!",data);
+    })
+  }
+
 }
 
 },{}],26:[function(require,module,exports){
@@ -639,6 +664,7 @@ angular
           return $http.get('/inventory');
         }
 
+
         function getAllInventoryByUser(userName){
           console.log("got me some corn", userName);
           return $http.get('/inventory/user/' + userName);
@@ -648,11 +674,16 @@ angular
           return $http.get('/orders/' + pending)
         }
 
+        function authorizeOrder(pending){
+          return $http.put('/orders/authorize/' + pending.id)
+        }
+
         return {
           createInventory:createInventory,
           getAllInventory: getAllInventory,
           getAllInventoryByUser:getAllInventoryByUser,
-          getOrdersPending:getOrdersPending
+          getOrdersPending:getOrdersPending,
+          authorizeOrder:authorizeOrder
 
         }
   })
