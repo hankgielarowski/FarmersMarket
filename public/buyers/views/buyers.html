@@ -56,7 +56,7 @@
 
 
             <ul class ="pendingOrders" >
-              <li>{{thing.category}} , {{thing.name}} , $ {{thing.price}} , {{thing.user.userName}} , {{thing.quantityOrdered}} lbs</li>
+              <li>{{thing.category}} , {{thing.name}} , $ {{thing.price}} , {{thing.buyer.userName}} , {{thing.quantityOrdered}} lbs</li>
 
             </ul>
             </div>
@@ -65,11 +65,9 @@
       <div class="col-md-6" id="right">
         <div class="well">
           <h4 class="text-success"> Approved Orders </h4>
-          <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
+          <ul ng-repeat="stuff in notPendingOrders track by $index">
+            <li>{{stuff.category}} , {{stuff.name}} , $ {{stuff.price}} , {{stuff.buyer.userName}} , {{stuff.quantityOrdered}} lbs</li>
+
           </ul>
         </div>
       </div>
