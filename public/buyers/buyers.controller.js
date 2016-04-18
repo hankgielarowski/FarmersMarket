@@ -2,9 +2,9 @@ angular
 .module("buyers.module")
 .controller("BuyersController", BuyersController);
 
-BuyersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyersService", "AuthService","_"];
+BuyersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyersService", "AuthService","_", "$uibModal"];
 
-function BuyersController($scope, $http, $location, $q, $rootScope, BuyersService, AuthService,_){
+function BuyersController($scope, $http, $location, $q, $rootScope, BuyersService, AuthService, _, $uibModal){
 
   $scope.user = AuthService.currentUser();
   $scope.myProducts;
@@ -28,39 +28,18 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
     BuyersService.getAllCategories()
     .then(function(data){
       $scope.categories = data.data;
-      console.log(data)
+
     })
+    $scope.createOrder = function() {
+      console.log("WHAT UP");
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: './buyers/views/modalOrder.html',
+        controller: 'ModalInstanceOrderFormController',
+        size: 'sm',
+        resolve: {
 
-  $scope.createOrder = function(order){
-    // var timeStampOrdered = new Date().toJSON().slice(0,10);
-    //   return timeStampOrdered
-    console.log($scope.myProducts);
-    order.category = order.category;
-    
-    order.quantityOrdered = order.quantityOrdered;
-    order.inventory = $scope.myProducts[0];
-    BuyersService.createOrder(order)
-    .then(function(res){
-      console.log("SUCCES", res);
-
-      $scope.order.push(order);
-      $scope.thing = {};
-
-
-      console.log("WHAT ARE WE SENDING", order);
-      console.log("HOW MUCH", quantity);
-      console.log("LOGINUSERS", window.localStorage.getItem('mahUser'));
-      // var timeStampOrdered = new Date().toJSON().slice(0,10);
-      // console.log("time", timeStampOrdered);
-      // return timeStampOrdered
-
-})
-      // BuyersService.getOrdersPending($scope.user.id)
-      // .then(function(data){
-      //   $scope.orders = data.data;
-      //   console.log("ORDERS!!!",$scope.orders);
-      // })
-
-      }
-
+        }
+      });
+    }
 }

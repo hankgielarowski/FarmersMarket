@@ -17,7 +17,7 @@ angular
 
   }
 
-},{"angular":38}],2:[function(require,module,exports){
+},{"angular":39}],2:[function(require,module,exports){
 var angular = require('angular');
 
 angular
@@ -32,7 +32,7 @@ angular
     })
 })
 
-},{"angular":38}],3:[function(require,module,exports){
+},{"angular":39}],3:[function(require,module,exports){
 var angular = require('angular');
 
 angular
@@ -53,7 +53,7 @@ angular
 
   })
 
-},{"angular":38}],4:[function(require,module,exports){
+},{"angular":39}],4:[function(require,module,exports){
 require('./admin.module');
 require('./admin.controller');
 require('./admin.service');
@@ -119,7 +119,7 @@ require('./home');
 require('./farmers');
 require('./auth');
 
-},{"./admin":4,"./auth":8,"./buyers":19,"./buyers-profile":14,"./farmers":28,"./farmers-profile":23,"./home":31,"angular":38,"angular-route":34,"angular-ui-bootstrap":36,"satellizer":39,"underscore":40}],6:[function(require,module,exports){
+},{"./admin":4,"./auth":8,"./buyers":19,"./buyers-profile":14,"./farmers":29,"./farmers-profile":24,"./home":32,"angular":39,"angular-route":35,"angular-ui-bootstrap":37,"satellizer":40,"underscore":41}],6:[function(require,module,exports){
 var angular = require('angular');
 var _ = require("underscore");
 
@@ -143,7 +143,7 @@ angular
 
 }
 
-},{"angular":38,"underscore":40}],7:[function(require,module,exports){
+},{"angular":39,"underscore":41}],7:[function(require,module,exports){
 angular
   .module('FarmersMarket')
   .service('AuthService', function($http,$window) {
@@ -286,11 +286,11 @@ angular
 .module("buyers-profile.module")
 .controller("BuyersProfileController", BuyersProfileController);
 
-BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService"]
+BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService" , "$uibModal"]
 
-function BuyersProfileController($scope, $http, BuyersProfileService, AuthService){
-  $scope.shit = AuthService.currentUser(user);
-  console.log("I am user", user );
+function BuyersProfileController($scope, $http, BuyersProfileService, AuthService, $uibModal){
+  $scope.user = AuthService.currentUser();
+
 
   $scope.editUser = function() {
     console.log("WHAT UP");
@@ -304,6 +304,12 @@ function BuyersProfileController($scope, $http, BuyersProfileService, AuthServic
       }
     });
   }
+  BuyersProfileService.getAllInventoryByUser($scope.user.id)
+  .then(function(data){
+    $scope.myProducts = data.data;
+
+  })
+
 }
 
 },{}],12:[function(require,module,exports){
@@ -313,7 +319,7 @@ angular
 ])
 .config(function($routeProvider) {
   $routeProvider
-    .when('/buyers-profile',{
+    .when('/buyers-profile/:id/',{
       templateUrl: "./buyers-profile/views/buyers-profile.html",
       controller: "BuyersProfileController"
     })
@@ -324,10 +330,6 @@ angular
   .module('buyers-profile.module')
   .service('BuyersProfileService', function($http,$window){
 
-        // function getUser() {
-        //   return $http.get('/users');
-        // }
-
         function getAllInventoryByUser(userName){
           console.log("got me some corn", userName);
           return $http.get('/inventory/user/' + userName);
@@ -337,7 +339,6 @@ angular
 
 
 return {
-  // getUser:getUser,
   getAllInventoryByUser:getAllInventoryByUser
   }
 
@@ -350,7 +351,7 @@ require('./buyers-profile.service');
 require('./modalInstanceEditBuyer.controller');
 
 },{"./buyers-profile.controller":11,"./buyers-profile.module":12,"./buyers-profile.service":13,"./modalInstanceEditBuyer.controller":15}],15:[function(require,module,exports){
-angular.module('buyers-profile.module').controller('ModalInstanceEditBuyerController', function($scope, $uibModalInstance, BuyersProfileControllerProfileService, $location, $window, AuthService) {
+angular.module('buyers-profile.module').controller('ModalInstanceEditBuyerController', function($scope, $uibModalInstance, BuyersProfileService, $location, $window, AuthService) {
 
 $scope.user = AuthService.currentUser();
 
@@ -376,9 +377,9 @@ angular
 .module("buyers.module")
 .controller("BuyersController", BuyersController);
 
-BuyersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyersService", "AuthService","_"];
+BuyersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyersService", "AuthService","_", "$uibModal"];
 
-function BuyersController($scope, $http, $location, $q, $rootScope, BuyersService, AuthService,_){
+function BuyersController($scope, $http, $location, $q, $rootScope, BuyersService, AuthService, _, $uibModal){
 
   $scope.user = AuthService.currentUser();
   $scope.myProducts;
@@ -402,41 +403,20 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
     BuyersService.getAllCategories()
     .then(function(data){
       $scope.categories = data.data;
-      console.log(data)
+
     })
+    $scope.createOrder = function() {
+      console.log("WHAT UP");
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: './buyers/views/modalOrder.html',
+        controller: 'ModalInstanceOrderFormController',
+        size: 'sm',
+        resolve: {
 
-  $scope.createOrder = function(order){
-    // var timeStampOrdered = new Date().toJSON().slice(0,10);
-    //   return timeStampOrdered
-    console.log($scope.myProducts);
-    order.category = order.category;
-    
-    order.quantityOrdered = order.quantityOrdered;
-    order.inventory = $scope.myProducts[0];
-    BuyersService.createOrder(order)
-    .then(function(res){
-      console.log("SUCCES", res);
-
-      $scope.order.push(order);
-      $scope.thing = {};
-
-
-      console.log("WHAT ARE WE SENDING", order);
-      console.log("HOW MUCH", quantity);
-      console.log("LOGINUSERS", window.localStorage.getItem('mahUser'));
-      // var timeStampOrdered = new Date().toJSON().slice(0,10);
-      // console.log("time", timeStampOrdered);
-      // return timeStampOrdered
-
-})
-      // BuyersService.getOrdersPending($scope.user.id)
-      // .then(function(data){
-      //   $scope.orders = data.data;
-      //   console.log("ORDERS!!!",$scope.orders);
-      // })
-
-      }
-
+        }
+      });
+    }
 }
 
 },{}],17:[function(require,module,exports){
@@ -458,7 +438,7 @@ angular
 
 })
 
-},{"angular":38,"angular-route":34,"angular-ui-bootstrap":36}],18:[function(require,module,exports){
+},{"angular":39,"angular-route":35,"angular-ui-bootstrap":37}],18:[function(require,module,exports){
 angular
   .module('buyers.module')
   .service('BuyersService', function($http){
@@ -475,9 +455,9 @@ angular
     // function getAllInventoryByCategory(category){
     //   return $http.get('/inventory/category/' + category);
     // }
-    function createOrder(order){
+    function createOrder(order, id){
       console.log("posted orders!!!!", order);
-      return $http.post('/orders',order);
+      return $http.post('/orders/' + id, order);
     }
 
     function getUserOrders(userName){
@@ -506,8 +486,44 @@ angular
 require('./buyers.module');
 require('./buyers.controller');
 require('./buyers.service');
+require('./modalInstanceOrderForm.controller');
 
-},{"./buyers.controller":16,"./buyers.module":17,"./buyers.service":18}],20:[function(require,module,exports){
+},{"./buyers.controller":16,"./buyers.module":17,"./buyers.service":18,"./modalInstanceOrderForm.controller":20}],20:[function(require,module,exports){
+angular.module('buyers.module').controller('ModalInstanceOrderFormController', function($scope, $uibModalInstance, BuyersService, $location, $window, AuthService) {
+
+$scope.user = AuthService.currentUser();
+
+$scope.createOrder = function(order){
+
+  console.log("fucking shit",$scope.myProducts);
+  
+  order.quantityOrdered = order.quantityOrdered;
+
+
+  BuyersService.createOrder(order)
+  .then(function(res){
+    console.log("SUCCES", res);
+
+    $scope.order.push(order);
+    $scope.thing = {};
+
+
+    console.log("WHAT ARE WE SENDING", order);
+    console.log("HOW MUCH", quantity);
+    console.log("LOGINUSERS", window.localStorage.getItem('mahUser'));
+
+})
+
+
+    }
+
+$scope.cancel = function() {
+    $uibModalInstance.close('cancel');
+};
+
+});
+
+},{}],21:[function(require,module,exports){
 angular
 .module("farmers-profile.module")
 .controller("FarmersProfileController", FarmersProfileController);
@@ -539,7 +555,7 @@ function FarmersProfileController($scope, $http, FarmersProfileService, AuthServ
 
 }
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 angular
 .module("farmers-profile.module", [
   "ngRoute"
@@ -552,7 +568,7 @@ angular
     })
 }) 
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 angular
   .module('farmers-profile.module')
   .service('FarmersProfileService', function($http,$window){
@@ -572,14 +588,14 @@ return {
 
 }) 
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 
 require('./farmers-profile.module');
 require('./farmers-profile.controller');
 require('./farmers-profile.service');
 require('./modalInstanceEditFarmer.controller');
 
-},{"./farmers-profile.controller":20,"./farmers-profile.module":21,"./farmers-profile.service":22,"./modalInstanceEditFarmer.controller":24}],24:[function(require,module,exports){
+},{"./farmers-profile.controller":21,"./farmers-profile.module":22,"./farmers-profile.service":23,"./modalInstanceEditFarmer.controller":25}],25:[function(require,module,exports){
 angular.module('farmers-profile.module').controller('ModalInstanceEditFarmerController', function($scope, $uibModalInstance, FarmersProfileService, $location, $window, AuthService) {
 
 $scope.user = AuthService.currentUser();
@@ -601,7 +617,7 @@ $scope.cancel = function() {
 
 });
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
   angular
 .module("farmers.module")
 .controller("FarmersController", FarmersController);
@@ -632,10 +648,10 @@ $scope.createInventory = function(inventory) {
   inventory.category = inventory.category.categoryName
   inventory.price = parseInt(inventory.price);
   inventory.quantityAvailable = parseInt(inventory.quantityAvailable);
-  inventory.user = null;
+  // inventory.user = null;
   FarmersService.createInventory(inventory)
   .then(function(res){
-    // console.log("SUCCES", res);
+    console.log("SUCCES", res);
     // window.corn = res.data;
     $scope.myProducts.push(inventory);
     $scope.list = {};
@@ -652,7 +668,7 @@ $scope.createInventory = function(inventory) {
   })
 }
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var angular = require("angular");
 require("angular-route");
 require("angular-ui-bootstrap");
@@ -670,7 +686,7 @@ angular
 
 })
 
-},{"angular":38,"angular-route":34,"angular-ui-bootstrap":36}],27:[function(require,module,exports){
+},{"angular":39,"angular-route":35,"angular-ui-bootstrap":37}],28:[function(require,module,exports){
 angular
   .module('farmers.module')
   .service('FarmersService', function($http,$window){
@@ -703,12 +719,12 @@ angular
         }
   })
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 require('./farmers.module');
 require('./farmers.controller');
 require('./farmers.service');
 
-},{"./farmers.controller":25,"./farmers.module":26,"./farmers.service":27}],29:[function(require,module,exports){
+},{"./farmers.controller":26,"./farmers.module":27,"./farmers.service":28}],30:[function(require,module,exports){
 var _ = require("underscore");
 
 angular
@@ -758,7 +774,7 @@ function HomeController($scope,$http,$location,$q,$routeParams,HomeService,$uibM
 
 }
 
-},{"underscore":40}],30:[function(require,module,exports){
+},{"underscore":41}],31:[function(require,module,exports){
 angular
   .module('FarmersMarket')
   .service('HomeService', function($http) {
@@ -784,12 +800,12 @@ angular
     // }
   })
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 require('./home.controller');
 require('./home.service');
 require('./navbar.js');
 
-},{"./home.controller":29,"./home.service":30,"./navbar.js":32}],32:[function(require,module,exports){
+},{"./home.controller":30,"./home.service":31,"./navbar.js":33}],33:[function(require,module,exports){
 angular
 .module('FarmersMarket')
   .controller('NavbarCtrl', function($scope, AuthService,$uibModal,$location,$window) {
@@ -860,7 +876,7 @@ angular
 
   });
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1884,11 +1900,11 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 require('./angular-route');
 module.exports = 'ngRoute';
 
-},{"./angular-route":33}],35:[function(require,module,exports){
+},{"./angular-route":34}],36:[function(require,module,exports){
 /*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
@@ -9217,12 +9233,12 @@ angular.module('ui.bootstrap.datepickerPopup').run(function() {!angular.$$csp().
 angular.module('ui.bootstrap.tooltip').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTooltipCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-bottom > .tooltip-arrow,[uib-popover-popup].popover.top-left > .arrow,[uib-popover-popup].popover.top-right > .arrow,[uib-popover-popup].popover.bottom-left > .arrow,[uib-popover-popup].popover.bottom-right > .arrow,[uib-popover-popup].popover.left-top > .arrow,[uib-popover-popup].popover.left-bottom > .arrow,[uib-popover-popup].popover.right-top > .arrow,[uib-popover-popup].popover.right-bottom > .arrow,[uib-popover-html-popup].popover.top-left > .arrow,[uib-popover-html-popup].popover.top-right > .arrow,[uib-popover-html-popup].popover.bottom-left > .arrow,[uib-popover-html-popup].popover.bottom-right > .arrow,[uib-popover-html-popup].popover.left-top > .arrow,[uib-popover-html-popup].popover.left-bottom > .arrow,[uib-popover-html-popup].popover.right-top > .arrow,[uib-popover-html-popup].popover.right-bottom > .arrow,[uib-popover-template-popup].popover.top-left > .arrow,[uib-popover-template-popup].popover.top-right > .arrow,[uib-popover-template-popup].popover.bottom-left > .arrow,[uib-popover-template-popup].popover.bottom-right > .arrow,[uib-popover-template-popup].popover.left-top > .arrow,[uib-popover-template-popup].popover.left-bottom > .arrow,[uib-popover-template-popup].popover.right-top > .arrow,[uib-popover-template-popup].popover.right-bottom > .arrow{top:auto;bottom:auto;left:auto;right:auto;margin:0;}[uib-popover-popup].popover,[uib-popover-html-popup].popover,[uib-popover-template-popup].popover{display:block !important;}</style>'); angular.$$uibTooltipCss = true; });
 angular.module('ui.bootstrap.timepicker').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTimepickerCss && angular.element(document).find('head').prepend('<style type="text/css">.uib-time input{width:50px;}</style>'); angular.$$uibTimepickerCss = true; });
 angular.module('ui.bootstrap.typeahead').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTypeaheadCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style>'); angular.$$uibTypeaheadCss = true; });
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 require('./dist/ui-bootstrap-tpls');
 
 module.exports = 'ui.bootstrap';
 
-},{"./dist/ui-bootstrap-tpls":35}],37:[function(require,module,exports){
+},{"./dist/ui-bootstrap-tpls":36}],38:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -39937,11 +39953,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":37}],39:[function(require,module,exports){
+},{"./angular":38}],40:[function(require,module,exports){
 /**
  * Satellizer 0.14.0
  * (c) 2016 Sahat Yalkabov
@@ -40904,7 +40920,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
 
 })(window, window.angular);
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
