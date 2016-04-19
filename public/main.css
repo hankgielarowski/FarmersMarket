@@ -246,6 +246,12 @@ footer li {
   width: 170px;
   height: 150px; }
 
+.new-veg-pic {
+  display: none; }
+
+.veg-pic:hover + .new-veg-pic {
+  display: inline; }
+
 .container-invFarm {
   width: 100%;
   margin: 0 auto;
@@ -269,5 +275,11 @@ footer li {
   margin-left: 10%;
   text-align: center; }
 
-.container-farmer-profile-bg {
-  background-image: image("http://www.schwabinsagency.com/img/~www.schwabinsagency.com/farm%20pic.jpg"); }
+.container-buyerProfile {
+  width: 100%; }
+
+.farmer-all {
+  margin-left: 35%; }
+
+.container-user {
+  text-align: center; }

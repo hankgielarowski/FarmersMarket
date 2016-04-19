@@ -29,22 +29,32 @@ angular
         $scope.users.splice(index, 1)
       })
     };
+    $scope.showFarmer = false
+    $scope.showBuyer = false
+
 
     $scope.getCatUsers = function(cat) {
       console.log("WE ARE GETTING SHIT?", cat)
       AdminService.getUsersInCategory(cat)
       .then(function(data){
           $scope.farmers = data.data.filter(function(el) {
-            return el.userType = "Farmer";
+            return el.userType === "Farmer";
           })
 
           $scope.buyers = data.data.filter(function(el) {
-            return el.userType = "Buyer";
+            return el.userType === "Buyer";
           })
+
+          $scope.showFarmer = !$scope.showFarmer
+          $scope.showBuyer = !$scope.showBuyer
+
+
       }).catch(function(err) {
         console.log("SHIT", err);
       });
     }
+
+
 
 
 
