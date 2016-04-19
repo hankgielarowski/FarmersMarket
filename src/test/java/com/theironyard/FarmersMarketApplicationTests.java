@@ -27,6 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -76,27 +77,23 @@ public class FarmersMarketApplicationTests {
     Assert.assertTrue(user.getUserName().equals("Alice"));
     }
 
-//    @Test
-//    public void test3GetValidatingUsers() throws Exception { //(GET route: /users/validate)
-//        ResultActions resAct =
-//            mockMvc.perform(
-//                    MockMvcRequestBuilders.get("/users/validate")
-//                            .sessionAttr("userName", "Admin")
-//            );
-//        MvcResult result = resAct.andReturn();
-//        String returnString = result.getResponse().getContentAsString();
-//
-//        Scanner fileScanner = new Scanner(returnString);
-//        while (fileScanner.hasNext()) {
-//            String[] line = returnString.split(",");
-//
-//            for(String stringLine : line) {
-//                String[] column = stringLine.split(": ");
-//            }
-//            Category c = new Category(column[0], column[1]);
-////        Assert.assertTrue(users.findByUserName("Alice").getValid().equals(false));
-//        }
-//    }
+    @Test
+    public void test3GetValidatingUsers() throws Exception { //(GET route: /users/validate)
+        ResultActions resAct =
+            mockMvc.perform(
+                    MockMvcRequestBuilders.get("/users/validate")
+                            .sessionAttr("userName", "Admin")
+            );
+        MvcResult result = resAct.andReturn();
+        String returnString = result.getResponse().getContentAsString();
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList userList = mapper.readValue(returnString, ArrayList.class);
+        HashMap userMap = (HashMap) userList.get(0);
+        Boolean isValid = (Boolean) userMap.get("valid");
+
+       Assert.assertTrue(!isValid);
+    }
+
 
     @Test
     public void test4ValidateUser() throws Exception { //(POST route: /users/validate/{id})
@@ -108,10 +105,24 @@ public class FarmersMarketApplicationTests {
         Assert.assertTrue(users.findByUserName("Alice").getValid());
     }
 
-//    -getUsersInCategory (GET route: /users/category/{category})
+    @Test
+    public void test5GetUsersInCategory() throws Exception { //(GET route: /users/category/{category})
+        ResultActions resAct =
+                mockMvc.perform(
+                        MockMvcRequestBuilders.get("/users/category/Farmer")
+                                .sessionAttr("userName", "Admin")
+                );
+        MvcResult result = resAct.andReturn();
+        String returnString = result.getResponse().getContentAsString();
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList userList = mapper.readValue(returnString, ArrayList.class);
+        HashMap userMap = (HashMap) userList.get(0);
+
+        Assert.assertTrue(userMap.get("userType").equals("Farmer"));
+    }
 
     @Test
-    public void test5UpdateUser() throws Exception { //(PUT route: /users/{id})
+    public void test6UpdateUser() throws Exception { //(PUT route: /users/{id})
         User user = users.findOne(5);
         user.setCompanyName("Rawl Produce");
         ObjectMapper mapper = new ObjectMapper();
@@ -126,7 +137,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void test6Login() throws Exception { //(POST route: /login)
+    public void test7Login() throws Exception { //(POST route: /login)
         User user = new User();
         user.setUserName("Alice");
         user.setPasswordHash("password");
@@ -145,7 +156,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void test7CreateInventoryUser() throws Exception { //(POST route: /inventory)
+    public void test8CreateInventoryUser() throws Exception { //(POST route: /inventory)
         Inventory inventory = new Inventory();
         inventory.setCategory("Banana");
         inventory.setName("Golden Yellow Bananas");
@@ -164,7 +175,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void test8UpdateInventoryUser() throws Exception { //(PUT route: /inventory/{id})
+    public void test9UpdateInventoryUser() throws Exception { //(PUT route: /inventory/{id})
         Inventory i = inventories.findOne(2);
         i.setCategory("Tomato");
         System.out.println();
@@ -180,7 +191,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void test9CreateInventoryAdmin() throws Exception { //(POST route: /inventory/user/{id})
+    public void testB1CreateInventoryAdmin() throws Exception { //(POST route: /inventory/user/{id})
         Inventory inventory = new Inventory();
         inventory.setCategory("Banana");
         inventory.setName("Chiquitta Bananas");
@@ -198,7 +209,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void testB1UpdateInventoryAdmin() throws Exception { //(PUT route: /inventory/{id})
+    public void testB2UpdateInventoryAdmin() throws Exception { //(PUT route: /inventory/{id})
         Inventory i = inventories.findOne(2);
         i.setCategory("Corn");
         System.out.println();
@@ -228,14 +239,54 @@ public class FarmersMarketApplicationTests {
 //        //this test is a placeholder that I'm going to work on redoing soon
 //    }
 
-//    -getAllCategories (GET route: /categories)
+    @Test
+    public void testB3FindInventoryWithCategory() throws Exception { //(GET route: /inventory/category/{category})
+        ResultActions resAct =
+                mockMvc.perform(
+                        MockMvcRequestBuilders.get("/inventory/category/Corn")
+                                .sessionAttr("userName", "FrankBuyer")
+                );
+        MvcResult result = resAct.andReturn();
+        String returnString = result.getResponse().getContentAsString();
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList itemList = mapper.readValue(returnString, ArrayList.class);
+        HashMap itemMap = (HashMap) itemList.get(0);
 
-
-//    -getCategoriesByLetter (GET route: /categories/{letter})
-
+        Assert.assertTrue(itemMap.get("category").equals("Corn"));
+    }
 
     @Test
-    public void testB3CreateOrderUser() throws Exception { //(POST route: /orders/{invId})
+    public void testB4GetAllCategories() throws Exception { //(GET route: /categories)
+        ResultActions resAct =
+                mockMvc.perform(
+                        MockMvcRequestBuilders.get("/categories")
+                                .sessionAttr("userName", "FrankBuyer")
+                );
+        MvcResult result = resAct.andReturn();
+        String returnString = result.getResponse().getContentAsString();
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList categoryList = mapper.readValue(returnString, ArrayList.class);
+
+        Assert.assertTrue(categoryList.size() == 70);
+    }
+
+    @Test
+    public void testB5GetCategoriesByFirstLetter() throws Exception { //(GET route: /categories/{letter})
+        ResultActions resAct =
+                mockMvc.perform(
+                        MockMvcRequestBuilders.get("/categories/A")
+                                .sessionAttr("userName", "FrankBuyer")
+                );
+        MvcResult result = resAct.andReturn();
+        String returnString = result.getResponse().getContentAsString();
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList categoryList = mapper.readValue(returnString, ArrayList.class);
+
+        Assert.assertTrue(categoryList.size() == 5);
+    }
+
+    @Test
+    public void testB6CreateOrderUser() throws Exception { //(POST route: /orders/{invId})
         User user = new User("Bob", "password", "password", "Buyer", "Bob Store", "charleston", "8888", "bob@bob");
         user.setValid(true);
         users.save(user);
@@ -257,7 +308,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void testB4CreateOrderAdmin() throws Exception { //(POST route: /orders/admin/{buyerId}/{invId})
+    public void testB7CreateOrderAdmin() throws Exception { //(POST route: /orders/admin/{buyerId}/{invId})
         Order order = new Order();
         order.setCategory("Banana");
         order.setName("Golden Yellow Bananas");
@@ -274,20 +325,8 @@ public class FarmersMarketApplicationTests {
         Assert.assertTrue(orders.count() == 2);
     }
 
-//    -getOrdersPending(GET route: /orders/{pending})
-
-
     @Test
-    public void testB5DeletePendingOrderFarmerOrBuyerOrAdmin() throws Exception { //(DELETE route: /orders/{id})
-        mockMvc.perform(
-                MockMvcRequestBuilders.delete("/orders/1")
-                .sessionAttr("userName", "Alice")
-        );
-        Assert.assertTrue(orders.count() == 1);
-    }
-
-    @Test
-    public void testB6authorizeOrderByFarmerOrAdmin() throws Exception { //(PUT route: /orders/authorize/{id})
+    public void testB8authorizeOrderByFarmerOrAdmin() throws Exception { //(PUT route: /orders/authorize/{id})
 
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/orders/authorize/2")
@@ -296,10 +335,34 @@ public class FarmersMarketApplicationTests {
         Assert.assertTrue(!orders.findOne(2).isPendingApproval());
     }
 
+    @Test
+    public void testB9GetOrdersPending() throws Exception { //(GET route: /orders/{pending})
+        ResultActions resAct =
+                mockMvc.perform(
+                        MockMvcRequestBuilders.get("/orders/true")
+                                .sessionAttr("userName", "Bob")
+                );
+        MvcResult result = resAct.andReturn();
+        String returnString = result.getResponse().getContentAsString();
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList orderList = mapper.readValue(returnString, ArrayList.class);
+        HashMap orderMap = (HashMap) orderList.get(0);
+        Boolean isPending = (Boolean) orderMap.get("pendingApproval");
 
+        Assert.assertTrue(orderList.size() == 1 && isPending);
+    }
 
     @Test
-    public void testB7DeleteInventoryUser() throws Exception { //(DELETE route: /inventory/{id})
+    public void testC1DeletePendingOrderFarmerOrBuyerOrAdmin() throws Exception { //(DELETE route: /orders/{id})
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/orders/1")
+                .sessionAttr("userName", "Alice")
+        );
+        Assert.assertTrue(orders.count() == 1);
+    }
+
+    @Test
+    public void testC2DeleteInventoryUser() throws Exception { //(DELETE route: /inventory/{id})
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/inventory/2")
                         .sessionAttr("userName", "Alice")
@@ -308,7 +371,7 @@ public class FarmersMarketApplicationTests {
     }
 
     @Test
-    public void testB8DeleteInventoryAdmin() throws Exception { //(DELETE route: /inventory/{id})
+    public void testC3DeleteInventoryAdmin() throws Exception { //(DELETE route: /inventory/{id})
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/inventory/3")
                         .sessionAttr("userName", "Admin")
@@ -316,8 +379,37 @@ public class FarmersMarketApplicationTests {
         Assert.assertTrue(inventories.findByUser(users.findByUserName("Alice")).size() == 0);
     }
 
-//    -getOrderHistoryForFarmer *
-//    -getOderHistoryForBuyer *
+    @Test
+    public void testC4GetAllOrdersByUser() throws Exception { //(GET route: /orders/user/{userId})
+        ResultActions resAct =
+                mockMvc.perform(
+                        MockMvcRequestBuilders.get("/orders/user/5")
+                                .sessionAttr("userName", "Admin")
+                );
+        MvcResult result = resAct.andReturn();
+        String returnString = result.getResponse().getContentAsString();
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList orderList = mapper.readValue(returnString, ArrayList.class);
+        HashMap orderMap = (HashMap) orderList.get(0);
+        HashMap farmerMap = (HashMap) orderMap.get("farmer");
+        System.out.println();
+
+        Assert.assertTrue(orderList.size() == 1 && farmerMap.get("userName").equals("Alice"));
+    }
+
+
 //    -logout (POST route: /logout)
+@Test
+public void testC5Logout() throws Exception { //(POST route: /login)
+    ResultActions resAct =
+            mockMvc.perform(
+                    MockMvcRequestBuilders.post("/logout")
+                            .sessionAttr("userName", "Alice")
+            );
+    MvcResult result = resAct.andReturn();
+    MockHttpServletRequest request = result.getRequest();
+    HttpSession session = request.getSession();
+    Assert.assertTrue(session.getAttribute("userName") == null);
+}
 
 }

@@ -19,14 +19,19 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
     BuyersService.getAllCategories().then(function(data) {
         $scope.categories = data.data;
     })
-    $scope.createOrder = function(order) {
-        console.log('myproducts', $scope.myProducts);
-        order.category = order.category;
-        order.quantityOrdered = order.quantityOrdered;
-        order.inventory = $scope.myProducts[0];
+
+    $scope.createOrder = function(product, id) {
+        console.log("why it works",$scope.myProducts);
+        var order = {};
+        order.category = product.category;
+        order.name = product.name;
+        order.price= product.price;
+        order.quantityOrdered = product.quantityOrdered;
+        order.inventory = product;
+
 
         if($scope.user.userType === 'Buyer') {
-          BuyersService.createOrder(order)
+          BuyersService.createOrder(order, id)
           .then(function(res){
             $scope.pendingOrders.push(order);
             $scope.thing = {};

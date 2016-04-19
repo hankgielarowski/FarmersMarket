@@ -20,10 +20,12 @@
         <div class="well">
           <h4 class="text-success"> Goods Available </h4>
           <ul ng-repeat="product in myProducts track by $index">
-            <li>{{::product.category}}</li>
-            <li>{{::product.name}}</li>
-            <li>{{::product.quantityAvailable}} lb</li>
-            <li>$ {{::product.price}}</li>
+            <li>{{product.category}}</li>
+            <li>{{product.name}}</li>
+            <li>{{product.quantityAvailable}} lb</li>
+            <li>$ {{product.price}}</li>
+            <button type="button" class="btn btn-danger navbar-right login" ng-click="updateInventory(product)">Edit Inventory</button>
+            <button type="button" class="btn btn-danger btn-sm" ng-click="deleteInventory(product)">Delete Order</button>
           </ul>
         </div>
       </div>
