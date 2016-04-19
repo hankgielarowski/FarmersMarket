@@ -15,6 +15,12 @@ angular
       return $http.post('/orders/' + order.id, order);
     }
 
+    function createOrderAdmin(order, buyerId, id){
+      console.log("GIVE ME AN ORDER", order);
+      return $http.post('/orders/admin/'+ buyerId + '/' + order.id , order);
+    }
+
+
     function getOrdersPending(pending){
       return $http.get('/orders/' + pending)
     }
@@ -24,7 +30,8 @@ angular
           getAllInventoryByCategory: getAllInventoryByCategory,
           getAllCategories: getAllCategories,
           createOrder:createOrder,
-          getOrdersPending:getOrdersPending
+          getOrdersPending:getOrdersPending,
+          createOrderAdmin:createOrderAdmin
 
         }
   })

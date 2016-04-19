@@ -1,7 +1,7 @@
 angular.module("buyers.module").controller("BuyersController", BuyersController);
-BuyersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyersService", "AuthService", "_"];
+BuyersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "BuyersService", "AuthService", "_", "$routeParams"];
 
-function BuyersController($scope, $http, $location, $q, $rootScope, BuyersService, AuthService, _) {
+function BuyersController($scope, $http, $location, $q, $rootScope, BuyersService, AuthService, _, $routeParams) {
     $scope.user = AuthService.currentUser();
     $scope.pendingOrders = [];
     $scope.myProducts;
@@ -24,12 +24,22 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
         order.category = order.category;
         order.quantityOrdered = order.quantityOrdered;
         order.inventory = $scope.myProducts[0];
-        BuyersService.createOrder(order).then(function(res) {
-            console.log("SUCCES", res);
+
+        if($scope.user.userType === 'Buyer') {
+          BuyersService.createOrder(order)
+          .then(function(res){
             $scope.pendingOrders.push(order);
             $scope.thing = {};
-        })
+          })
+        } else {
+          BuyersService.createOrderAdmin(order,$routeParams.id)
+          .then(function(res) {
+            $scope.pendingOrders.push(order);
+            $scope.thing = {};
+          })
+        }
     }
+
     BuyersService.getOrdersPending(true).then(function(data) {
         console.log("ARE PENDING", data.data);
         $scope.pendingOrders = data.data;
