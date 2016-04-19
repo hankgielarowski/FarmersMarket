@@ -2,18 +2,25 @@
 .module("farmers.module")
 .controller("FarmersController", FarmersController);
 
-FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmersService", "AuthService","BuyersService", "$routeParams"];
+FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmersService", "AuthService","BuyersService", "$routeParams", "$uibModal"];
 
-function FarmersController($scope, $http, $location, $q, $rootScope, FarmersService, AuthService, BuyersService, $routeParams){
+function FarmersController($scope, $http, $location, $q, $rootScope, FarmersService, AuthService, BuyersService, $routeParams, $uibModal){
   $scope.user = AuthService.currentUser();
   $scope.myProducts;
   $scope.categories = [];
   $scope.approvedOrders = [];
 
-
 FarmersService.getAllInventoryByUser($routeParams.id)
 .then(function(data){
+  console.log("DREW",data);
   $scope.myProducts = data.data;
+})
+$scope.$on('product:updated', function () {
+  FarmersService.getAllInventoryByUser($routeParams.id)
+  .then(function(data){
+    console.log("DREW",data);
+    $scope.myProducts = data.data;
+  })
 })
 
 $scope.createInventory = function(inventory) {
@@ -59,7 +66,30 @@ $scope.createInventory = function(inventory) {
     .then(function(data){
       $scope.pendingOrders.splice(index,1);
     })
+}
 
+$scope.deleteInventory = function(inventory,index){
+  var id= inventory.id
+  FarmersService.deleteInventory(id)
+  .then(function(data){
+    $scope.myProducts.splice(index,1);
+  })
+
+}
+
+$scope.updateInventory = function(product) {
+  console.log("we workin");
+  var modalInstance = $uibModal.open({
+    animation: $scope.animationsEnabled,
+    templateUrl: './farmers/views/modaleditInv.html',
+    controller: 'ModalInstanceEditInvController',
+    size: 'sm',
+    resolve: {
+      inventory: function(){
+        return product;
+      }
+    }
+  });
 }
 
 }
