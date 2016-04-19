@@ -26,7 +26,7 @@ import java.util.Scanner;
 /**
  * Created by drewmunnerlyn on 4/6/16.
  */
-
+////
 @RestController
 public class FarmersMarketController {
 
@@ -123,7 +123,6 @@ public class FarmersMarketController {
         if(!user.getUserType().equals("Admin") || !user.getValid()) {
             throw new Exception("Cannot Delete this User");
         }
-
         users.delete(id);
     }
 
@@ -143,11 +142,9 @@ public class FarmersMarketController {
     public User getOneUser(@PathVariable("id") int id, HttpSession session) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         if(!user.getUserType().equals("Admin") && (!user.getUserType().equals("Buyer") || !user.getValid() || !users.findOne(id).getUserType().equals("Farmer")) && user.getId() != id){
             throw new Exception("Invalid User Permissions");
         }
-
         return users.findOne(id);
     }
 
@@ -202,11 +199,9 @@ public class FarmersMarketController {
     public Inventory createInventory(@RequestBody Inventory inventory, HttpSession session) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         if (!user.getUserType().equals("Farmer") || !user.getValid()){
             throw new Exception("Invalid User Permissions");
         }
-
         inventory.setUser(user);
         inventories.save(inventory);
         return inventory;
@@ -216,16 +211,13 @@ public class FarmersMarketController {
     public Inventory createInventoryByAdmin(@RequestBody Inventory inventory, HttpSession session, @PathVariable("id") int id) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         if (!user.getUserType().equals("Admin")){
             throw new Exception("Insufficient User Permissions");
         }
         User user2 = users.findOne(id);
-
         if(!user2.getValid()) {
             throw new Exception("You cannot add inventory to an unvalidated user");
         }
-
         inventory.setUser(user2);
         inventories.save(inventory);
         return inventory;
@@ -237,18 +229,14 @@ public class FarmersMarketController {
         return (List<Inventory>) inventories.findAll();
     }
 
-
     @RequestMapping(path = "/inventory/user/{id}", method = RequestMethod.GET)
     public ArrayList<Inventory> getAllInventoryByUser(HttpSession session, @PathVariable("id") int id) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         User user2 = users.findOne(id);
-
         if(!user.getUserType().equals("Admin") && (!user.getUserType().equals("Buyer") || !user.getValid()) && (user.getId() != user2.getId() || !user.getUserType().equals("Farmer"))){
             throw new Exception("Invalid User Permissions");
         }
-
             return inventories.findByUser(user2);
     }
 
@@ -256,11 +244,9 @@ public class FarmersMarketController {
     public ArrayList<Inventory> getAllInventoryByCategory(@PathVariable("category") String category, HttpSession session) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         if(!user.getUserType().equals("Admin") && (!user.getUserType().equals("Buyer") || !user.getValid())) {
             throw new Exception("Invalid User Permissions");
         }
-
         return (ArrayList<Inventory>) inventories.findByCategory(category);
     }
 
@@ -274,24 +260,19 @@ public class FarmersMarketController {
     public void deleteInventory(HttpSession session, @PathVariable("id") int id) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         if(!user.getUserType().equals("Admin") && (!user.getUserType().equals("Farmer") || user.getId() != inventories.findOne(id).getUser().getId())){
             throw new Exception("Invalid User Request");
         }
-
         List<Order> deleteOrderList = orders.findByIsPendingApprovalAndInventory(true, inventories.findOne(id));
-
         for(Order order : deleteOrderList) {
             orders.delete(order);
         }
-
         List<Order> saveOrderList = orders.findByIsPendingApprovalAndInventory(false, inventories.findOne(id));
 
         for(Order order : saveOrderList) {
             order.setInventory(null);
             orders.save(order);
         }
-
         inventories.delete(id);
     }
 
@@ -299,7 +280,6 @@ public class FarmersMarketController {
     public void updateInventory(@RequestBody Inventory inventory, @PathVariable("id") int id, HttpSession session) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         if(!user.getUserType().equals("Admin") && (!user.getUserType().equals("Farmer") || user.getId() != inventories.findOne(id).getUser().getId())){
             throw new Exception("Invalid User Request");
         }
@@ -320,7 +300,6 @@ public class FarmersMarketController {
     public ArrayList<Order> getOrdersPending(HttpSession session, @PathVariable("pending") boolean pending) {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         ArrayList<Order> orderList = new ArrayList<Order>();
         if(user.getUserType().equals("Farmer")) {
             orderList = orders.findByIsPendingApprovalAndFarmer(pending, user);
@@ -335,11 +314,9 @@ public class FarmersMarketController {
     public void createOrder(HttpSession session, @RequestBody Order order, @PathVariable("invId") int invId) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         if((!user.getUserType().equals("Buyer") || !user.getValid())){ //shouldlnt this say "true" inside it?
             throw new Exception("Invalid User Permissions");
         }
-
         order.setInventory(inventories.findOne(invId));
         order.setBuyer(user);
         order.setFarmer(order.getInventory().getUser());
@@ -351,11 +328,9 @@ public class FarmersMarketController {
     public void createOrderAdmin(HttpSession session, @RequestBody Order order, @PathVariable("buyerId") int id, @PathVariable("invId") int invId) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         if(!user.getUserType().equals("Admin")) {
             throw new Exception("Insufficient Permissions");
         }
-
         order.setInventory(inventories.findOne(invId));
         order.setFarmer(order.getInventory().getUser());
         order.setBuyer(users.findOne(id));
@@ -367,17 +342,13 @@ public class FarmersMarketController {
     public void deleteOrder(HttpSession session, @PathVariable("id") int id) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         Order order = orders.findOne(id);
-
         if(!user.getUserType().equals("Admin") && user.getId() != order.getFarmer().getId() && user.getId() != order.getBuyer().getId()) {
             throw new Exception("Invalid User Permissions");
         }
-
         if(!orders.findOne(id).isPendingApproval()) {
             throw new Exception("Invalid Request: Order is already approved");
         }
-
         orders.delete(id);
     }
 
@@ -385,12 +356,10 @@ public class FarmersMarketController {
     public ArrayList<Order> getUserOrders(HttpSession session, @PathVariable("userId") int id) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         if(!user.getUserType().equals("Admin")){
             throw new Exception("Insufficient Permissions");
         }
         User checkedUser = users.findOne(id);
-
         return orders.findByFarmerOrBuyer(checkedUser, checkedUser);
     }
 
@@ -398,23 +367,17 @@ public class FarmersMarketController {
     public void authorizeOrder(HttpSession session, @PathVariable("id") int id) throws Exception {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-
         if (user.getId() != orders.findOne(id).getFarmer().getId() && !user.getUserType().equals("Admin")){
             throw new Exception("Invalid User Permissions");
         }
-
         Order order = orders.findOne(id);
         Inventory inventory = order.getInventory();
-
         if(inventory.getQuantityAvailable() < order.getQuantityOrdered()) {
             throw new Exception("Invalid Order: Quantity Requested too High");
         }
-
         inventory.setQuantityAvailable(inventory.getQuantityAvailable() - order.getQuantityOrdered());
-
         order.setPendingApproval(false);
         order.setTimeStampOrdered(LocalDateTime.now());
-
         inventories.save(inventory);
         orders.save(order);
     }
