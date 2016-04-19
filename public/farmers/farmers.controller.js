@@ -10,6 +10,7 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
   $scope.categories = [];
   $scope.approvedOrders = [];
 
+
 FarmersService.getAllInventoryByUser($scope.user.id)
 .then(function(data){
   $scope.myProducts = data.data;
@@ -37,12 +38,20 @@ $scope.createInventory = function(inventory) {
       console.log("ARE PENDING", data.data);
       $scope.pendingOrders = data.data;
   })
-  $scope.authorizeOrder = function(pending){
+  $scope.authorizeOrder = function(pending,index){
     FarmersService.authorizeOrder(pending)
     .then (function(data){
       console.log("Authorized Bitch!!",data);
         $scope.approvedOrders.push(pending);
+        $scope.pendingOrders.splice(index,1)
     })
-  }
+}
+  $scope.deleteOrder = function(order,index){
+    FarmersService.deleteOrder(order)
+    .then(function(data){
+      $scope.pendingOrders.splice(index,1);
+    })
+
+}
 
 }

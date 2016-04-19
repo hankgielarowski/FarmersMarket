@@ -41,7 +41,9 @@
         <div class="well">
           <h4 class="text-danger">Product Orders</h4>
             <ul ng-repeat="thing in pendingOrders track by $index">
-              <li ng-click="authorizeOrder(thing)">{{thing.category}} , {{thing.name}} , $ {{thing.price}} , {{thing.buyer.userName}} , {{thing.quantityOrdered}} lbs</li>
+              <li>{{thing.category}} , {{thing.name}} , {{thing.buyer.userName}} , $ {{thing.price}} , {{thing.quantityOrdered}} lbs</li>
+              <button type="button" class="btn btn-danger btn-sm" ng-click="authorizeOrder(thing)">Accept Order</button>
+              <button type="button" class="btn btn-danger btn-sm" ng-click="deleteOrder(order)">Delete Order</button>
             </ul>
         </div>
       </div>
@@ -49,7 +51,7 @@
         <div class="well">
           <h4 class="text-success"> Approved Orders </h4>
           <ul ng-repeat="approved in approvedOrders track by $index">
-            <li>{{approved.category}} , {{approved.name}} , $ {{approved.price}} , {{approved.buyer.userName}} , {{approved.quantityOrdered}} lbs</li>
+            <li>{{approved.category}} , {{approved.name}} , {{approved.buyer.userName}} ,  $ {{approved.price}} , {{approved.quantityOrdered}} lbs</li>
           </ul>
         </div>
       </div>
