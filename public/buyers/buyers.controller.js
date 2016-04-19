@@ -20,7 +20,7 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
         $scope.categories = data.data;
     })
     $scope.createOrder = function(order) {
-        console.log($scope.myProducts);
+        console.log('myproducts', $scope.myProducts);
         order.category = order.category;
         order.quantityOrdered = order.quantityOrdered;
         order.inventory = $scope.myProducts[0];
@@ -38,6 +38,7 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
             $scope.thing = {};
           })
         }
+
     }
 
     BuyersService.getOrdersPending(true).then(function(data) {

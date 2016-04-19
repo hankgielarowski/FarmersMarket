@@ -3,10 +3,12 @@ angular
   .service('FarmersService', function($http,$window){
 
         function createInventory(inventory){
+          console.log("i make inventory", inventory);
           return $http.post('/inventory/', inventory);
         }
 
         function createInventoryByAdmin(inventory,userId) {
+
           return $http.post('/inventory/user/' + userId, inventory);
         }
 
