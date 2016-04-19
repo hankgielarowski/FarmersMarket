@@ -127,7 +127,7 @@ public class FarmersMarketController {
         users.delete(id);
     }
 
-    //deleteUserHiddenByAdminOrUser
+    //deleteUserHiddenByAdminOrUser ?? should we make something that hides a users profile when they "delete"?
 
     @RequestMapping(path = "/users", method = RequestMethod.GET)
     public ArrayList<User> getAllUsers(HttpSession session) throws Exception {
@@ -231,7 +231,7 @@ public class FarmersMarketController {
         return inventory;
     }
 
-    //not going to use "/inventory" GET all?
+    //not currently using this "/inventory" GET all
     @RequestMapping(path = "/inventory", method = RequestMethod.GET)
     public List<Inventory> getAllInventory() {
         return (List<Inventory>) inventories.findAll();
@@ -264,7 +264,7 @@ public class FarmersMarketController {
         return (ArrayList<Inventory>) inventories.findByCategory(category);
     }
 
-    //is get one needed??
+    //not currently using this "/inventory/{id}"
     @RequestMapping(path = "/inventory/{id}", method = RequestMethod.GET)
     public Inventory getOneInventory(@PathVariable("id") int id) {
         return inventories.findOne(id);
@@ -303,8 +303,6 @@ public class FarmersMarketController {
         if(!user.getUserType().equals("Admin") && (!user.getUserType().equals("Farmer") || user.getId() != inventories.findOne(id).getUser().getId())){
             throw new Exception("Invalid User Request");
         }
-
-
         inventories.save(inventory);
     }
 
@@ -420,10 +418,5 @@ public class FarmersMarketController {
         inventories.save(inventory);
         orders.save(order);
     }
-
-
-    // frontend will handle the buyers' order validation by just not sending the validated (GET route) to backend until the buyer clicks "confirm"
-    // need to explain to frontend that they should display a purchse button next to each item
-    // when deleting a user or inventory object, need to figure out the parenthood/cascading
 
 }
