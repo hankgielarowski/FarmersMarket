@@ -9,8 +9,8 @@
           <p>{{category.categoryName}}</p>
         </li>
         <li class="cat-list">
-          <img ng-src="imagesCategories/{{category.imageCategory}}" alt="">
-          <img ng-src="imagesCategories/Tits.jpg" alt="">
+          <img class="veg-pic" ng-src="imagesCategories/{{category.imageCategory}}" alt="">
+          <img class="new-veg-pic" ng-src="imagesCategories/Tits.jpg" alt="">
         </li>
     </a>
     </ul>
@@ -56,7 +56,7 @@
 
 
             <ul class ="pendingOrders" >
-              <li>{{thing.category}} , {{thing.name}} , $ {{thing.price}} , {{thing.buyer.userName}} , {{thing.quantityOrdered}} lbs</li>
+              <li>{{thing.category}} , {{thing.name}} , $ {{thing.price}} , {{user.userName}} , {{thing.quantityOrdered}} lbs</li>
 
             </ul>
             </div>

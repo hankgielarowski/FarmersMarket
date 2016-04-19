@@ -2,9 +2,9 @@
 .module("farmers.module")
 .controller("FarmersController", FarmersController);
 
-FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmersService", "AuthService","BuyersService"];
+FarmersController.$inject = ["$scope", "$http", "$location", "$q", "$rootScope", "FarmersService", "AuthService","BuyersService", "$routeParams"];
 
-function FarmersController($scope, $http, $location, $q, $rootScope, FarmersService, AuthService, BuyersService){
+function FarmersController($scope, $http, $location, $q, $rootScope, FarmersService, AuthService, BuyersService, $routeParams){
   $scope.user = AuthService.currentUser();
   $scope.myProducts;
   $scope.categories = [];
