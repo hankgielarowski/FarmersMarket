@@ -1,7 +1,6 @@
 package com.theironyard;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.theironyard.entities.Category;
 import com.theironyard.entities.Inventory;
 import com.theironyard.entities.Order;
 import com.theironyard.entities.User;
@@ -23,12 +22,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = FarmersMarketApplication.class)
@@ -93,7 +89,6 @@ public class FarmersMarketApplicationTests {
 
        Assert.assertTrue(!isValid);
     }
-
 
     @Test
     public void test4ValidateUser() throws Exception { //(POST route: /users/validate/{id})
@@ -223,21 +218,6 @@ public class FarmersMarketApplicationTests {
         );
         Assert.assertTrue(inventories.findOne(2).getCategory().equals("Corn"));
     }
-
-//    @Test
-//    public void testB2FindInventoryByCategory() throws Exception { //(GET route: /inventory/category/{category})
-////        ObjectMapper mapper = new ObjectMapper();
-////        String json = mapper.writeValueAsString(inventories.findAll());
-////        mockMvc.perform(
-////                MockMvcRequestBuilders.get("/inventory/category/Tomato")
-////                        .content(json)
-////                        .contentType("application/json")
-////                        .sessionAttr("userName", "Alice")
-////        );
-//        Assert.assertTrue(inventories.findByCategory("Tomato").size() == 1); //does this test actually work?
-//        // is it checking the amount of inventory items in that category?
-//        //this test is a placeholder that I'm going to work on redoing soon
-//    }
 
     @Test
     public void testB3FindInventoryWithCategory() throws Exception { //(GET route: /inventory/category/{category})
@@ -397,19 +377,17 @@ public class FarmersMarketApplicationTests {
         Assert.assertTrue(orderList.size() == 1 && farmerMap.get("userName").equals("Alice"));
     }
 
-
-//    -logout (POST route: /logout)
-@Test
-public void testC5Logout() throws Exception { //(POST route: /login)
-    ResultActions resAct =
-            mockMvc.perform(
-                    MockMvcRequestBuilders.post("/logout")
-                            .sessionAttr("userName", "Alice")
-            );
-    MvcResult result = resAct.andReturn();
-    MockHttpServletRequest request = result.getRequest();
-    HttpSession session = request.getSession();
-    Assert.assertTrue(session.getAttribute("userName") == null);
-}
+    @Test
+    public void testC5Logout() throws Exception { //(POST route: /login)
+        ResultActions resAct =
+                mockMvc.perform(
+                        MockMvcRequestBuilders.post("/logout")
+                                .sessionAttr("userName", "Alice")
+                );
+        MvcResult result = resAct.andReturn();
+        MockHttpServletRequest request = result.getRequest();
+        HttpSession session = request.getSession();
+        Assert.assertTrue(session.getAttribute("userName") == null);
+    }
 
 }
