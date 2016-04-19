@@ -1,0 +1,26 @@
+<div id="profileEdit">
+      <div class="modal-header">
+          <h3 class="modal-title">EDIT DAT SHEEET</h3>
+      </div>
+      <div class="modal-body">
+      <div class="box">
+        <div class="content register-box">
+          <div class="form">
+            <form class="editInv-form" ng-submit="updateInventory(inventory)">
+              <input id="editProductName" class="form-control" type="text" value="{{inventory.name}}" name="inventoryName" ng-model="inventory.name">
+              <input id="editQuantity" class="form-control" type="text" value="{{inventory.quantityAvailable}}" name="quantityAvailable" ng-model="inventory.quantityAvailable">
+              <input id="editPrice" class="form-control" type="text" value="{{inventory.price}}" name="price" ng-model="inventory.price">
+              <input class="btn btn-default btn-register" type="submit" value="Edit" name="commit" >
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="modal-footer">
+
+          <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+      </div>
+      </div>
+
+      </div>

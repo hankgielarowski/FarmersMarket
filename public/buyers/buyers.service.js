@@ -12,7 +12,8 @@ angular
 
     function createOrder(order, id){
       console.log("posted orders!!!!", order);
-      return $http.post('/orders/' + order.id, order);
+      return $http.post('/orders/' + id, order);
+      console.log("still posting", order);
     }
 
     function createOrderAdmin(order, buyerId, id){
