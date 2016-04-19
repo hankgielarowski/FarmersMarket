@@ -323,7 +323,6 @@ public class FarmersMarketController {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
 
-
         ArrayList<Order> orderList = new ArrayList<Order>();
         if(user.getUserType().equals("Farmer")) {
             orderList = orders.findByIsPendingApprovalAndFarmer(pending, user);
@@ -418,23 +417,8 @@ public class FarmersMarketController {
         order.setPendingApproval(false);
         order.setTimeStampOrdered(LocalDateTime.now());
 
-//        if(inventory.getQuantityAvailable() == 0) {
-//            List<Order> deleteOrderList = orders.findByIsPendingApprovalAndInventory(true, inventories.findOne(id));
-//
-//            for(Order order2 : deleteOrderList) {
-//                orders.delete(order2);
-//            }
-//
-//            inventories.delete(inventory);
-//        }
-//        else {
-//            inventories.save(inventory);
-//        }
-
         inventories.save(inventory);
-
         orders.save(order);
-
     }
 
 
