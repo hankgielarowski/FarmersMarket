@@ -43,7 +43,7 @@
             <ul ng-repeat="thing in pendingOrders track by $index">
               <li>{{thing.category}} , {{thing.name}} , {{thing.buyer.userName}} , $ {{thing.price}} , {{thing.quantityOrdered}} lbs</li>
               <button type="button" class="btn btn-danger btn-sm" ng-click="authorizeOrder(thing)">Accept Order</button>
-              <button type="button" class="btn btn-danger btn-sm" ng-click="deleteOrder(order)">Delete Order</button>
+              <button type="button" class="btn btn-danger btn-sm" ng-click="deleteOrder(thing)">Delete Order</button>
             </ul>
         </div>
       </div>
