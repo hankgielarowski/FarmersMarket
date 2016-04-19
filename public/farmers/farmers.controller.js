@@ -11,10 +11,9 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
   $scope.approvedOrders = [];
 
 
-FarmersService.getAllInventoryByUser($scope.user.id)
+FarmersService.getAllInventoryByUser($routeParams.id)
 .then(function(data){
   $scope.myProducts = data.data;
-  console.log("YYAY SHIT",$scope.myProducts);
 })
 
 $scope.createInventory = function(inventory) {
@@ -22,11 +21,20 @@ $scope.createInventory = function(inventory) {
   inventory.price = parseInt(inventory.price);
   inventory.quantityAvailable = parseInt(inventory.quantityAvailable);
   inventory.user= null;
-  FarmersService.createInventory(inventory)
-  .then(function(res){
-    $scope.myProducts.push(inventory);
-    $scope.list = {};
-  })
+
+  if($scope.user.userType === 'Farmer') {
+    FarmersService.createInventory(inventory)
+    .then(function(res){
+      $scope.myProducts.push(inventory);
+      $scope.list = {};
+    })
+  } else {
+    FarmersService.createInventoryByAdmin(inventory,$routeParams.id)
+    .then(function(res) {
+      $scope.myProducts.push(inventory);
+      $scope.list = {};
+    })
+  }
 }
 
   BuyersService.getAllCategories()

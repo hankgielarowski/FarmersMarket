@@ -6,6 +6,10 @@ angular
           return $http.post('/inventory/', inventory);
         }
 
+        function createInventoryByAdmin(inventory,userId) {
+          return $http.post('/inventory/user/' + userId, inventory);
+        }
+
         function getAllInventory(inventory){
           console.log("ALL the corn", inventory);
           return $http.get('/inventory');
@@ -35,7 +39,8 @@ angular
           getAllInventoryByUser:getAllInventoryByUser,
           getOrdersPending:getOrdersPending,
           authorizeOrder:authorizeOrder,
-          deleteOrder:deleteOrder
+          deleteOrder:deleteOrder,
+          createInventoryByAdmin: createInventoryByAdmin
 
         }
   })
