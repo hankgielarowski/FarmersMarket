@@ -30,22 +30,32 @@ angular
         $scope.users.splice(index, 1)
       })
     };
+    $scope.showFarmer = false
+    $scope.showBuyer = false
+
 
     $scope.getCatUsers = function(cat) {
       console.log("WE ARE GETTING SHIT?", cat)
       AdminService.getUsersInCategory(cat)
       .then(function(data){
           $scope.farmers = data.data.filter(function(el) {
-            return el.userType = "Farmer";
+            return el.userType === "Farmer";
           })
 
           $scope.buyers = data.data.filter(function(el) {
-            return el.userType = "Buyer";
+            return el.userType === "Buyer";
           })
+
+          $scope.showFarmer = !$scope.showFarmer
+          $scope.showBuyer = !$scope.showBuyer
+
+
       }).catch(function(err) {
         console.log("SHIT", err);
       });
     }
+
+
 
 
 
@@ -335,10 +345,10 @@ angular
 .controller("BuyersProfileController", BuyersProfileController);
 
 
-BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService", "$uibModal"]
+BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService", "$uibModal", "$routeParams"]
 
 
-function BuyersProfileController($scope, $http, BuyersProfileService, AuthService, $uibModal){
+function BuyersProfileController($scope, $http, BuyersProfileService, AuthService, $uibModal, $routeParams){
   $scope.user = AuthService.currentUser();
 
 
@@ -354,10 +364,15 @@ function BuyersProfileController($scope, $http, BuyersProfileService, AuthServic
       }
     });
   }
+
+  BuyersProfileService.getBuyerProfile($routeParams.buyerId).then(function (buyer) {
+    console.log(buyer);
+    $scope.buyer = buyer.data;
+  })
+
   BuyersProfileService.getAllInventoryByUser($scope.user.id)
   .then(function(data){
     $scope.myProducts = data.data;
-
   })
 }
 
@@ -368,7 +383,7 @@ angular
 ])
 .config(function($routeProvider) {
   $routeProvider
-    .when('/buyers-profile/:id/',{
+    .when('/buyers-profile/:buyerId/',{
       templateUrl: "./buyers-profile/views/buyers-profile.html",
       controller: "BuyersProfileController"
     })
@@ -384,11 +399,14 @@ angular
           return $http.get('/inventory/user/' + userName);
         }
 
-
+        function getBuyerProfileUser(id) {
+          return $http.get('/users/' + id);
+        }
 
 
 return {
-  getAllInventoryByUser:getAllInventoryByUser
+  getAllInventoryByUser:getAllInventoryByUser,
+  getBuyerProfile: getBuyerProfileUser
   }
 
 })
@@ -525,9 +543,9 @@ angular
 .module("farmers-profile.module")
 .controller("FarmersProfileController", FarmersProfileController);
 
-FarmersProfileController.$inject = ["$scope", "$http", "FarmersProfileService", "AuthService", "$uibModal"]
+FarmersProfileController.$inject = ["$scope", "$http", "FarmersProfileService", "AuthService", "$uibModal", "$routeParams"]
 
-function FarmersProfileController($scope, $http, FarmersProfileService, AuthService, $uibModal){
+function FarmersProfileController($scope, $http, FarmersProfileService, AuthService, $uibModal, $routeParams){
   $scope.user = AuthService.currentUser();
   console.log("CHOKE RICHARD",AuthService.currentUser());
 
@@ -543,6 +561,11 @@ function FarmersProfileController($scope, $http, FarmersProfileService, AuthServ
       }
     });
   }
+
+    FarmersProfileService.getProfile($routeParams.farmerId).then(function (farmer) {
+      console.log(farmer);
+      $scope.farmer = farmer.data;
+    })
     FarmersProfileService.getAllInventoryByUser($scope.user.id)
     .then(function(data){
       $scope.myProducts = data.data;
@@ -550,7 +573,7 @@ function FarmersProfileController($scope, $http, FarmersProfileService, AuthServ
     })
 
 
-}
+} 
 
 },{}],21:[function(require,module,exports){
 angular
@@ -559,11 +582,11 @@ angular
 ])
 .config(function($routeProvider) {
   $routeProvider
-    .when('/farmers-profile/:id/',{
+    .when('/farmers-profile/:farmerId',{
       templateUrl: "./farmers-profile/views/farmers-profile.html",
       controller: "FarmersProfileController"
     })
-}) 
+})
 
 },{}],22:[function(require,module,exports){
 angular
@@ -576,14 +599,17 @@ angular
           return $http.get('/inventory/user/' + userName);
         }
 
-
+        function getProfileUser(id) {
+          return $http.get('/users/' + id);
+        }
 
 
 return {
-  getAllInventoryByUser:getAllInventoryByUser
+  getAllInventoryByUser:getAllInventoryByUser,
+  getProfile: getProfileUser
   }
 
-}) 
+})
 
 },{}],23:[function(require,module,exports){
 
@@ -627,6 +653,7 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
   $scope.categories = [];
   $scope.approvedOrders = [];
 
+
 FarmersService.getAllInventoryByUser($scope.user.id)
 .then(function(data){
   $scope.myProducts = data.data;
@@ -654,13 +681,21 @@ $scope.createInventory = function(inventory) {
       console.log("ARE PENDING", data.data);
       $scope.pendingOrders = data.data;
   })
-  $scope.authorizeOrder = function(pending){
+  $scope.authorizeOrder = function(pending,index){
     FarmersService.authorizeOrder(pending)
     .then (function(data){
       console.log("Authorized Bitch!!",data);
         $scope.approvedOrders.push(pending);
+        $scope.pendingOrders.splice(index,1)
     })
-  }
+}
+  $scope.deleteOrder = function(order,index){
+    FarmersService.deleteOrder(order)
+    .then(function(data){
+      $scope.pendingOrders.splice(index,1);
+    })
+
+}
 
 }
 
@@ -710,12 +745,17 @@ angular
           return $http.put('/orders/authorize/' + pending.id)
         }
 
+        function deleteOrder(order){
+          return $http.delete('/orders/' + order.id)
+        }
+
         return {
           createInventory:createInventory,
           getAllInventory: getAllInventory,
           getAllInventoryByUser:getAllInventoryByUser,
           getOrdersPending:getOrdersPending,
-          authorizeOrder:authorizeOrder
+          authorizeOrder:authorizeOrder,
+          deleteOrder:deleteOrder
 
         }
   })

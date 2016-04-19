@@ -8,11 +8,14 @@ angular
           return $http.get('/inventory/user/' + userName);
         }
 
-
+        function getProfileUser(id) {
+          return $http.get('/users/' + id);
+        }
 
 
 return {
-  getAllInventoryByUser:getAllInventoryByUser
+  getAllInventoryByUser:getAllInventoryByUser,
+  getProfile: getProfileUser
   }
 
-}) 
+})
