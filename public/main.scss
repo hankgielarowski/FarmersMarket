@@ -324,6 +324,13 @@ footer li {
   height: 150px;
 }
 
+.new-veg-pic {
+  display: none;
+}
+.veg-pic:hover + .new-veg-pic {
+  display: inline;
+}
+
 .container-invFarm {
   width: 100%;
   margin: 0 auto;
@@ -353,19 +360,15 @@ footer li {
  //buyer profile page
 .container-buyerProfile {
   width: 100%
-  background-color: rgba(115, 186, 241, 0.3);
+  // background-color: rgba(115, 186, 241, 0.3);
 }
 // end profile page
 
 //admin page
-.container-fluid {
-  list-style: none;
-  display: inline-block;
-}
 
-.view-button {
-  list-style: none;
-  display: inline-block;
-  padding-left: 10px;
-  text-align: center;
+.farmer-all {
+    margin-left: 35%;
+}
+.container-user {
+    text-align: center;
 }

@@ -32,4 +32,4 @@ function FarmersProfileController($scope, $http, FarmersProfileService, AuthServ
     })
 
 
-} 
+}
