@@ -12,5 +12,4 @@ angular
         templateUrl: "./farmers/views/farmers.html",
         controller: "FarmersController"
     })
-
 })

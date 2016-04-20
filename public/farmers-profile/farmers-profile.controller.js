@@ -6,7 +6,6 @@ FarmersProfileController.$inject = ["$scope", "$http", "FarmersProfileService", 
 
 function FarmersProfileController($scope, $http, FarmersProfileService, AuthService, $uibModal, $routeParams){
   $scope.user = AuthService.currentUser();
-  console.log("CHOKE RICHARD",AuthService.currentUser());
 
   $scope.editUser = function() {
     console.log("WHAT UP");
@@ -16,20 +15,15 @@ function FarmersProfileController($scope, $http, FarmersProfileService, AuthServ
       controller: 'ModalInstanceEditFarmerController',
       size: 'sm',
       resolve: {
-
       }
     });
   }
 
     FarmersProfileService.getProfile($routeParams.farmerId).then(function (farmer) {
-      console.log(farmer);
       $scope.farmer = farmer.data;
     })
     FarmersProfileService.getAllInventoryByUser($scope.user.id)
     .then(function(data){
       $scope.myProducts = data.data;
-
     })
-
-
 }

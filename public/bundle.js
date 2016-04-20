@@ -12,17 +12,14 @@ angular
     AdminService.getvalidateUser()
     .then(function(data){
       $scope.users = data.data;
-      console.log("who",data)
     });
 
     $scope.validateUser = function(user, index) {
       AdminService.validateUser(user)
       .then(function(data){
-        console.log("ldlkdaftujhasdfg",data);
         $scope.users.splice(index, 1)
       })
     }
-
 
     $scope.deleteUserDeniedByAdmin = function (user, index) {
       AdminService.deleteUser(user)
@@ -35,7 +32,6 @@ angular
 
 
     $scope.getCatUsers = function(cat) {
-      console.log("WE ARE GETTING SHIT?", cat)
       AdminService.getUsersInCategory(cat)
       .then(function(data){
           $scope.farmers = data.data.filter(function(el) {
@@ -49,9 +45,7 @@ angular
           $scope.showFarmer = !$scope.showFarmer
           $scope.showBuyer = !$scope.showBuyer
 
-
       }).catch(function(err) {
-        console.log("SHIT", err);
       });
     }
 
@@ -82,7 +76,6 @@ var angular = require('angular');
 angular
   .module('admin.module')
   .service('AdminService', function($http){
-
 
     function getvalidateUser(){
       console.log("I am a user")
@@ -141,22 +134,7 @@ angular
       templateUrl: "home/views/home.html",
       controller: "HomeController"
     })
-    // .when('/admin', {
-    //   templateUrl: "admin/views/admin.html",
-    //   controller: "AdminController"
-    // })
-    // .when('/buyers', {
-    //   templateUrl: "buyers/views/buyers.html",
-    //   controller: "BuyersController"
-    // })
-    // .when('/buyers-profile', {
-    //   templateUrl: "buyers-profile/views/buyers-profile.html",
-    //   controller: "BuyersProfileController"
-    // })
-    // .when('/farmers-profile', {
-    //   templateUrl: "farmers-profile/views/farmers-profile.html",
-    //   controller: "FarmersProfileController"
-    // })
+  
 })
 .config(function($authProvider) {
   $authProvider.loginUrl = '/login';
@@ -188,12 +166,9 @@ angular
   AuthController.$inject = ['$scope', '$q','$http', '$rootScope', 'AuthService', '$routeParams', '$location','$auth'];
 
   function AuthController($scope, $q, $http, $rootScope, AuthService, $routeParams, $location, $auth){
-    console.log("COMING HOT")
     AuthService.getUser()
     .then(function(data) {
-      console.log("THIS SHOULD BE USERS", data);
     })
-
 
     $scope.logOutUser = function(user) {
       $auth.logout();
@@ -214,16 +189,14 @@ angular
       if($window.localStorage.getItem('mahUser')) {
         return true;
       }
-      return false;
-    }
+        return false;
+      }
 
     function goToProfile(user){
-      console.log("PRofile", user);
       return $http.get("/users");
     }
 
     function loginUser(user){
-      console.log("ARE YOU HAPPENING?");
       return $http.post('/login', user);
     }
 
@@ -274,12 +247,9 @@ angular
 .module('farmers.module')
 .controller('ModalLoginInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location,$window) {
 
-
  $scope.loginUser = function (user) {
-   console.log("TEST MODAL", user);
    AuthService.loginUser(user)
    .success(function(res){
-     console.log("RIGHT?",res);
      $window.localStorage.setItem('mahUser', JSON.stringify(res));
      AuthService.user = res;
      if(res.userType === 'Farmer') {
@@ -292,19 +262,16 @@ angular
 
    })
    .error(function(err) {
-     console.log("SHIT", err);
      alert("Incorrect Password");
    });
 
    $uibModalInstance.close();
- };
+   };
 
-
-
- $scope.cancel = function () {
+   $scope.cancel = function () {
    $uibModalInstance.close('cancel');
- };
-});
+  };
+  });
 
 },{}],10:[function(require,module,exports){
 angular
@@ -314,25 +281,15 @@ angular
   $scope.createUser = function (user) {
     AuthService.createUser(user)
     .success(function(res){
-      console.log("CREATED",res);
       $window.localStorage.setItem('mahUser', JSON.stringify(res));
       AuthService.user = res;
       alert("You Have Signed Up.  You WIll Be Granted Access Upon Administration Approval")
-
-      // if(res.userType === 'Farmer') {
-      //   $location.path("/farmers/"+ res.id);
-      // } else if (res.userType === 'Buyer') {
-      //   $location.path("/buyers/" + res.id);
-      // }
     })
 
     .error(function(err) {
-      console.log("SHIT", err);
     });
     $uibModalInstance.close();
   };
-
-
 
   $scope.cancel = function () {
     $uibModalInstance.close('cancel');
@@ -344,29 +301,23 @@ angular
 .module("buyers-profile.module")
 .controller("BuyersProfileController", BuyersProfileController);
 
-
 BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService", "$uibModal", "$routeParams"]
-
 
 function BuyersProfileController($scope, $http, BuyersProfileService, AuthService, $uibModal, $routeParams){
   $scope.user = AuthService.currentUser();
 
-
   $scope.editUser = function() {
-    console.log("WHAT UP");
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: './buyers-profile/views/modaledit.html',
       controller: 'ModalInstanceEditBuyerController',
       size: 'sm',
       resolve: {
-
       }
     });
   }
 
   BuyersProfileService.getBuyerProfile($routeParams.buyerId).then(function (buyer) {
-    console.log(buyer);
     $scope.buyer = buyer.data;
   })
 
@@ -404,12 +355,11 @@ angular
         }
 
 
-return {
-  getAllInventoryByUser:getAllInventoryByUser,
-  getBuyerProfile: getBuyerProfileUser
-  }
-
-})
+        return {
+          getAllInventoryByUser:getAllInventoryByUser,
+          getBuyerProfile: getBuyerProfileUser
+        }
+    })
 
 },{}],14:[function(require,module,exports){
 require('./buyers-profile.module');
@@ -424,20 +374,16 @@ $scope.user = AuthService.currentUser();
 
 $scope.editUser = function(user) {
     AuthService.editUser(user).success(function(res) {
-        console.log("CREATED", res);
         $window.localStorage.setItem('mahUser', JSON.stringify(res));
         AuthService.user = res;
-        // alert("You Have Signed Up.  You WIll Be Granted Access Upon Administration Approval");
     }).error(function(err) {
-        console.log("SHIT", err);
     });
     $uibModalInstance.close();
-};
+  };
 $scope.cancel = function() {
     $uibModalInstance.close('cancel');
-};
-
-});
+  };
+  });
 
 },{}],16:[function(require,module,exports){
 angular.module("buyers.module").controller("BuyersController", BuyersController);
@@ -453,30 +399,19 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
         // on image
     BuyersService.getAllInventoryByCategory().then(function(data) {
         $scope.myProducts = data.data;
-        console.log("PRDS", data.data);
-        console.log("GROUB", _.groupBy(data.data, 'category'));
         var cats = Object.keys(_.groupBy(data.data, 'category'))
-        console.log(cats);
     })
     BuyersService.getAllCategories().then(function(data) {
         $scope.categories = data.data;
     })
-<<<<<<< HEAD
-    $scope.createOrder = function(order) {
-        console.log('myproducts', $scope.myProducts);
-        order.category = order.category;
-        order.quantityOrdered = order.quantityOrdered;
-        order.inventory = $scope.myProducts[0];
-=======
+
     $scope.createOrder = function(product, id) {
-        console.log("why it works",$scope.myProducts);
         var order = {};
         order.category = product.category;
         order.name = product.name;
         order.price= product.price;
         order.quantityOrdered = product.quantityOrdered;
         order.inventory = product;
->>>>>>> 324635656855e2f36562eac97962185b7bb47e9c
 
         if($scope.user.userType === 'Buyer') {
           BuyersService.createOrder(order, id)
@@ -491,15 +426,11 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
             $scope.thing = {};
           })
         }
-
     }
-
     BuyersService.getOrdersPending(true).then(function(data) {
-        console.log("ARE PENDING", data.data);
         $scope.pendingOrders = data.data;
     })
     BuyersService.getOrdersPending(false).then(function(data) {
-        console.log("HELLO", data.data);
         $scope.notPendingOrders = data.data;
     })
 }
@@ -508,7 +439,6 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
 var angular = require("angular");
 require("angular-route");
 require("angular-ui-bootstrap");
-
 
 angular
 .module("buyers.module", [
@@ -537,29 +467,23 @@ angular
     }
 
     function createOrder(order, id){
-      console.log("posted orders!!!!", order);
       return $http.post('/orders/' + id, order);
-      console.log("still posting", order);
     }
 
     function createOrderAdmin(order, buyerId, id){
-      console.log("GIVE ME AN ORDER", order);
       return $http.post('/orders/admin/'+ buyerId + '/' + order.id , order);
     }
-
 
     function getOrdersPending(pending){
       return $http.get('/orders/' + pending)
     }
 
-
-        return {
+      return {
           getAllInventoryByCategory: getAllInventoryByCategory,
           getAllCategories: getAllCategories,
           createOrder:createOrder,
           getOrdersPending:getOrdersPending,
           createOrderAdmin:createOrderAdmin
-
         }
   })
 
@@ -577,7 +501,6 @@ FarmersProfileController.$inject = ["$scope", "$http", "FarmersProfileService", 
 
 function FarmersProfileController($scope, $http, FarmersProfileService, AuthService, $uibModal, $routeParams){
   $scope.user = AuthService.currentUser();
-  console.log("CHOKE RICHARD",AuthService.currentUser());
 
   $scope.editUser = function() {
     console.log("WHAT UP");
@@ -587,22 +510,17 @@ function FarmersProfileController($scope, $http, FarmersProfileService, AuthServ
       controller: 'ModalInstanceEditFarmerController',
       size: 'sm',
       resolve: {
-
       }
     });
   }
 
     FarmersProfileService.getProfile($routeParams.farmerId).then(function (farmer) {
-      console.log(farmer);
       $scope.farmer = farmer.data;
     })
     FarmersProfileService.getAllInventoryByUser($scope.user.id)
     .then(function(data){
       $scope.myProducts = data.data;
-
     })
-
-
 }
 
 },{}],21:[function(require,module,exports){
@@ -623,7 +541,6 @@ angular
   .module('farmers-profile.module')
   .service('FarmersProfileService', function($http,$window){
 
-
         function getAllInventoryByUser(userName){
           console.log("got me some corn", userName);
           return $http.get('/inventory/user/' + userName);
@@ -633,13 +550,11 @@ angular
           return $http.get('/users/' + id);
         }
 
-
-return {
-  getAllInventoryByUser:getAllInventoryByUser,
-  getProfile: getProfileUser
-  }
-
-})
+        return {
+          getAllInventoryByUser:getAllInventoryByUser,
+          getProfile: getProfileUser
+        }
+      })
 
 },{}],23:[function(require,module,exports){
 
@@ -653,18 +568,15 @@ angular.module('farmers-profile.module').controller('ModalInstanceEditFarmerCont
 
 $scope.user = AuthService.currentUser();
 
-$scope.editUser = function(user) {
+  $scope.editUser = function(user) {
     AuthService.editUser(user).success(function(res) {
-        console.log("CREATED", res);
         $window.localStorage.setItem('mahUser', JSON.stringify(res));
         AuthService.user = res;
-        // alert("You Have Signed Up.  You WIll Be Granted Access Upon Administration Approval");
     }).error(function(err) {
-        console.log("SHIT", err);
     });
     $uibModalInstance.close();
 };
-$scope.cancel = function() {
+  $scope.cancel = function() {
     $uibModalInstance.close('cancel');
 };
 
@@ -685,13 +597,11 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
 
 FarmersService.getAllInventoryByUser($routeParams.id)
 .then(function(data){
-  console.log("DREW",data);
   $scope.myProducts = data.data;
 })
 $scope.$on('product:updated', function () {
   FarmersService.getAllInventoryByUser($routeParams.id)
   .then(function(data){
-    console.log("DREW",data);
     $scope.myProducts = data.data;
   })
 })
@@ -719,39 +629,35 @@ $scope.createInventory = function(inventory) {
 
   BuyersService.getAllCategories()
   .then(function(data){
-    console.log("CATEGOREIS", data);
     $scope.categories = data.data;
   })
   BuyersService.getOrdersPending(true).then(function(data) {
-      console.log("ARE PENDING", data.data);
       $scope.pendingOrders = data.data;
   })
   $scope.authorizeOrder = function(pending,index){
     FarmersService.authorizeOrder(pending)
     .then (function(data){
-      console.log("Authorized Bitch!!",data);
-        $scope.approvedOrders.push(pending);
-        $scope.pendingOrders.splice(index,1)
+      $scope.approvedOrders.push(pending);
+      $scope.pendingOrders.splice(index,1)
     })
 }
-  $scope.deleteOrder = function(order,index){
+ $scope.deleteOrder = function(order,index){
     FarmersService.deleteOrder(order)
     .then(function(data){
       $scope.pendingOrders.splice(index,1);
     })
 }
 
-$scope.deleteInventory = function(inventory,index){
-  var id= inventory.id
-  FarmersService.deleteInventory(id)
-  .then(function(data){
-    $scope.myProducts.splice(index,1);
+ $scope.deleteInventory = function(inventory,index){
+   var id= inventory.id
+   FarmersService.deleteInventory(id)
+   .then(function(data){
+     $scope.myProducts.splice(index,1);
   })
 
 }
 
 $scope.updateInventory = function(product) {
-  console.log("we workin");
   var modalInstance = $uibModal.open({
     animation: $scope.animationsEnabled,
     templateUrl: './farmers/views/modaleditInv.html',
@@ -782,7 +688,6 @@ angular
         templateUrl: "./farmers/views/farmers.html",
         controller: "FarmersController"
     })
-
 })
 
 },{"angular":39,"angular-route":35,"angular-ui-bootstrap":37}],27:[function(require,module,exports){
@@ -791,23 +696,18 @@ angular
   .service('FarmersService', function($http,$window, $rootScope){
 
         function createInventory(inventory){
-          console.log("i make inventory", inventory);
           return $http.post('/inventory/', inventory);
         }
 
         function createInventoryByAdmin(inventory,userId) {
-
           return $http.post('/inventory/user/' + userId, inventory);
         }
 
         function getAllInventory(inventory){
-          console.log("ALL the corn", inventory);
           return $http.get('/inventory');
         }
 
-
         function getAllInventoryByUser(userName){
-          console.log("got me some corn", userName);
           return $http.get('/inventory/user/' + userName);
         }
 
@@ -828,8 +728,6 @@ angular
         }
 
         function updateInventory(id, inventory){
-
-          console.log("puttin on the ritz", inventory);
           return $http.put('/inventory/' + id, inventory).then(function () {
               $rootScope.$broadcast('product:updated');
           })
@@ -862,13 +760,6 @@ angular.module('farmers.module').controller('ModalInstanceEditInvController', fu
 
 $scope.updateInventory = function(inventory) {
     FarmersService.updateInventory(inventory.id, inventory).then(function(res) {
-    //     console.log("CREATED", res);
-    //     var id= inventory.id
-    // FarmersService.updateInventory(id)
-    //   .then(function(data){
-    //
-    //     })
-    console.log(res);
   });
     $uibModalInstance.close();
 };
@@ -889,43 +780,23 @@ HomeController.$inject = ["$scope", "$http", "$location", "$q", "$routeParams", 
 
 function HomeController($scope,$http,$location,$q,$routeParams,HomeService,$uibModal) {
   $scope.openLogin = function() {
-    console.log("WHAT UP");
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: './auth/views/modallogin.html',
       controller: 'ModalLoginInstanceCtrl',
       size: 'size',
       resolve: {
-
       }
     });
   }
 
-
   $scope.toggleAnimation = function () {
     $scope.animationsEnabled = !$scope.animationsEnabled;
   };
 
-  // $scope.openSignup = function(size) {
-  //   console.log("WHAT SIGNUP");
-  //   var modalInstance = $uibModal.open({
-  //     animation: $scope.animationsEnabled,
-  //     templateUrl: './auth/views/modalsignup.html',
-  //     controller: 'ModalSignupInstanceCtrl',
-  //     size: size,
-  //     resolve: {
-  //
-  //     }
-  //   });
-  // }
-
-
   $scope.toggleAnimation = function () {
     $scope.animationsEnabled = !$scope.animationsEnabled;
   };
-
-
-
 }
 
 },{"underscore":41}],31:[function(require,module,exports){
@@ -933,25 +804,6 @@ angular
   .module('FarmersMarket')
   .service('HomeService', function($http) {
 
-
-    // function getUser() {
-    //   return $http.get('/users');
-    // }
-    // 
-    // function createFarmer(user) {
-    //   return $http.post('/users', user);
-    // }
-    //
-    // function createBuyer(user) {
-    //   return $http.post('/users', user);
-    // }
-    //
-    // return {
-    //   getUser: getUser,
-    //   createFarmer: createFarmer,
-    //   createBuyer: createBuyer,
-    //   createUser: createUser
-    // }
   })
 
 },{}],32:[function(require,module,exports){
@@ -971,22 +823,19 @@ angular
     if($window.localStorage.getItem('mahUser')) {
       $scope.user = JSON.parse($window.localStorage.getItem('mahUser'));
     }
-    // $scope.user = JSON.parse($window.localStorage.getItem('mahUser'));
 
     $scope.openLogin = function() {
-      console.log("WHAT UP");
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
         templateUrl: './auth/views/modallogin.html',
         controller: 'ModalLoginInstanceCtrl',
         size: 'sm',
         resolve: {
-
         }
       });
     }
 
-    $scope.logTheFuckOut = function() {
+    $scope.logOut = function() {
       var user= AuthService.user
         AuthService.logOutUser(user)
         .success(function(res) {
@@ -997,46 +846,38 @@ angular
 
     $scope.goToProfile = function(user) {
       var profile= AuthService.user
-      console.log("woo",AuthService.user);
         if(profile.userType === "Farmer"){
           $location.path("/farmers-profile/" + profile.id)
-    } else if(profile.userType === "Buyer"){
+      } else if(profile.userType === "Buyer"){
         $location.path("/buyers-profile/" + profile.id)
+      }
     }
-}
     $scope.toggleAnimation = function () {
       $scope.animationsEnabled = !$scope.animationsEnabled;
     };
 
     $scope.openSignup = function() {
-      console.log("WHAT SIGNUP");
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
         templateUrl: './auth/views/modalsignup.html',
         controller: 'ModalSignupInstanceCtrl',
         size: 'sm',
         resolve: {
-
         }
       });
     }
-
-
     $scope.toggleAnimation = function () {
       $scope.animationsEnabled = !$scope.animationsEnabled;
     };
-
-
-
   });
 
 },{}],34:[function(require,module,exports){
 /**
- * @license AngularJS v1.5.5
+ * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
  */
-(function(window, angular) {'use strict';
+(function(window, angular, undefined) {'use strict';
 
 /**
  * @ngdoc module
@@ -1055,7 +896,11 @@ angular
  */
  /* global -ngRouteModule */
 var ngRouteModule = angular.module('ngRoute', ['ng']).
-                        provider('$route', $RouteProvider),
+                        provider('$route', $RouteProvider).
+                        // Ensure `$route` will be instantiated in time to capture the initial
+                        // `$locationChangeSuccess` event. This is necessary in case `ngView` is
+                        // included in an asynchronously loaded template.
+                        run(['$route', angular.noop]),
     $routeMinErr = angular.$$minErr('ngRoute');
 
 /**
@@ -1789,13 +1634,6 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
  *
  * The enter and leave animation occur concurrently.
  *
- * @knownIssue If `ngView` is contained in an asynchronously loaded template (e.g. in another
- *             directive's templateUrl or in a template loaded using `ngInclude`), then you need to
- *             make sure that `$route` is instantiated in time to capture the initial
- *             `$locationChangeStart` event and load the appropriate view. One way to achieve this
- *             is to have it as a dependency in a `.run` block:
- *             `myModule.run(['$route', function() {}]);`
- *
  * @scope
  * @priority 400
  * @param {string=} onload Expression to evaluate whenever the view updates.
@@ -2066,7 +1904,7 @@ module.exports = 'ngRoute';
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
 
- * Version: 1.3.2 - 2016-04-14
+ * Version: 1.3.1 - 2016-04-05
  * License: MIT
  */angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.collapse","ui.bootstrap.accordion","ui.bootstrap.alert","ui.bootstrap.buttons","ui.bootstrap.carousel","ui.bootstrap.dateparser","ui.bootstrap.isClass","ui.bootstrap.datepicker","ui.bootstrap.position","ui.bootstrap.datepickerPopup","ui.bootstrap.debounce","ui.bootstrap.dropdown","ui.bootstrap.stackedMap","ui.bootstrap.modal","ui.bootstrap.paging","ui.bootstrap.pager","ui.bootstrap.pagination","ui.bootstrap.tooltip","ui.bootstrap.popover","ui.bootstrap.progressbar","ui.bootstrap.rating","ui.bootstrap.tabs","ui.bootstrap.timepicker","ui.bootstrap.typeahead"]);
 angular.module("ui.bootstrap.tpls", ["uib/template/accordion/accordion-group.html","uib/template/accordion/accordion.html","uib/template/alert/alert.html","uib/template/carousel/carousel.html","uib/template/carousel/slide.html","uib/template/datepicker/datepicker.html","uib/template/datepicker/day.html","uib/template/datepicker/month.html","uib/template/datepicker/year.html","uib/template/datepickerPopup/popup.html","uib/template/modal/backdrop.html","uib/template/modal/window.html","uib/template/pager/pager.html","uib/template/pagination/pagination.html","uib/template/tooltip/tooltip-html-popup.html","uib/template/tooltip/tooltip-popup.html","uib/template/tooltip/tooltip-template-popup.html","uib/template/popover/popover-html.html","uib/template/popover/popover-template.html","uib/template/popover/popover.html","uib/template/progressbar/bar.html","uib/template/progressbar/progress.html","uib/template/progressbar/progressbar.html","uib/template/rating/rating.html","uib/template/tabs/tab.html","uib/template/tabs/tabset.html","uib/template/timepicker/timepicker.html","uib/template/typeahead/typeahead-match.html","uib/template/typeahead/typeahead-popup.html"]);
@@ -3282,7 +3120,7 @@ function ($animate) {
 
   return {
     restrict: 'A',
-    compile: function(tElement, tAttrs) {
+    compile: function (tElement, tAttrs) {
       var linkedScopes = [];
       var instances = [];
       var expToData = {};
@@ -3301,7 +3139,7 @@ function ($animate) {
           element: element
         });
 
-        exps.forEach(function(exp, k) {
+        exps.forEach(function (exp, k) {
           addForExp(exp, scope);
         });
 
@@ -3314,9 +3152,9 @@ function ($animate) {
         var compareWithExp = matches[2];
         var data = expToData[exp];
         if (!data) {
-          var watchFn = function(compareWithVal) {
+          var watchFn = function (compareWithVal) {
             var newActivated = null;
-            instances.some(function(instance) {
+            instances.some(function (instance) {
               var thisVal = instance.scope.$eval(onExp);
               if (thisVal === compareWithVal) {
                 newActivated = instance;
@@ -3351,13 +3189,14 @@ function ($animate) {
         instances.splice(index, 1);
         if (linkedScopes.length) {
           var newWatchScope = linkedScopes[0];
-          angular.forEach(expToData, function(data) {
+          angular.forEach(expToData, function (data) {
             if (data.scope === removedScope) {
               data.watcher = newWatchScope.$watch(data.compareWithExp, data.watchFn);
               data.scope = newWatchScope;
             }
           });
-        } else {
+        }
+        else {
           expToData = {};
         }
       }
@@ -3634,8 +3473,6 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
       $scope.$emit('uib:datepicker.mode');
     }
-
-    $scope.$broadcast('uib:datepicker.focus');
   };
 
   $scope.move = function(direction) {
@@ -3693,7 +3530,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     }
   };
 
-  $scope.$on('$destroy', function() {
+  $scope.$on("$destroy", function() {
     //Clear all watch listeners on destroy
     while (watchListeners.length) {
       watchListeners.shift()();
@@ -4808,7 +4645,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
 
     var dates = {};
     angular.forEach(['minDate', 'maxDate'], function(key) {
-      if (!$scope.datepickerOptions[key]) {
+      if ($scope.datepickerOptions[key] === null) {
         dates[key] = null;
       } else if (angular.isDate($scope.datepickerOptions[key])) {
         dates[key] = dateParser.fromTimezone(new Date($scope.datepickerOptions[key]), timezone);
@@ -5098,10 +4935,10 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 .service('uibDropdownService', ['$document', '$rootScope', function($document, $rootScope) {
   var openScope = null;
 
-  this.open = function(dropdownScope, element) {
+  this.open = function(dropdownScope) {
     if (!openScope) {
       $document.on('click', closeDropdown);
-      element.on('keydown', keybindFilter);
+      $document.on('keydown', keybindFilter);
     }
 
     if (openScope && openScope !== dropdownScope) {
@@ -5111,11 +4948,11 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     openScope = dropdownScope;
   };
 
-  this.close = function(dropdownScope, element) {
+  this.close = function(dropdownScope) {
     if (openScope === dropdownScope) {
       openScope = null;
       $document.off('click', closeDropdown);
-      element.off('keydown', keybindFilter);
+      $document.off('keydown', keybindFilter);
     }
   };
 
@@ -5148,7 +4985,6 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
 
   var keybindFilter = function(evt) {
     if (evt.which === 27) {
-      evt.stopPropagation();
       openScope.focusToggleElement();
       closeDropdown();
     } else if (openScope.isKeynavEnabled() && [38, 40].indexOf(evt.which) !== -1 && openScope.isOpen) {
@@ -5340,7 +5176,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
       }
 
       scope.focusToggleElement();
-      uibDropdownService.open(scope, $element);
+      uibDropdownService.open(scope);
     } else {
       if (self.dropdownMenuTemplateUrl) {
         if (templateScope) {
@@ -5351,7 +5187,7 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
         self.dropdownMenu = newEl;
       }
 
-      uibDropdownService.close(scope, $element);
+      uibDropdownService.close(scope);
       self.selectedOption = null;
     }
 
@@ -5795,9 +5631,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
         removeAfterAnimate(modalWindow.modalDomEl, modalWindow.modalScope, function() {
           var modalBodyClass = modalWindow.openedClass || OPENED_MODAL_CLASS;
           openedClasses.remove(modalBodyClass, modalInstance);
-          var areAnyOpen = openedClasses.hasKey(modalBodyClass);
-          appendToElement.toggleClass(modalBodyClass, areAnyOpen);
-          if (!areAnyOpen && scrollbarPadding && scrollbarPadding.heightOverflow && scrollbarPadding.scrollbarWidth) {
+          appendToElement.toggleClass(modalBodyClass, openedClasses.hasKey(modalBodyClass));
+          if (scrollbarPadding && scrollbarPadding.heightOverflow && scrollbarPadding.scrollbarWidth) {
             if (scrollbarPadding.originalRight) {
               appendToElement.css({paddingRight: scrollbarPadding.originalRight + 'px'});
             } else {
@@ -5931,7 +5766,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           modalBodyClass = modal.openedClass || OPENED_MODAL_CLASS;
 
         toggleTopWindowClass(false);
-
+        
         // Store the current top first, to determine what index we ought to use
         // for the current top modal
         previousTopOpenedModal = openedWindows.top();
@@ -5969,10 +5804,6 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           }
           $compile(backdropDomEl)(backdropScope);
           $animate.enter(backdropDomEl, appendToElement);
-          scrollbarPadding = $uibPosition.scrollbarPadding(appendToElement);
-          if (scrollbarPadding.heightOverflow && scrollbarPadding.scrollbarWidth) {
-            appendToElement.css({paddingRight: scrollbarPadding.right + 'px'});
-          }
         }
 
         // Set the top modal index based on the index of the previous top modal
@@ -5990,6 +5821,10 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap', 'ui.bootstrap.p
           angularDomEl.attr('modal-animation', 'true');
         }
 
+        scrollbarPadding = $uibPosition.scrollbarPadding(appendToElement);
+        if (scrollbarPadding.heightOverflow && scrollbarPadding.scrollbarWidth) {
+          appendToElement.css({paddingRight: scrollbarPadding.right + 'px'});
+        }
         appendToElement.addClass(modalBodyClass);
         $animate.enter($compile(angularDomEl)(modal.scope), appendToElement);
 
@@ -6988,6 +6823,8 @@ angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.s
               observers.push(
                 attrs.$observe(prefix + 'Placement', function(val) {
                   ttScope.placement = val ? val : options.placement;
+                  var placement = $position.parsePlacement(ttScope.placement);
+                  lastPlacement = placement[1] ? placement[0] + '-' + placement[1] : placement[0];
                   if (ttScope.isOpen) {
                     positionTooltip();
                   }
@@ -8744,7 +8581,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         });
       }
       if (!isEditable && modelCtrl.$error.editable) {
-        modelCtrl.$setViewValue();
+        modelCtrl.$viewValue = '';
         // Reset validity as we are clearing
         modelCtrl.$setValidity('editable', true);
         modelCtrl.$setValidity('parse', true);
@@ -9341,15 +9178,15 @@ angular.module("uib/template/timepicker/timepicker.html", []).run(["$templateCac
     "    </tr>\n" +
     "    <tr>\n" +
     "      <td class=\"form-group uib-time hours\" ng-class=\"{'has-error': invalidHours}\">\n" +
-    "        <input type=\"text\" placeholder=\"HH\" ng-model=\"hours\" ng-change=\"updateHours()\" class=\"form-control text-center\" ng-readonly=\"::readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\" ng-disabled=\"noIncrementHours()\" ng-blur=\"blur()\">\n" +
+    "        <input style=\"width:50px;\" type=\"text\" placeholder=\"HH\" ng-model=\"hours\" ng-change=\"updateHours()\" class=\"form-control text-center\" ng-readonly=\"::readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\" ng-disabled=\"noIncrementHours()\" ng-blur=\"blur()\">\n" +
     "      </td>\n" +
     "      <td class=\"uib-separator\">:</td>\n" +
     "      <td class=\"form-group uib-time minutes\" ng-class=\"{'has-error': invalidMinutes}\">\n" +
-    "        <input type=\"text\" placeholder=\"MM\" ng-model=\"minutes\" ng-change=\"updateMinutes()\" class=\"form-control text-center\" ng-readonly=\"::readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\" ng-disabled=\"noIncrementMinutes()\" ng-blur=\"blur()\">\n" +
+    "        <input style=\"width:50px;\" type=\"text\" placeholder=\"MM\" ng-model=\"minutes\" ng-change=\"updateMinutes()\" class=\"form-control text-center\" ng-readonly=\"::readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\" ng-disabled=\"noIncrementMinutes()\" ng-blur=\"blur()\">\n" +
     "      </td>\n" +
     "      <td ng-show=\"showSeconds\" class=\"uib-separator\">:</td>\n" +
     "      <td class=\"form-group uib-time seconds\" ng-class=\"{'has-error': invalidSeconds}\" ng-show=\"showSeconds\">\n" +
-    "        <input type=\"text\" placeholder=\"SS\" ng-model=\"seconds\" ng-change=\"updateSeconds()\" class=\"form-control text-center\" ng-readonly=\"readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\" ng-disabled=\"noIncrementSeconds()\" ng-blur=\"blur()\">\n" +
+    "        <input style=\"width:50px;\" type=\"text\" placeholder=\"SS\" ng-model=\"seconds\" ng-change=\"updateSeconds()\" class=\"form-control text-center\" ng-readonly=\"readonlyInput\" maxlength=\"2\" tabindex=\"{{::tabindex}}\" ng-disabled=\"noIncrementSeconds()\" ng-blur=\"blur()\">\n" +
     "      </td>\n" +
     "      <td ng-show=\"showMeridian\" class=\"uib-time am-pm\"><button type=\"button\" ng-class=\"{disabled: noToggleMeridian()}\" class=\"btn btn-default text-center\" ng-click=\"toggleMeridian()\" ng-disabled=\"noToggleMeridian()\" tabindex=\"{{::tabindex}}\">{{meridian}}</button></td>\n" +
     "    </tr>\n" +
@@ -9398,11 +9235,11 @@ module.exports = 'ui.bootstrap';
 
 },{"./dist/ui-bootstrap-tpls":36}],38:[function(require,module,exports){
 /**
- * @license AngularJS v1.5.5
+ * @license AngularJS v1.5.3
  * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
  */
-(function(window) {'use strict';
+(function(window, document, undefined) {'use strict';
 
 /**
  * @description
@@ -9456,7 +9293,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message += '\nhttp://errors.angularjs.org/1.5.5/' +
+    message += '\nhttp://errors.angularjs.org/1.5.3/' +
       (module ? module + '/' : '') + code;
 
     for (i = SKIP_INDEXES, paramPrefix = '?'; i < templateArgs.length; i++, paramPrefix = '&') {
@@ -9570,7 +9407,6 @@ function minErr(module, ErrorConstructor) {
  * @ngdoc module
  * @name ng
  * @module ng
- * @installation
  * @description
  *
  * # ng (core module)
@@ -9637,7 +9473,7 @@ var
  * documentMode is an IE-only property
  * http://msdn.microsoft.com/en-us/library/ie/cc196988(v=vs.85).aspx
  */
-msie = window.document.documentMode;
+msie = document.documentMode;
 
 
 /**
@@ -10447,41 +10283,6 @@ function shallowCopy(src, dst) {
  * @param {*} o1 Object or value to compare.
  * @param {*} o2 Object or value to compare.
  * @returns {boolean} True if arguments are equal.
- *
- * @example
-   <example module="equalsExample" name="equalsExample">
-     <file name="index.html">
-      <div ng-controller="ExampleController">
-        <form novalidate>
-          <h3>User 1</h3>
-          Name: <input type="text" ng-model="user1.name">
-          Age: <input type="number" ng-model="user1.age">
-
-          <h3>User 2</h3>
-          Name: <input type="text" ng-model="user2.name">
-          Age: <input type="number" ng-model="user2.age">
-
-          <div>
-            <br/>
-            <input type="button" value="Compare" ng-click="compare()">
-          </div>
-          User 1: <pre>{{user1 | json}}</pre>
-          User 2: <pre>{{user2 | json}}</pre>
-          Equal: <pre>{{result}}</pre>
-        </form>
-      </div>
-    </file>
-    <file name="script.js">
-        angular.module('equalsExample', []).controller('ExampleController', ['$scope', function($scope) {
-          $scope.user1 = {};
-          $scope.user2 = {};
-          $scope.result;
-          $scope.compare = function() {
-            $scope.result = angular.equals($scope.user1, $scope.user2);
-          };
-        }]);
-    </file>
-  </example>
  */
 function equals(o1, o2) {
   if (o1 === o2) return true;
@@ -10528,8 +10329,8 @@ var csp = function() {
   if (!isDefined(csp.rules)) {
 
 
-    var ngCspElement = (window.document.querySelector('[ng-csp]') ||
-                    window.document.querySelector('[data-ng-csp]'));
+    var ngCspElement = (document.querySelector('[ng-csp]') ||
+                    document.querySelector('[data-ng-csp]'));
 
     if (ngCspElement) {
       var ngCspAttribute = ngCspElement.getAttribute('ng-csp') ||
@@ -10604,7 +10405,7 @@ var jq = function() {
   var i, ii = ngAttrPrefixes.length, prefix, name;
   for (i = 0; i < ii; ++i) {
     prefix = ngAttrPrefixes[i];
-    if (el = window.document.querySelector('[' + prefix.replace(':', '\\:') + 'jq]')) {
+    if (el = document.querySelector('[' + prefix.replace(':', '\\:') + 'jq]')) {
       name = el.getAttribute(prefix + 'jq');
       break;
     }
@@ -10669,7 +10470,7 @@ function toJsonReplacer(key, value) {
     val = undefined;
   } else if (isWindow(value)) {
     val = '$WINDOW';
-  } else if (value &&  window.document === value) {
+  } else if (value &&  document === value) {
     val = '$DOCUMENT';
   } else if (isScope(value)) {
     val = '$SCOPE';
@@ -11121,11 +10922,11 @@ function bootstrap(element, modules, config) {
     element = jqLite(element);
 
     if (element.injector()) {
-      var tag = (element[0] === window.document) ? 'document' : startingTag(element);
+      var tag = (element[0] === document) ? 'document' : startingTag(element);
       //Encode angle brackets to prevent input from being sanitized to empty string #8683
       throw ngMinErr(
           'btstrpd',
-          "App already bootstrapped with this element '{0}'",
+          "App Already Bootstrapped with this Element '{0}'",
           tag.replace(/</,'&lt;').replace(/>/,'&gt;'));
     }
 
@@ -11572,9 +11373,9 @@ function setupModuleLoader(window) {
            * @ngdoc method
            * @name angular.Module#decorator
            * @module ng
-           * @param {string} name The name of the service to decorate.
-           * @param {Function} decorFn This function will be invoked when the service needs to be
-           *                           instantiated and should return the decorated service instance.
+           * @param {string} The name of the service to decorate.
+           * @param {Function} This function will be invoked when the service needs to be
+           *                                    instantiated and should return the decorated service instance.
            * @description
            * See {@link auto.$provide#decorator $provide.decorator()}.
            */
@@ -11878,11 +11679,11 @@ function toDebugString(obj) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.5.5',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.5.3',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 5,
-  dot: 5,
-  codeName: 'material-conspiration'
+  dot: 3,
+  codeName: 'diplohaplontic-meiosis'
 };
 
 
@@ -12139,9 +11940,6 @@ function publishExternalAPI(angular) {
  * - `inheritedData()` - same as `data()`, but walks up the DOM until a value is found or the top
  *   parent element is reached.
  *
- * @knownIssue You cannot spy on `angular.element` if you are using Jasmine version 1.x. See
- * https://github.com/angular/angular.js/issues/14251 for more information.
- *
  * @param {string|DOMElement} element HTML string or DOMElement to be wrapped into jQuery.
  * @returns {Object} jQuery object.
  */
@@ -12268,7 +12066,7 @@ function jqLiteBuildFragment(html, context) {
 }
 
 function jqLiteParseHTML(html, context) {
-  context = context || window.document;
+  context = context || document;
   var parsed;
 
   if ((parsed = SINGLE_TAG_REGEXP.exec(html))) {
@@ -12294,7 +12092,7 @@ function jqLiteWrapNode(node, wrapper) {
 
 
 // IE9-11 has no method "contains" in SVG element and in Node.prototype. Bug #10259.
-var jqLiteContains = window.Node.prototype.contains || function(arg) {
+var jqLiteContains = Node.prototype.contains || function(arg) {
   // jshint bitwise: false
   return !!(this.compareDocumentPosition(arg) & 16);
   // jshint bitwise: true
@@ -12566,8 +12364,8 @@ var JQLitePrototype = JQLite.prototype = {
     }
 
     // check if document is already loaded
-    if (window.document.readyState === 'complete') {
-      window.setTimeout(trigger);
+    if (document.readyState === 'complete') {
+      setTimeout(trigger);
     } else {
       this.on('DOMContentLoaded', trigger); // works for modern browsers and IE9
       // we can not use jqLite since we are not done loading and jQuery could be loaded later.
@@ -13257,7 +13055,6 @@ var $$HashMapProvider = [function() {
 /**
  * @ngdoc module
  * @name auto
- * @installation
  * @description
  *
  * Implicit module which gets automatically added to each {@link auto.$injector $injector}.
@@ -13271,7 +13068,7 @@ var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 var $injectorMinErr = minErr('$injector');
 
 function extractArgs(fn) {
-  var fnText = Function.prototype.toString.call(fn).replace(STRIP_COMMENTS, ''),
+  var fnText = fn.toString().replace(STRIP_COMMENTS, ''),
       args = fnText.match(ARROW_ARG) || fnText.match(FN_ARGS);
   return args;
 }
@@ -14691,9 +14488,6 @@ var $AnimateProvider = ['$provide', function($provide) {
        * // remove all the animation event listeners listening for `enter`
        * $animate.off('enter');
        *
-       * // remove listeners for all animation events from the container element
-       * $animate.off(container);
-       *
        * // remove all the animation event listeners listening for `enter` on the given element and its children
        * $animate.off('enter', container);
        *
@@ -14702,9 +14496,7 @@ var $AnimateProvider = ['$provide', function($provide) {
        * $animate.off('enter', container, callback);
        * ```
        *
-       * @param {string|DOMElement} event|container the animation event (e.g. enter, leave, move,
-       * addClass, removeClass, etc...), or the container element. If it is the element, all other
-       * arguments are ignored.
+       * @param {string} event the animation event (e.g. enter, leave, move, addClass, removeClass, etc...)
        * @param {DOMElement=} container the container element the event listener was placed on
        * @param {Function=} callback the callback function that was registered as the listener
        */
@@ -16277,8 +16069,8 @@ function $TemplateCacheProvider() {
  *   this element). This is a good place to put initialization code for your controller.
  * * `$onChanges(changesObj)` - Called whenever one-way (`<`) or interpolation (`@`) bindings are updated. The
  *   `changesObj` is a hash whose keys are the names of the bound properties that have changed, and the values are an
- *   object of the form `{ currentValue, previousValue, isFirstChange() }`. Use this hook to trigger updates within a
- *   component such as cloning the bound value to prevent accidental mutation of the outer value.
+ *   object of the form `{ currentValue: ..., previousValue: ... }`. Use this hook to trigger updates within a component
+ *   such as cloning the bound value to prevent accidental mutation of the outer value.
  * * `$onDestroy()` - Called on a controller when its containing scope is destroyed. Use this hook for releasing
  *   external resources, watches and event handlers. Note that components have their `$onDestroy()` hooks called in
  *   the same order as the `$scope.$broadcast` events are triggered, which is top down. This means that parent
@@ -16825,9 +16617,6 @@ function $TemplateCacheProvider() {
 
 var $compileMinErr = minErr('$compile');
 
-function UNINITIALIZED_VALUE() {}
-var _UNINITIALIZED_VALUE = new UNINITIALIZED_VALUE();
-
 /**
  * @ngdoc provider
  * @name $compileProvider
@@ -16852,7 +16641,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
   function parseIsolateBindings(scope, directiveName, isController) {
     var LOCAL_REGEXP = /^\s*([@&<]|=(\*?))(\??)\s*(\w*)\s*$/;
 
-    var bindings = createMap();
+    var bindings = {};
 
     forEach(scope, function(definition, scopeName) {
       if (definition in bindingCache) {
@@ -17026,9 +16815,6 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    *      See {@link ng.$compile#-bindtocontroller- `bindToController`}.
    *    - `transclude` – `{boolean=}` – whether {@link $compile#transclusion content transclusion} is enabled.
    *      Disabled by default.
-   *    - `require` - `{Object<string, string>=}` - requires the controllers of other directives and binds them to
-   *      this component's controller. The object keys specify the property names under which the required
-   *      controllers (object values) will be bound. See {@link ng.$compile#-require- `require`}.
    *    - `$...` – additional properties to attach to the directive factory function and the controller
    *      constructor function. (This is used by the component router to annotate)
    *
@@ -17074,7 +16860,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    * See also {@link ng.$compileProvider#directive $compileProvider.directive()}.
    */
   this.component = function registerComponent(name, options) {
-    var controller = options.controller || function() {};
+    var controller = options.controller || noop;
 
     function factory($injector) {
       function makeInjectable(fn) {
@@ -17088,7 +16874,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       }
 
       var template = (!options.template && !options.templateUrl ? '' : options.template);
-      var ddo = {
+      return {
         controller: controller,
         controllerAs: identifierForController(options.controller) || options.controllerAs || '$ctrl',
         template: makeInjectable(template),
@@ -17099,27 +16885,14 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         restrict: 'E',
         require: options.require
       };
-
-      // Copy annotations (starting with $) over to the DDO
-      forEach(options, function(val, key) {
-        if (key.charAt(0) === '$') ddo[key] = val;
-      });
-
-      return ddo;
     }
 
-    // TODO(pete) remove the following `forEach` before we release 1.6.0
-    // The component-router@0.2.0 looks for the annotations on the controller constructor
-    // Nothing in Angular looks for annotations on the factory function but we can't remove
-    // it from 1.5.x yet.
-
-    // Copy any annotation properties (starting with $) over to the factory and controller constructor functions
+    // Copy any annotation properties (starting with $) over to the factory function
     // These could be used by libraries such as the new component router
     forEach(options, function(val, key) {
       if (key.charAt(0) === '$') {
         factory[key] = val;
-        // Don't try to copy over annotations to named controller
-        if (isFunction(controller)) controller[key] = val;
+        controller[key] = val;
       }
     });
 
@@ -17256,7 +17029,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
              $controller,   $rootScope,   $sce,   $animate,   $$sanitizeUri) {
 
     var SIMPLE_ATTR_NAME = /^\w/;
-    var specialAttrHolder = window.document.createElement('div');
+    var specialAttrHolder = document.createElement('div');
 
 
 
@@ -17587,7 +17360,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       if (debugInfoEnabled) {
         content = ' ' + (directiveName || '') + ': ' + (comment || '') + ' ';
       }
-      return window.document.createComment(content);
+      return document.createComment(content);
     };
 
     return compile;
@@ -17610,7 +17383,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         var domNode = $compileNodes[i];
 
         if (domNode.nodeType === NODE_TYPE_TEXT && domNode.nodeValue.match(NOT_EMPTY) /* non-empty */) {
-          jqLiteWrapNode(domNode, $compileNodes[i] = window.document.createElement('span'));
+          jqLiteWrapNode(domNode, $compileNodes[i] = document.createElement('span'));
         }
       }
 
@@ -18303,9 +18076,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             replaceDirective = directive;
           }
 
-          /* jshint -W021 */
           nodeLinkFn = compileTemplateUrl(directives.splice(i, directives.length - i), $compileNode,
-          /* jshint +W021 */
               templateAttrs, jqCollection, hasTranscludeDirective && childTranscludeFn, preLinkFns, postLinkFns, {
                 controllerDirectives: controllerDirectives,
                 newScopeDirective: (newScopeDirective !== directive) && newScopeDirective,
@@ -18369,7 +18140,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
       function nodeLinkFn(childLinkFn, scope, linkNode, $rootElement, boundTranscludeFn) {
         var i, ii, linkFn, isolateScope, controllerScope, elementControllers, transcludeFn, $element,
-            attrs, scopeBindingInfo;
+            attrs, removeScopeBindingWatches, removeControllerBindingWatches;
 
         if (compileNode === linkNode) {
           attrs = templateAttrs;
@@ -18408,11 +18179,11 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           compile.$$addScopeClass($element, true);
           isolateScope.$$isolateBindings =
               newIsolateScopeDirective.$$isolateBindings;
-          scopeBindingInfo = initializeDirectiveBindings(scope, attrs, isolateScope,
+          removeScopeBindingWatches = initializeDirectiveBindings(scope, attrs, isolateScope,
                                         isolateScope.$$isolateBindings,
                                         newIsolateScopeDirective);
-          if (scopeBindingInfo.removeWatches) {
-            isolateScope.$on('$destroy', scopeBindingInfo.removeWatches);
+          if (removeScopeBindingWatches) {
+            isolateScope.$on('$destroy', removeScopeBindingWatches);
           }
         }
 
@@ -18423,10 +18194,8 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           var bindings = controllerDirective.$$bindings.bindToController;
 
           if (controller.identifier && bindings) {
-            controller.bindingInfo =
+            removeControllerBindingWatches =
               initializeDirectiveBindings(controllerScope, attrs, controller.instance, bindings, controllerDirective);
-          } else {
-            controller.bindingInfo = {};
           }
 
           var controllerResult = controller();
@@ -18435,8 +18204,8 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             // from setupControllers
             controller.instance = controllerResult;
             $element.data('$' + controllerDirective.name + 'Controller', controllerResult);
-            controller.bindingInfo.removeWatches && controller.bindingInfo.removeWatches();
-            controller.bindingInfo =
+            removeControllerBindingWatches && removeControllerBindingWatches();
+            removeControllerBindingWatches =
               initializeDirectiveBindings(controllerScope, attrs, controller.instance, bindings, controllerDirective);
           }
         }
@@ -18452,9 +18221,6 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         // Handle the init and destroy lifecycle hooks on all controllers that have them
         forEach(elementControllers, function(controller) {
           var controllerInstance = controller.instance;
-          if (isFunction(controllerInstance.$onChanges)) {
-            controllerInstance.$onChanges(controller.bindingInfo.initialChanges);
-          }
           if (isFunction(controllerInstance.$onInit)) {
             controllerInstance.$onInit();
           }
@@ -18911,7 +18677,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       switch (type) {
       case 'svg':
       case 'math':
-        var wrapper = window.document.createElement('div');
+        var wrapper = document.createElement('div');
         wrapper.innerHTML = '<' + type + '>' + template + '</' + type + '>';
         return wrapper.childNodes[0].childNodes;
       default:
@@ -19055,7 +18821,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       // - remove them from the DOM
       // - allow them to still be traversed with .nextSibling
       // - allow a single fragment.qSA to fetch all elements being removed
-      var fragment = window.document.createDocumentFragment();
+      var fragment = document.createDocumentFragment();
       for (i = 0; i < removeCount; i++) {
         fragment.appendChild(elementsToRemove[i]);
       }
@@ -19101,7 +18867,6 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
     // only occurs for isolate scopes and new scopes with controllerAs.
     function initializeDirectiveBindings(scope, attrs, destination, bindings, directive) {
       var removeWatchCollection = [];
-      var initialChanges = {};
       var changes;
       forEach(bindings, function initializeBinding(definition, scopeName) {
         var attrName = definition.attrName,
@@ -19117,7 +18882,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
               destination[scopeName] = attrs[attrName] = void 0;
             }
             attrs.$observe(attrName, function(value) {
-              if (isString(value) || isBoolean(value)) {
+              if (isString(value)) {
                 var oldValue = destination[scopeName];
                 recordChanges(scopeName, value, oldValue);
                 destination[scopeName] = value;
@@ -19134,7 +18899,6 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
               // the value to boolean rather than a string, so we special case this situation
               destination[scopeName] = lastValue;
             }
-            initialChanges[scopeName] = new SimpleChange(_UNINITIALIZED_VALUE, destination[scopeName]);
             break;
 
           case '=':
@@ -19190,16 +18954,11 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             parentGet = $parse(attrs[attrName]);
 
             destination[scopeName] = parentGet(scope);
-            initialChanges[scopeName] = new SimpleChange(_UNINITIALIZED_VALUE, destination[scopeName]);
 
-            removeWatch = scope.$watch(parentGet, function parentValueWatchAction(newValue, oldValue) {
-              if (newValue === oldValue) {
-                // If the new and old values are identical then this is the first time the watch has been triggered
-                // So instead we use the current value on the destination as the old value
-                oldValue = destination[scopeName];
-              }
-              recordChanges(scopeName, newValue, oldValue);
-              destination[scopeName] = newValue;
+            removeWatch = scope.$watch(parentGet, function parentValueWatchAction(newParentValue) {
+              var oldValue = destination[scopeName];
+              recordChanges(scopeName, newParentValue, oldValue);
+              destination[scopeName] = newParentValue;
             }, parentGet.literal);
 
             removeWatchCollection.push(removeWatch);
@@ -19236,7 +18995,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             previousValue = changes[key].previousValue;
           }
           // Store this change
-          changes[key] = new SimpleChange(previousValue, currentValue);
+          changes[key] = {previousValue: previousValue, currentValue: currentValue};
         }
       }
 
@@ -19246,24 +19005,14 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         changes = undefined;
       }
 
-      return {
-        initialChanges: initialChanges,
-        removeWatches: removeWatchCollection.length && function removeWatches() {
-          for (var i = 0, ii = removeWatchCollection.length; i < ii; ++i) {
-            removeWatchCollection[i]();
-          }
+      return removeWatchCollection.length && function removeWatches() {
+        for (var i = 0, ii = removeWatchCollection.length; i < ii; ++i) {
+          removeWatchCollection[i]();
         }
       };
     }
   }];
 }
-
-function SimpleChange(previous, current) {
-  this.previousValue = previous;
-  this.currentValue = current;
-}
-SimpleChange.prototype.isFirstChange = function() { return this.previousValue === _UNINITIALIZED_VALUE; };
-
 
 var PREFIX_REGEXP = /^((?:x|data)[\:\-_])/i;
 /**
@@ -20204,7 +19953,7 @@ function $HttpProvider() {
      * That means changes to the properties of `data` are not local to the transform function (since Javascript passes objects by reference).
      * For example, when calling `$http.get(url, $scope.myObject)`, modifications to the object's properties in a transformRequest
      * function will be reflected on the scope and in any templates where the object is data-bound.
-     * To prevent this, transform functions should have no side-effects.
+     * To prevent his, transform functions should have no side-effects.
      * If you need to modify properties, it is recommended to make a copy of the data, or create new object to return.
      * </div>
      *
@@ -20450,12 +20199,6 @@ function $HttpProvider() {
      *    - **headers** – `{Object}` – Map of strings or functions which return strings representing
      *      HTTP headers to send to the server. If the return value of a function is null, the
      *      header will not be sent. Functions accept a config object as an argument.
-     *    - **eventHandlers** - `{Object}` - Event listeners to be bound to the XMLHttpRequest object.
-     *      To bind events to the XMLHttpRequest upload object, use `uploadEventHandlers`.
-     *      The handler will be called in the context of a `$apply` block.
-     *    - **uploadEventHandlers** - `{Object}` - Event listeners to be bound to the XMLHttpRequest upload
-     *      object. To bind events to the XMLHttpRequest object, use `eventHandlers`.
-     *      The handler will be called in the context of a `$apply` block.
      *    - **xsrfHeaderName** – `{string}` – Name of HTTP header to populate with the XSRF token.
      *    - **xsrfCookieName** – `{string}` – Name of cookie containing the XSRF token.
      *    - **transformRequest** –
@@ -20914,34 +20657,10 @@ function $HttpProvider() {
         }
 
         $httpBackend(config.method, url, reqData, done, reqHeaders, config.timeout,
-            config.withCredentials, config.responseType,
-            createApplyHandlers(config.eventHandlers),
-            createApplyHandlers(config.uploadEventHandlers));
+            config.withCredentials, config.responseType);
       }
 
       return promise;
-
-      function createApplyHandlers(eventHandlers) {
-        if (eventHandlers) {
-          var applyHandlers = {};
-          forEach(eventHandlers, function(eventHandler, key) {
-            applyHandlers[key] = function(event) {
-              if (useApplyAsync) {
-                $rootScope.$applyAsync(callEventHandler);
-              } else if ($rootScope.$$phase) {
-                callEventHandler();
-              } else {
-                $rootScope.$apply(callEventHandler);
-              }
-
-              function callEventHandler() {
-                eventHandler(event);
-              }
-            };
-          });
-          return applyHandlers;
-        }
-      }
 
 
       /**
@@ -21063,7 +20782,7 @@ function $HttpBackendProvider() {
 
 function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDocument) {
   // TODO(vojta): fix the signature
-  return function(method, url, post, callback, headers, timeout, withCredentials, responseType, eventHandlers, uploadEventHandlers) {
+  return function(method, url, post, callback, headers, timeout, withCredentials, responseType) {
     $browser.$$incOutstandingRequestCount();
     url = url || $browser.url();
 
@@ -21122,14 +20841,6 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
 
       xhr.onerror = requestError;
       xhr.onabort = requestError;
-
-      forEach(eventHandlers, function(value, key) {
-          xhr.addEventListener(key, value);
-      });
-
-      forEach(uploadEventHandlers, function(value, key) {
-        xhr.upload.addEventListener(key, value);
-      });
 
       if (withCredentials) {
         xhr.withCredentials = true;
@@ -23109,7 +22820,7 @@ Lexer.prototype = {
         this.readString(ch);
       } else if (this.isNumber(ch) || ch === '.' && this.isNumber(this.peek())) {
         this.readNumber();
-      } else if (this.isIdentifierStart(this.peekMultichar())) {
+      } else if (this.isIdent(ch)) {
         this.readIdent();
       } else if (this.is(ch, '(){}[].,;:?')) {
         this.tokens.push({index: this.index, text: ch});
@@ -23153,47 +22864,10 @@ Lexer.prototype = {
             ch === '\n' || ch === '\v' || ch === '\u00A0');
   },
 
-  isIdentifierStart: function(ch) {
-    return this.options.isIdentifierStart ?
-        this.options.isIdentifierStart(ch, this.codePointAt(ch)) :
-        this.isValidIdentifierStart(ch);
-  },
-
-  isValidIdentifierStart: function(ch) {
+  isIdent: function(ch) {
     return ('a' <= ch && ch <= 'z' ||
             'A' <= ch && ch <= 'Z' ||
             '_' === ch || ch === '$');
-  },
-
-  isIdentifierContinue: function(ch) {
-    return this.options.isIdentifierContinue ?
-        this.options.isIdentifierContinue(ch, this.codePointAt(ch)) :
-        this.isValidIdentifierContinue(ch);
-  },
-
-  isValidIdentifierContinue: function(ch, cp) {
-    return this.isValidIdentifierStart(ch, cp) || this.isNumber(ch);
-  },
-
-  codePointAt: function(ch) {
-    if (ch.length === 1) return ch.charCodeAt(0);
-    /*jshint bitwise: false*/
-    return (ch.charCodeAt(0) << 10) + ch.charCodeAt(1) - 0x35FDC00;
-    /*jshint bitwise: true*/
-  },
-
-  peekMultichar: function() {
-    var ch = this.text.charAt(this.index);
-    var peek = this.peek();
-    if (!peek) {
-      return ch;
-    }
-    var cp1 = ch.charCodeAt(0);
-    var cp2 = peek.charCodeAt(0);
-    if (cp1 >= 0xD800 && cp1 <= 0xDBFF && cp2 >= 0xDC00 && cp2 <= 0xDFFF) {
-      return ch + peek;
-    }
-    return ch;
   },
 
   isExpOperator: function(ch) {
@@ -23244,13 +22918,12 @@ Lexer.prototype = {
 
   readIdent: function() {
     var start = this.index;
-    this.index += this.peekMultichar().length;
     while (this.index < this.text.length) {
-      var ch = this.peekMultichar();
-      if (!this.isIdentifierContinue(ch)) {
+      var ch = this.text.charAt(this.index);
+      if (!(this.isIdent(ch) || this.isNumber(ch))) {
         break;
       }
-      this.index += ch.length;
+      this.index++;
     }
     this.tokens.push({
       index: start,
@@ -24180,13 +23853,7 @@ ASTCompiler.prototype = {
   },
 
   nonComputedMember: function(left, right) {
-    var SAFE_IDENTIFIER = /[$_a-zA-Z][$_a-zA-Z0-9]*/;
-    var UNSAFE_CHARACTERS = /[^$_a-zA-Z0-9]/g;
-    if (SAFE_IDENTIFIER.test(right)) {
-      return left + '.' + right;
-    } else {
-      return left  + '["' + right.replace(UNSAFE_CHARACTERS, this.stringEscapeFn) + '"]';
-    }
+    return left + '.' + right;
   },
 
   computedMember: function(left, right) {
@@ -24749,7 +24416,6 @@ function $ParseProvider() {
     'null': null,
     'undefined': undefined
   };
-  var identStart, identContinue;
 
   /**
    * @ngdoc method
@@ -24766,50 +24432,17 @@ function $ParseProvider() {
     literals[literalName] = literalValue;
   };
 
- /**
-  * @ngdoc method
-  * @name $parseProvider#setIdentifierFns
-  * @description
-  *
-  * Allows defining the set of characters that are allowed in Angular expressions. The function
-  * `identifierStart` will get called to know if a given character is a valid character to be the
-  * first character for an identifier. The function `identifierContinue` will get called to know if
-  * a given character is a valid character to be a follow-up identifier character. The functions
-  * `identifierStart` and `identifierContinue` will receive as arguments the single character to be
-  * identifier and the character code point. These arguments will be `string` and `numeric`. Keep in
-  * mind that the `string` parameter can be two characters long depending on the character
-  * representation. It is expected for the function to return `true` or `false`, whether that
-  * character is allowed or not.
-  *
-  * Since this function will be called extensivelly, keep the implementation of these functions fast,
-  * as the performance of these functions have a direct impact on the expressions parsing speed.
-  *
-  * @param {function=} identifierStart The function that will decide whether the given character is
-  *   a valid identifier start character.
-  * @param {function=} identifierContinue The function that will decide whether the given character is
-  *   a valid identifier continue character.
-  */
-  this.setIdentifierFns = function(identifierStart, identifierContinue) {
-    identStart = identifierStart;
-    identContinue = identifierContinue;
-    return this;
-  };
-
   this.$get = ['$filter', function($filter) {
     var noUnsafeEval = csp().noUnsafeEval;
     var $parseOptions = {
           csp: noUnsafeEval,
           expensiveChecks: false,
-          literals: copy(literals),
-          isIdentifierStart: isFunction(identStart) && identStart,
-          isIdentifierContinue: isFunction(identContinue) && identContinue
+          literals: copy(literals)
         },
         $parseOptionsExpensive = {
           csp: noUnsafeEval,
           expensiveChecks: true,
-          literals: copy(literals),
-          isIdentifierStart: isFunction(identStart) && identStart,
-          isIdentifierContinue: isFunction(identContinue) && identContinue
+          literals: copy(literals)
         };
     var runningChecksEnabled = false;
 
@@ -28604,7 +28237,7 @@ function $TimeoutProvider() {
 // doesn't know about mocked locations and resolves URLs to the real document - which is
 // exactly the behavior needed here.  There is little value is mocking these out for this
 // service.
-var urlParsingNode = window.document.createElement("a");
+var urlParsingNode = document.createElement("a");
 var originUrl = urlResolve(window.location.href);
 
 
@@ -29304,9 +28937,7 @@ function currencyFilter($locale) {
  * @param {(number|string)=} fractionSize Number of decimal places to round the number to.
  * If this is not provided then the fraction size is computed from the current locale's number
  * formatting pattern. In the case of the default locale, it will be 3.
- * @returns {string} Number rounded to `fractionSize` appropriately formatted based on the current
- *                   locale (e.g., in the en_US locale it will have "." as the decimal separator and
- *                   include "," group separators after each third digit).
+ * @returns {string} Number rounded to fractionSize and places a “,” after each third digit.
  *
  * @example
    <example module="numberFilterExample">
@@ -33535,11 +33166,7 @@ function classDirective(name, selector) {
               updateClasses(oldClasses, newClasses);
             }
           }
-          if (isArray(newVal)) {
-            oldVal = newVal.map(function(v) { return shallowCopy(v); });
-          } else {
-            oldVal = shallowCopy(newVal);
-          }
+          oldVal = shallowCopy(newVal);
         }
       }
     };
@@ -35255,7 +34882,7 @@ var ngIncludeFillContentDirective = ['$compile',
           // support innerHTML, so detect this here and try to generate the contents
           // specially.
           $element.empty();
-          $compile(jqLiteBuildFragment(ctrl.template, window.document).childNodes)(scope,
+          $compile(jqLiteBuildFragment(ctrl.template, document).childNodes)(scope,
               function namespaceAdaptedClone(clone) {
             $element.append(clone);
           }, {futureParentElement: $element});
@@ -37169,7 +36796,7 @@ var NG_OPTIONS_REGEXP = /^\s*([\s\S]+?)(?:\s+as\s+([\s\S]+?))?(?:\s+group\s+by\s
 // jshint maxlen: 100
 
 
-var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, $document, $parse) {
+var ngOptionsDirective = ['$compile', '$parse', function($compile, $parse) {
 
   function parseOptionsExpression(optionsExp, selectElement, scope) {
 
@@ -37330,8 +36957,8 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
 
   // we can't just jqLite('<option>') since jqLite is not smart enough
   // to create it in <select> and IE barfs otherwise.
-  var optionTemplate = window.document.createElement('option'),
-      optGroupTemplate = window.document.createElement('optgroup');
+  var optionTemplate = document.createElement('option'),
+      optGroupTemplate = document.createElement('optgroup');
 
     function ngOptionsPostLink(scope, selectElement, attr, ctrls) {
 
@@ -37356,10 +36983,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
 
       var options;
       var ngOptions = parseOptionsExpression(attr.ngOptions, selectElement, scope);
-      // This stores the newly created options before they are appended to the select.
-      // Since the contents are removed from the fragment when it is appended,
-      // we only need to create it once.
-      var listFragment = $document[0].createDocumentFragment();
+
 
       var renderEmptyOption = function() {
         if (!providedEmptyOption) {
@@ -37394,7 +37018,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
         selectCtrl.writeValue = function writeNgOptionsValue(value) {
           var option = options.getOptionFromViewValue(value);
 
-          if (option) {
+          if (option && !option.disabled) {
             // Don't update the option when it is already selected.
             // For example, the browser will select the first option by default. In that case,
             // most properties are set automatically - except the `selected` attribute, which we
@@ -37456,7 +37080,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
           if (value) {
             value.forEach(function(item) {
               var option = options.getOptionFromViewValue(item);
-              if (option) option.element.selected = true;
+              if (option && !option.disabled) option.element.selected = true;
             });
           }
         };
@@ -37508,8 +37132,6 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
         emptyOption = jqLite(optionTemplate.cloneNode(false));
       }
 
-      selectElement.empty();
-
       // We need to do this here to ensure that the options object is defined
       // when we first hit it in writeNgOptionsValue
       updateOptions();
@@ -37518,12 +37140,6 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
       scope.$watchCollection(ngOptions.getWatchables, updateOptions);
 
       // ------------------------------------------------------------------ //
-
-      function addOptionElement(option, parent) {
-        var optionElement = optionTemplate.cloneNode(false);
-        parent.appendChild(optionElement);
-        updateOptionElement(option, optionElement);
-      }
 
 
       function updateOptionElement(option, element) {
@@ -37541,66 +37157,133 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
         if (option.value !== element.value) element.value = option.selectValue;
       }
 
-      function updateOptions() {
-        var previousValue = options && selectCtrl.readValue();
-
-        // We must remove all current options, but cannot simply set innerHTML = null
-        // since the providedEmptyOption might have an ngIf on it that inserts comments which we
-        // must preserve.
-        // Instead, iterate over the current option elements and remove them or their optgroup
-        // parents
-        if (options) {
-
-          for (var i = options.items.length - 1; i >= 0; i--) {
-            var option = options.items[i];
-            if (option.group) {
-              jqLiteRemove(option.element.parentNode);
-            } else {
-              jqLiteRemove(option.element);
-            }
+      function addOrReuseElement(parent, current, type, templateElement) {
+        var element;
+        // Check whether we can reuse the next element
+        if (current && lowercase(current.nodeName) === type) {
+          // The next element is the right type so reuse it
+          element = current;
+        } else {
+          // The next element is not the right type so create a new one
+          element = templateElement.cloneNode(false);
+          if (!current) {
+            // There are no more elements so just append it to the select
+            parent.appendChild(element);
+          } else {
+            // The next element is not a group so insert the new one
+            parent.insertBefore(element, current);
           }
         }
+        return element;
+      }
+
+
+      function removeExcessElements(current) {
+        var next;
+        while (current) {
+          next = current.nextSibling;
+          jqLiteRemove(current);
+          current = next;
+        }
+      }
+
+
+      function skipEmptyAndUnknownOptions(current) {
+        var emptyOption_ = emptyOption && emptyOption[0];
+        var unknownOption_ = unknownOption && unknownOption[0];
+
+        // We cannot rely on the extracted empty option being the same as the compiled empty option,
+        // because the compiled empty option might have been replaced by a comment because
+        // it had an "element" transclusion directive on it (such as ngIf)
+        if (emptyOption_ || unknownOption_) {
+          while (current &&
+                (current === emptyOption_ ||
+                current === unknownOption_ ||
+                current.nodeType === NODE_TYPE_COMMENT ||
+                (nodeName_(current) === 'option' && current.value === ''))) {
+            current = current.nextSibling;
+          }
+        }
+        return current;
+      }
+
+
+      function updateOptions() {
+
+        var previousValue = options && selectCtrl.readValue();
 
         options = ngOptions.getOptions();
 
-        var groupElementMap = {};
+        var groupMap = {};
+        var currentElement = selectElement[0].firstChild;
 
         // Ensure that the empty option is always there if it was explicitly provided
         if (providedEmptyOption) {
           selectElement.prepend(emptyOption);
         }
 
-        options.items.forEach(function addOption(option) {
+        currentElement = skipEmptyAndUnknownOptions(currentElement);
+
+        options.items.forEach(function updateOption(option) {
+          var group;
           var groupElement;
+          var optionElement;
 
           if (isDefined(option.group)) {
 
             // This option is to live in a group
             // See if we have already created this group
-            groupElement = groupElementMap[option.group];
+            group = groupMap[option.group];
 
-            if (!groupElement) {
+            if (!group) {
 
-              groupElement = optGroupTemplate.cloneNode(false);
-              listFragment.appendChild(groupElement);
+              // We have not already created this group
+              groupElement = addOrReuseElement(selectElement[0],
+                                               currentElement,
+                                               'optgroup',
+                                               optGroupTemplate);
+              // Move to the next element
+              currentElement = groupElement.nextSibling;
 
               // Update the label on the group element
               groupElement.label = option.group;
 
               // Store it for use later
-              groupElementMap[option.group] = groupElement;
+              group = groupMap[option.group] = {
+                groupElement: groupElement,
+                currentOptionElement: groupElement.firstChild
+              };
+
             }
 
-            addOptionElement(option, groupElement);
+            // So now we have a group for this option we add the option to the group
+            optionElement = addOrReuseElement(group.groupElement,
+                                              group.currentOptionElement,
+                                              'option',
+                                              optionTemplate);
+            updateOptionElement(option, optionElement);
+            // Move to the next element
+            group.currentOptionElement = optionElement.nextSibling;
 
           } else {
 
             // This option is not in a group
-            addOptionElement(option, listFragment);
+            optionElement = addOrReuseElement(selectElement[0],
+                                              currentElement,
+                                              'option',
+                                              optionTemplate);
+            updateOptionElement(option, optionElement);
+            // Move to the next element
+            currentElement = optionElement.nextSibling;
           }
         });
 
-        selectElement[0].appendChild(listFragment);
+
+        // Now remove all excess options and group
+        Object.keys(groupMap).forEach(function(key) {
+          removeExcessElements(groupMap[key].currentOptionElement);
+        });
+        removeExcessElements(currentElement);
 
         ngModelCtrl.$render();
 
@@ -39295,7 +38978,7 @@ var SelectController =
   //
   // We can't just jqLite('<option>') since jqLite is not smart enough
   // to create it in <select> and IE barfs otherwise.
-  self.unknownOption = jqLite(window.document.createElement('option'));
+  self.unknownOption = jqLite(document.createElement('option'));
   self.renderUnknownOption = function(val) {
     var unknownVal = '? ' + hashKey(val) + ' ?';
     self.unknownOption.val(unknownVal);
@@ -40258,11 +39941,11 @@ $provide.value("$locale", {
 });
 }]);
 
-  jqLite(window.document).ready(function() {
-    angularInit(window.document, bootstrap);
+  jqLite(document).ready(function() {
+    angularInit(document, bootstrap);
   });
 
-})(window);
+})(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 },{}],39:[function(require,module,exports){

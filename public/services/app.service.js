@@ -1,3 +1,1 @@
 
-
-return $http.get('/farmfood')

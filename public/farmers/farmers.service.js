@@ -3,23 +3,18 @@ angular
   .service('FarmersService', function($http,$window, $rootScope){
 
         function createInventory(inventory){
-          console.log("i make inventory", inventory);
           return $http.post('/inventory/', inventory);
         }
 
         function createInventoryByAdmin(inventory,userId) {
-
           return $http.post('/inventory/user/' + userId, inventory);
         }
 
         function getAllInventory(inventory){
-          console.log("ALL the corn", inventory);
           return $http.get('/inventory');
         }
 
-
         function getAllInventoryByUser(userName){
-          console.log("got me some corn", userName);
           return $http.get('/inventory/user/' + userName);
         }
 
@@ -40,8 +35,6 @@ angular
         }
 
         function updateInventory(id, inventory){
-
-          console.log("puttin on the ritz", inventory);
           return $http.put('/inventory/' + id, inventory).then(function () {
               $rootScope.$broadcast('product:updated');
           })
