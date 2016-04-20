@@ -12,17 +12,14 @@ angular
     AdminService.getvalidateUser()
     .then(function(data){
       $scope.users = data.data;
-      console.log("who",data)
     });
 
     $scope.validateUser = function(user, index) {
       AdminService.validateUser(user)
       .then(function(data){
-        console.log("ldlkdaftujhasdfg",data);
         $scope.users.splice(index, 1)
       })
     }
-
 
     $scope.deleteUserDeniedByAdmin = function (user, index) {
       AdminService.deleteUser(user)
@@ -35,7 +32,6 @@ angular
 
 
     $scope.getCatUsers = function(cat) {
-      console.log("WE ARE GETTING SHIT?", cat)
       AdminService.getUsersInCategory(cat)
       .then(function(data){
           $scope.farmers = data.data.filter(function(el) {
@@ -49,9 +45,7 @@ angular
           $scope.showFarmer = !$scope.showFarmer
           $scope.showBuyer = !$scope.showBuyer
 
-
       }).catch(function(err) {
-        console.log("SHIT", err);
       });
     }
 
@@ -82,7 +76,6 @@ var angular = require('angular');
 angular
   .module('admin.module')
   .service('AdminService', function($http){
-
 
     function getvalidateUser(){
       console.log("I am a user")
@@ -141,22 +134,7 @@ angular
       templateUrl: "home/views/home.html",
       controller: "HomeController"
     })
-    // .when('/admin', {
-    //   templateUrl: "admin/views/admin.html",
-    //   controller: "AdminController"
-    // })
-    // .when('/buyers', {
-    //   templateUrl: "buyers/views/buyers.html",
-    //   controller: "BuyersController"
-    // })
-    // .when('/buyers-profile', {
-    //   templateUrl: "buyers-profile/views/buyers-profile.html",
-    //   controller: "BuyersProfileController"
-    // })
-    // .when('/farmers-profile', {
-    //   templateUrl: "farmers-profile/views/farmers-profile.html",
-    //   controller: "FarmersProfileController"
-    // })
+  
 })
 .config(function($authProvider) {
   $authProvider.loginUrl = '/login';
@@ -188,12 +166,9 @@ angular
   AuthController.$inject = ['$scope', '$q','$http', '$rootScope', 'AuthService', '$routeParams', '$location','$auth'];
 
   function AuthController($scope, $q, $http, $rootScope, AuthService, $routeParams, $location, $auth){
-    console.log("COMING HOT")
     AuthService.getUser()
     .then(function(data) {
-      console.log("THIS SHOULD BE USERS", data);
     })
-
 
     $scope.logOutUser = function(user) {
       $auth.logout();
@@ -214,16 +189,14 @@ angular
       if($window.localStorage.getItem('mahUser')) {
         return true;
       }
-      return false;
-    }
+        return false;
+      }
 
     function goToProfile(user){
-      console.log("PRofile", user);
       return $http.get("/users");
     }
 
     function loginUser(user){
-      console.log("ARE YOU HAPPENING?");
       return $http.post('/login', user);
     }
 
@@ -274,12 +247,9 @@ angular
 .module('farmers.module')
 .controller('ModalLoginInstanceCtrl', function ($scope, $uibModalInstance, AuthService,$location,$window) {
 
-
  $scope.loginUser = function (user) {
-   console.log("TEST MODAL", user);
    AuthService.loginUser(user)
    .success(function(res){
-     console.log("RIGHT?",res);
      $window.localStorage.setItem('mahUser', JSON.stringify(res));
      AuthService.user = res;
      if(res.userType === 'Farmer') {
@@ -292,19 +262,16 @@ angular
 
    })
    .error(function(err) {
-     console.log("SHIT", err);
      alert("Incorrect Password");
    });
 
    $uibModalInstance.close();
- };
+   };
 
-
-
- $scope.cancel = function () {
+   $scope.cancel = function () {
    $uibModalInstance.close('cancel');
- };
-});
+  };
+  });
 
 },{}],10:[function(require,module,exports){
 angular
@@ -314,25 +281,15 @@ angular
   $scope.createUser = function (user) {
     AuthService.createUser(user)
     .success(function(res){
-      console.log("CREATED",res);
       $window.localStorage.setItem('mahUser', JSON.stringify(res));
       AuthService.user = res;
       alert("You Have Signed Up.  You WIll Be Granted Access Upon Administration Approval")
-
-      // if(res.userType === 'Farmer') {
-      //   $location.path("/farmers/"+ res.id);
-      // } else if (res.userType === 'Buyer') {
-      //   $location.path("/buyers/" + res.id);
-      // }
     })
 
     .error(function(err) {
-      console.log("SHIT", err);
     });
     $uibModalInstance.close();
   };
-
-
 
   $scope.cancel = function () {
     $uibModalInstance.close('cancel');
@@ -344,29 +301,23 @@ angular
 .module("buyers-profile.module")
 .controller("BuyersProfileController", BuyersProfileController);
 
-
 BuyersProfileController.$inject = ["$scope", "$http", "BuyersProfileService", "AuthService", "$uibModal", "$routeParams"]
-
 
 function BuyersProfileController($scope, $http, BuyersProfileService, AuthService, $uibModal, $routeParams){
   $scope.user = AuthService.currentUser();
 
-
   $scope.editUser = function() {
-    console.log("WHAT UP");
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: './buyers-profile/views/modaledit.html',
       controller: 'ModalInstanceEditBuyerController',
       size: 'sm',
       resolve: {
-
       }
     });
   }
 
   BuyersProfileService.getBuyerProfile($routeParams.buyerId).then(function (buyer) {
-    console.log(buyer);
     $scope.buyer = buyer.data;
   })
 
@@ -404,12 +355,11 @@ angular
         }
 
 
-return {
-  getAllInventoryByUser:getAllInventoryByUser,
-  getBuyerProfile: getBuyerProfileUser
-  }
-
-})
+        return {
+          getAllInventoryByUser:getAllInventoryByUser,
+          getBuyerProfile: getBuyerProfileUser
+        }
+    })
 
 },{}],14:[function(require,module,exports){
 require('./buyers-profile.module');
@@ -424,20 +374,16 @@ $scope.user = AuthService.currentUser();
 
 $scope.editUser = function(user) {
     AuthService.editUser(user).success(function(res) {
-        console.log("CREATED", res);
         $window.localStorage.setItem('mahUser', JSON.stringify(res));
         AuthService.user = res;
-        // alert("You Have Signed Up.  You WIll Be Granted Access Upon Administration Approval");
     }).error(function(err) {
-        console.log("SHIT", err);
     });
     $uibModalInstance.close();
-};
+  };
 $scope.cancel = function() {
     $uibModalInstance.close('cancel');
-};
-
-});
+  };
+  });
 
 },{}],16:[function(require,module,exports){
 angular.module("buyers.module").controller("BuyersController", BuyersController);
@@ -453,16 +399,13 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
         // on image
     BuyersService.getAllInventoryByCategory().then(function(data) {
         $scope.myProducts = data.data;
-        console.log("PRDS", data.data);
-        console.log("GROUB", _.groupBy(data.data, 'category'));
         var cats = Object.keys(_.groupBy(data.data, 'category'))
-        console.log(cats);
     })
     BuyersService.getAllCategories().then(function(data) {
         $scope.categories = data.data;
     })
+
     $scope.createOrder = function(product, id) {
-        console.log("why it works",$scope.myProducts);
         var order = {};
         order.category = product.category;
         order.name = product.name;
@@ -484,13 +427,10 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
           })
         }
     }
-
     BuyersService.getOrdersPending(true).then(function(data) {
-        console.log("ARE PENDING", data.data);
         $scope.pendingOrders = data.data;
     })
     BuyersService.getOrdersPending(false).then(function(data) {
-        console.log("HELLO", data.data);
         $scope.notPendingOrders = data.data;
     })
 }
@@ -499,7 +439,6 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
 var angular = require("angular");
 require("angular-route");
 require("angular-ui-bootstrap");
-
 
 angular
 .module("buyers.module", [
@@ -528,29 +467,23 @@ angular
     }
 
     function createOrder(order, id){
-      console.log("posted orders!!!!", order);
       return $http.post('/orders/' + id, order);
-      console.log("still posting", order);
     }
 
     function createOrderAdmin(order, buyerId, id){
-      console.log("GIVE ME AN ORDER", order);
       return $http.post('/orders/admin/'+ buyerId + '/' + order.id , order);
     }
-
 
     function getOrdersPending(pending){
       return $http.get('/orders/' + pending)
     }
 
-
-        return {
+      return {
           getAllInventoryByCategory: getAllInventoryByCategory,
           getAllCategories: getAllCategories,
           createOrder:createOrder,
           getOrdersPending:getOrdersPending,
           createOrderAdmin:createOrderAdmin
-
         }
   })
 
@@ -568,7 +501,6 @@ FarmersProfileController.$inject = ["$scope", "$http", "FarmersProfileService", 
 
 function FarmersProfileController($scope, $http, FarmersProfileService, AuthService, $uibModal, $routeParams){
   $scope.user = AuthService.currentUser();
-  console.log("CHOKE RICHARD",AuthService.currentUser());
 
   $scope.editUser = function() {
     console.log("WHAT UP");
@@ -578,22 +510,17 @@ function FarmersProfileController($scope, $http, FarmersProfileService, AuthServ
       controller: 'ModalInstanceEditFarmerController',
       size: 'sm',
       resolve: {
-
       }
     });
   }
 
     FarmersProfileService.getProfile($routeParams.farmerId).then(function (farmer) {
-      console.log(farmer);
       $scope.farmer = farmer.data;
     })
     FarmersProfileService.getAllInventoryByUser($scope.user.id)
     .then(function(data){
       $scope.myProducts = data.data;
-
     })
-
-
 }
 
 },{}],21:[function(require,module,exports){
@@ -614,7 +541,6 @@ angular
   .module('farmers-profile.module')
   .service('FarmersProfileService', function($http,$window){
 
-
         function getAllInventoryByUser(userName){
           console.log("got me some corn", userName);
           return $http.get('/inventory/user/' + userName);
@@ -624,13 +550,11 @@ angular
           return $http.get('/users/' + id);
         }
 
-
-return {
-  getAllInventoryByUser:getAllInventoryByUser,
-  getProfile: getProfileUser
-  }
-
-})
+        return {
+          getAllInventoryByUser:getAllInventoryByUser,
+          getProfile: getProfileUser
+        }
+      })
 
 },{}],23:[function(require,module,exports){
 
@@ -644,18 +568,15 @@ angular.module('farmers-profile.module').controller('ModalInstanceEditFarmerCont
 
 $scope.user = AuthService.currentUser();
 
-$scope.editUser = function(user) {
+  $scope.editUser = function(user) {
     AuthService.editUser(user).success(function(res) {
-        console.log("CREATED", res);
         $window.localStorage.setItem('mahUser', JSON.stringify(res));
         AuthService.user = res;
-        // alert("You Have Signed Up.  You WIll Be Granted Access Upon Administration Approval");
     }).error(function(err) {
-        console.log("SHIT", err);
     });
     $uibModalInstance.close();
 };
-$scope.cancel = function() {
+  $scope.cancel = function() {
     $uibModalInstance.close('cancel');
 };
 
@@ -676,13 +597,11 @@ function FarmersController($scope, $http, $location, $q, $rootScope, FarmersServ
 
 FarmersService.getAllInventoryByUser($routeParams.id)
 .then(function(data){
-  console.log("DREW",data);
   $scope.myProducts = data.data;
 })
 $scope.$on('product:updated', function () {
   FarmersService.getAllInventoryByUser($routeParams.id)
   .then(function(data){
-    console.log("DREW",data);
     $scope.myProducts = data.data;
   })
 })
@@ -710,39 +629,35 @@ $scope.createInventory = function(inventory) {
 
   BuyersService.getAllCategories()
   .then(function(data){
-    console.log("CATEGOREIS", data);
     $scope.categories = data.data;
   })
   BuyersService.getOrdersPending(true).then(function(data) {
-      console.log("ARE PENDING", data.data);
       $scope.pendingOrders = data.data;
   })
   $scope.authorizeOrder = function(pending,index){
     FarmersService.authorizeOrder(pending)
     .then (function(data){
-      console.log("Authorized Bitch!!",data);
-        $scope.approvedOrders.push(pending);
-        $scope.pendingOrders.splice(index,1)
+      $scope.approvedOrders.push(pending);
+      $scope.pendingOrders.splice(index,1)
     })
 }
-  $scope.deleteOrder = function(order,index){
+ $scope.deleteOrder = function(order,index){
     FarmersService.deleteOrder(order)
     .then(function(data){
       $scope.pendingOrders.splice(index,1);
     })
 }
 
-$scope.deleteInventory = function(inventory,index){
-  var id= inventory.id
-  FarmersService.deleteInventory(id)
-  .then(function(data){
-    $scope.myProducts.splice(index,1);
+ $scope.deleteInventory = function(inventory,index){
+   var id= inventory.id
+   FarmersService.deleteInventory(id)
+   .then(function(data){
+     $scope.myProducts.splice(index,1);
   })
 
 }
 
 $scope.updateInventory = function(product) {
-  console.log("we workin");
   var modalInstance = $uibModal.open({
     animation: $scope.animationsEnabled,
     templateUrl: './farmers/views/modaleditInv.html',
@@ -773,7 +688,6 @@ angular
         templateUrl: "./farmers/views/farmers.html",
         controller: "FarmersController"
     })
-
 })
 
 },{"angular":39,"angular-route":35,"angular-ui-bootstrap":37}],27:[function(require,module,exports){
@@ -790,13 +704,10 @@ angular
         }
 
         function getAllInventory(inventory){
-          console.log("ALL the corn", inventory);
           return $http.get('/inventory');
         }
 
-
         function getAllInventoryByUser(userName){
-          console.log("got me some corn", userName);
           return $http.get('/inventory/user/' + userName);
         }
 
@@ -817,8 +728,6 @@ angular
         }
 
         function updateInventory(id, inventory){
-
-          console.log("puttin on the ritz", inventory);
           return $http.put('/inventory/' + id, inventory).then(function () {
               $rootScope.$broadcast('product:updated');
           })
@@ -851,13 +760,6 @@ angular.module('farmers.module').controller('ModalInstanceEditInvController', fu
 
 $scope.updateInventory = function(inventory) {
     FarmersService.updateInventory(inventory.id, inventory).then(function(res) {
-    //     console.log("CREATED", res);
-    //     var id= inventory.id
-    // FarmersService.updateInventory(id)
-    //   .then(function(data){
-    //
-    //     })
-    console.log(res);
   });
     $uibModalInstance.close();
 };
@@ -878,43 +780,23 @@ HomeController.$inject = ["$scope", "$http", "$location", "$q", "$routeParams", 
 
 function HomeController($scope,$http,$location,$q,$routeParams,HomeService,$uibModal) {
   $scope.openLogin = function() {
-    console.log("WHAT UP");
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: './auth/views/modallogin.html',
       controller: 'ModalLoginInstanceCtrl',
       size: 'size',
       resolve: {
-
       }
     });
   }
 
-
   $scope.toggleAnimation = function () {
     $scope.animationsEnabled = !$scope.animationsEnabled;
   };
 
-  // $scope.openSignup = function(size) {
-  //   console.log("WHAT SIGNUP");
-  //   var modalInstance = $uibModal.open({
-  //     animation: $scope.animationsEnabled,
-  //     templateUrl: './auth/views/modalsignup.html',
-  //     controller: 'ModalSignupInstanceCtrl',
-  //     size: size,
-  //     resolve: {
-  //
-  //     }
-  //   });
-  // }
-
-
   $scope.toggleAnimation = function () {
     $scope.animationsEnabled = !$scope.animationsEnabled;
   };
-
-
-
 }
 
 },{"underscore":41}],31:[function(require,module,exports){
@@ -922,25 +804,6 @@ angular
   .module('FarmersMarket')
   .service('HomeService', function($http) {
 
-
-    // function getUser() {
-    //   return $http.get('/users');
-    // }
-    // 
-    // function createFarmer(user) {
-    //   return $http.post('/users', user);
-    // }
-    //
-    // function createBuyer(user) {
-    //   return $http.post('/users', user);
-    // }
-    //
-    // return {
-    //   getUser: getUser,
-    //   createFarmer: createFarmer,
-    //   createBuyer: createBuyer,
-    //   createUser: createUser
-    // }
   })
 
 },{}],32:[function(require,module,exports){
@@ -960,22 +823,19 @@ angular
     if($window.localStorage.getItem('mahUser')) {
       $scope.user = JSON.parse($window.localStorage.getItem('mahUser'));
     }
-    // $scope.user = JSON.parse($window.localStorage.getItem('mahUser'));
 
     $scope.openLogin = function() {
-      console.log("WHAT UP");
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
         templateUrl: './auth/views/modallogin.html',
         controller: 'ModalLoginInstanceCtrl',
         size: 'sm',
         resolve: {
-
         }
       });
     }
 
-    $scope.logTheFuckOut = function() {
+    $scope.logOut = function() {
       var user= AuthService.user
         AuthService.logOutUser(user)
         .success(function(res) {
@@ -986,37 +846,29 @@ angular
 
     $scope.goToProfile = function(user) {
       var profile= AuthService.user
-      console.log("woo",AuthService.user);
         if(profile.userType === "Farmer"){
           $location.path("/farmers-profile/" + profile.id)
-    } else if(profile.userType === "Buyer"){
+      } else if(profile.userType === "Buyer"){
         $location.path("/buyers-profile/" + profile.id)
+      }
     }
-}
     $scope.toggleAnimation = function () {
       $scope.animationsEnabled = !$scope.animationsEnabled;
     };
 
     $scope.openSignup = function() {
-      console.log("WHAT SIGNUP");
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
         templateUrl: './auth/views/modalsignup.html',
         controller: 'ModalSignupInstanceCtrl',
         size: 'sm',
         resolve: {
-
         }
       });
     }
-
-
     $scope.toggleAnimation = function () {
       $scope.animationsEnabled = !$scope.animationsEnabled;
     };
-
-
-
   });
 
 },{}],34:[function(require,module,exports){

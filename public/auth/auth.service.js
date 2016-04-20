@@ -10,16 +10,14 @@ angular
       if($window.localStorage.getItem('mahUser')) {
         return true;
       }
-      return false;
-    }
+        return false;
+      }
 
     function goToProfile(user){
-      console.log("PRofile", user);
       return $http.get("/users");
     }
 
     function loginUser(user){
-      console.log("ARE YOU HAPPENING?");
       return $http.post('/login', user);
     }
 

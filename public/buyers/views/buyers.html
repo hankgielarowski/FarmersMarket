@@ -3,7 +3,7 @@
   <h4 class="text-cat"> Category </h4>
   <div class="container-buyer-all">
     <div class="container-catAll" ng-repeat="category in categories">
-    <ul class="cat-order" ng-click="showThisCat(category.categoryName)">
+    <ul class="cat-order"  ng-click="showThisCat(category.categoryName)">
       <a href="">
         <li class="cat-list">
           <p>{{category.categoryName}}</p>
@@ -11,40 +11,35 @@
         <li class="cat-list">
           <img class="veg-pic" ng-src="imagesCategories/{{category.imageCategory}}" alt="">
         </li>
-    </a>
+      </a>
     </ul>
-  </div>
+   </div>
   </div>
 </div>
-
 
 <!-- getallinvetorybycatogery -->
 <!-- what is submitted for the order -->
 
-<div class="container-invFarm" ng-repeat="category in categories" ng-show="category.categoryName === showCat">
+<div class="container-invFarm" ng-repeat="category in categories"  ng-show="category.categoryName === showCat">
   <p id="cat-name">{{category.categoryName}}</p>
   <div class="container-invFarmProd" ng-repeat="thing in myProducts | filter:showCat">
     <ul class="list-prod">
-
       <li>{{thing.name}}</li>
       <li>{{thing.quantityAvailable}} lb</li>
       <li>$ {{thing.price}}</li>
-      <a href="/#/farmers-profile/{{thing.user.companyName}}"><li>{{thing.user.companyName}}</li></a>
+        <a href="/#/farmers-profile/{{thing.user.companyName}}"><li>{{thing.user.companyName}}</li></a>
       <li>{{thing.userType}}</li>
-      <form class="order-form" ng-submit="createOrder(thing, thing.id)">
+      <form class="order-form" ng-submit="createOrder(thing)">
         <li>
           <input id="who" class="form-control" type="text" placeholder="Enter Quantity" name="" ng-model="thing.quantityOrdered">
           <input class="btn btn-sm btn-danger btn-register" type="submit"value="Submit Order" name="">
         </li>
       </form>
-
     </ul>
   </div>
-
-
+</div>
 
 <div class="container-farm">
-
 <div class="row">
   <div class="col-md-12">
     <div class="row">
@@ -55,7 +50,7 @@
             <ul class ="pendingOrders" >
               <li>{{::thing.category}} , {{::thing.name}} , $ {{::thing.price}} , {{::user.userName}} , {{::thing.quantityOrdered}} lbs</li>
             </ul>
-            </div>
+          </div>
         </div>
       </div>
       <div class="col-md-6" id="right">

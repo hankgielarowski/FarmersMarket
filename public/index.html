@@ -13,16 +13,22 @@
 
   <body ng-app="FarmersMarket">
 
-    <ng-include src="'home/views/navbar.html'"></ng-include>
+  <ng-include src="'home/views/navbar.html'"></ng-include>
+
   <div class="container-main">
 
     <ng-view></ng-view>
+
   </div>
 
   <footer>
     <div class="row row-footer">
       <div class="col-lg-12">
-        <p id="copyright"><p>Copyright ©2016 Farmers Market, All Rights Reserved</p>
+        <ul>
+        <li><button type="button" class="btn login btn-danger">contact</button></li>
+        <li><a href="https://www.placecage.com/gif/600/600">FAQ</a></li>
+        <li id="copyright"><p>Copyright ©2016 Farmers Market, All Rights Reserved</p></li>
+        </ul>
     </div>
   </div>
   </footer>

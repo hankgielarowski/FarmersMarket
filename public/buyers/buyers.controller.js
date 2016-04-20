@@ -11,16 +11,13 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
         // on image
     BuyersService.getAllInventoryByCategory().then(function(data) {
         $scope.myProducts = data.data;
-        console.log("PRDS", data.data);
-        console.log("GROUB", _.groupBy(data.data, 'category'));
         var cats = Object.keys(_.groupBy(data.data, 'category'))
-        console.log(cats);
     })
     BuyersService.getAllCategories().then(function(data) {
         $scope.categories = data.data;
     })
+
     $scope.createOrder = function(product, id) {
-        console.log("why it works",$scope.myProducts);
         var order = {};
         order.category = product.category;
         order.name = product.name;
@@ -42,13 +39,10 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
           })
         }
     }
-
     BuyersService.getOrdersPending(true).then(function(data) {
-        console.log("ARE PENDING", data.data);
         $scope.pendingOrders = data.data;
     })
     BuyersService.getOrdersPending(false).then(function(data) {
-        console.log("HELLO", data.data);
         $scope.notPendingOrders = data.data;
     })
 }

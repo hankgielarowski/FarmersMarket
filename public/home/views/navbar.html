@@ -1,14 +1,11 @@
-
 <div ng-controller="NavbarCtrl">
   <div class="navbar navbar-inverse navbar-fixed-top" style="opacity: .98;">
     <ul class="branding">
       <li class="brand-img"><img class="logo" alt="Brand" src="img/farmersMarketLogo.jpg" style="width: 70px; height: 70px; vertical-align: bottom;"></li>
       <li class="nav-title"><p class="navbar-text">Farmers Market</p></li>
-
-
       <li class="nav-signup"><button ng-hide="isAuthenticated()" type="button" class="btn btn-danger navbar-right login"  ng-click="openSignup()">Sign Up</button></li>
       <li class="nav-signin"><button ng-hide="isAuthenticated()" type="button" class="btn btn-primary navbar-right login" ng-click="openLogin()">Sign In</button></li>
-      <li class="nav-logout"><button ng-click="logTheFuckOut()" type="button" class="btn btn-warning navbar-right login" ng-show="isAuthenticated()">Log Out</button></li>
+      <li class="nav-logout"><button ng-click="logOut()" type="button" class="btn btn-warning navbar-right login" ng-show="isAuthenticated()">Log Out</button></li>
       <li class="nav-profile"><button ng-click="goToProfile()" type="button" class="btn btn-success navbar-right login" ng-show="isAuthenticated()">Profile</button></li>
       <li class="nav-user"><p ng-show="isAuthenticated()">
         Welcome, {{user.companyName}}
