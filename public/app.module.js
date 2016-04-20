@@ -22,22 +22,7 @@ angular
       templateUrl: "home/views/home.html",
       controller: "HomeController"
     })
-    // .when('/admin', {
-    //   templateUrl: "admin/views/admin.html",
-    //   controller: "AdminController"
-    // })
-    // .when('/buyers', {
-    //   templateUrl: "buyers/views/buyers.html",
-    //   controller: "BuyersController"
-    // })
-    // .when('/buyers-profile', {
-    //   templateUrl: "buyers-profile/views/buyers-profile.html",
-    //   controller: "BuyersProfileController"
-    // })
-    // .when('/farmers-profile', {
-    //   templateUrl: "farmers-profile/views/farmers-profile.html",
-    //   controller: "FarmersProfileController"
-    // })
+  
 })
 .config(function($authProvider) {
   $authProvider.loginUrl = '/login';

@@ -4,13 +4,6 @@ angular.module('farmers.module').controller('ModalInstanceEditInvController', fu
 
 $scope.updateInventory = function(inventory) {
     FarmersService.updateInventory(inventory.id, inventory).then(function(res) {
-    //     console.log("CREATED", res);
-    //     var id= inventory.id
-    // FarmersService.updateInventory(id)
-    //   .then(function(data){
-    //
-    //     })
-    console.log(res);
   });
     $uibModalInstance.close();
 };

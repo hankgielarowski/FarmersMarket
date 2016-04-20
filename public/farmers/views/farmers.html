@@ -34,7 +34,6 @@
 </div>
 </div>
 
-
 <div class="container-farm">
  <div class="row">
   <div class="col-md-12">
@@ -43,7 +42,7 @@
         <div class="well">
           <h4 class="text-danger">Product Orders</h4>
             <ul ng-repeat="thing in pendingOrders track by $index">
-              <li>{{thing.category}} , {{thing.name}} , {{thing.buyer.userName}} , $ {{thing.price}} , {{thing.quantityOrdered}} lbs</li>
+              <li>{{::thing.category}} , {{::thing.name}} , {{::thing.buyer.userName}} , $ {{::thing.price}} , {{::thing.quantityOrdered}} lbs</li>
               <button type="button" class="btn btn-danger btn-sm" ng-click="authorizeOrder(thing)">Accept Order</button>
               <button type="button" class="btn btn-danger btn-sm" ng-click="deleteOrder(thing)">Delete Order</button>
             </ul>

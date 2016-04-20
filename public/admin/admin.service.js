@@ -4,7 +4,6 @@ angular
   .module('admin.module')
   .service('AdminService', function($http){
 
-
     function getvalidateUser(){
       console.log("I am a user")
       return $http.get('/users/validate/');

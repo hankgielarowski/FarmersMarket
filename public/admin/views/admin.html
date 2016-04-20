@@ -1,4 +1,4 @@
-<div class="containe-fluid">
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-12" id="allUsers">
       <div class="well">
@@ -10,7 +10,6 @@
           <li>{{user.email}}</li>
             <button type="button" class="btn btn-danger btn-sm" ng-click="validateUser(user, $index)">Approve User</button>
             <button type="button" class="btn btn-danger btn-sm" ng-click="deleteUserDeniedByAdmin (user, $index)">Delete User</button>
-
         </ul>
       </div>
     </div>
@@ -26,14 +25,12 @@
   </div>
 </div>
 
-
 <div class="row" ng-show="showFarmer">
   <div class="col-12-md">
     <h1>List of Farmers</h1>
     <ul class="userList" ng-repeat="person in farmers">
       <li>
         <a href="/#/farmers/{{person.id}}">{{person.userName}}</a>
-
       </li>
     </ul>
   </div>

@@ -12,9 +12,8 @@ angular
         }
 
 
-return {
-  getAllInventoryByUser:getAllInventoryByUser,
-  getBuyerProfile: getBuyerProfileUser
-  }
-
-})
+        return {
+          getAllInventoryByUser:getAllInventoryByUser,
+          getBuyerProfile: getBuyerProfileUser
+        }
+    })
