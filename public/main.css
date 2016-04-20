@@ -1,27 +1,142 @@
 .body {
   width: 90%; }
 
+ul {
+  margin-bottom: 0; }
+
+.btn-go {
+  background: green;
+  color: rgba(0, 0, 0, 0.5);
+  transition: .2s all; }
+  .btn-go:hover {
+    background: darkgreen;
+    color: white; }
+
+.btn-edit {
+  background: orange;
+  color: rgba(0, 0, 0, 0.5);
+  transition: .2s all; }
+  .btn-edit:hover {
+    background: blue;
+    color: white; }
+
+.btn-delete {
+  background: red;
+  color: rgba(0, 0, 0, 0.5);
+  transition: .2s all; }
+  .btn-delete:hover {
+    background: purple;
+    color: white; }
+
+.nav-user {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right;
+  font-size: 20px;
+  color: whitesmoke; }
+
+.nav-signup {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right; }
+
+.nav-signin {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right; }
+
+.nav-profile {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right; }
+
+.nav-logout {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right; }
+
+.navbar-text {
+  margin-left: 240px !important;
+  font-size: 1.6em; }
+
+.nav-title {
+  font-size: 25px;
+  color: whitesmoke;
+  margin-left: 2%;
+  vertical-align: middle; }
+
+.nav-branding {
+  list-style: none;
+  display: inline-block;
+  float: left; }
+
+.navbar {
+  background: black; }
+  .navbar .logo {
+    width: 70px;
+    height: 70px;
+    vertical-align: middle; }
+  .navbar li {
+    list-style: none;
+    display: inline-block; }
+
 .container-main {
   margin-top: 93px;
   width: 90%;
   margin-right: auto;
   margin-left: auto; }
 
-footer {
-  height: 40px; }
-
-.row-footer {
-  text-align: center;
-  color: blue; }
-
-.container-farm {
+.container-full-bg {
   width: 100%;
-  height: 318px; }
+  height: 70%; }
+
+.hero {
+  height: 650px;
+  background-image: url(img/hero-pic.jpg);
+  background-size: cover;
+  margin: 10% 0; }
+
+.connect {
+  font-size: 2.5em;
+  font-family: Copperplate / Copperplate Gothic Light, sans-serif;
+  float: right;
+  padding-top: 75px;
+  color: #309700;
+  margin-right: 8%; }
+
+.row-two {
+  height: 300px;
+  margin-left: 0 !important;
+  margin-right: 0 !important; }
+
+.statement {
+  margin-bottom: 10%; }
+  .statement h5 {
+    color: red;
+    font-size: 2rem;
+    text-align: center; }
+  .statement p {
+    font-size: 1.6rem;
+    font-weight: bold; }
+
+footer {
+  height: 70px;
+  border: 2px solid red; }
+
+footer ul {
+  display: inline-block;
+  width: 100%; }
+
+footer li {
+  display: inline-block;
+  list-style: none;
+  padding-right: 10%; }
 
 .social {
   margin: 0;
   padding: 0;
-  text-align: center; }
+  text-align: center;
+  margin: 3% 0; }
 
 .social ul {
   margin: 0;
@@ -73,86 +188,9 @@ footer {
 .social .fa-instagram:hover {
   background: #375989; }
 
-.nav-user {
-  margin: 10px;
-  margin-right: 15px !important;
-  float: right;
-  font-size: 20px;
-  color: whitesmoke; }
-
-.nav-signup {
-  margin: 10px;
-  margin-right: 15px !important;
-  float: right; }
-
-.nav-signin {
-  margin: 10px;
-  margin-right: 15px !important;
-  float: right; }
-
-.nav-profile {
-  margin: 10px;
-  margin-right: 15px !important;
-  float: right; }
-
-.nav-logout {
-  margin: 10px;
-  margin-right: 15px !important;
-  float: right; }
-
-.navbar-text {
-  margin-left: 240px !important;
-  font-size: 1.6em; }
-
-.nav-title {
-  font-size: 20px;
-  color: whitesmoke; }
-
-.nav-branding {
-  list-style: none;
-  display: inline-block;
-  float: left; }
-
-.navbar li {
-  list-style: none;
-  display: inline-block; }
-
-.container-full-bg {
+.container-category {
   width: 100%;
-  height: 70%; }
-
-.row-one {
-  height: 650px;
-  background-image: url(img/hero-pic.jpg);
-  background-size: cover; }
-
-.connect {
-  font-size: 2.5em;
-  font-family: Copperplate / Copperplate Gothic Light, sans-serif;
-  float: right;
-  padding-top: 75px;
-  color: #309700;
-  margin-right: 8%; }
-
-.row-two {
-  height: 300px;
-  margin-left: 0 !important;
-  margin-right: 0 !important; }
-
-.statement {
-  background-color: #ffffff;
-  opacity: 0.6; }
-
-.about {
-  text-align: center;
-  font-size: 2em;
-  color: #C21B0A; }
-
-.mission {
-  color: #000;
-  font-size: 1.3em;
-  font-family: Copperplate / Copperplate Gothic Light, sans-serif;
-  font-weight: bold; }
+  height: 300px; }
 
 #farmer-right {
   top: 0px;
@@ -163,69 +201,38 @@ footer {
   overflow-y: scroll;
   border: 2px solid red; }
 
-#left {
-  position: absolute;
-  top: 0px;
-  bottom: 0;
-  left: 0;
-  width: 49.1%;
-  height: 300px;
-  overflow-y: scroll;
-  background-color: rgba(97, 217, 223, 0.18); }
+.radio li {
+  list-style: none;
+  display: inline-block;
+  padding-left: 50px; }
 
-#right {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  overflow-y: scroll;
-  width: 49.3%;
-  height: 300px;
-  background-color: rgba(97, 217, 223, 0.18); }
-
-.farm-right {
-  min-height: 20px;
-  padding: 19px;
-  margin-bottom: 20px; }
-
-.farm-left {
-  min-height: 20px;
-  padding: 19px;
-  margin-bottom: 20px; }
-
-#left li {
-  list-style: none; }
-
-.container-pic {
-  position: relative;
-  width: 100%;
-  background-size: cover;
-  background-position: center;
-  background-image: url(img/restaurant.jpg);
-  text-align: center;
-  color: white;
-  height: 590px; }
+.radio li label {
+  padding: 0; }
 
 .container-allInv {
   width: 100%;
-  margin: 0 auto; }
+  margin: 0 auto;
+  margin-top: 7%; }
 
 .container-buyer-all {
-  height: 240px;
-  overflow-y: scroll; }
+  height: 500px;
+  overflow-y: scroll;
+  border: 1px solid #efefef;
+  padding: 3%; }
 
 .container-catAll {
   display: inline-block;
-  width: 18%;
+  width: 19%;
   margin-bottom: 4%;
   vertical-align: top; }
 
 .text-cat {
   text-align: center;
-  border-bottom: 2px solid rgba(63, 184, 191, 0.18);
+  border: 1px solid #000;
   font-size: 2.5em;
-  margin-bottom: 3%;
-  padding-bottom: 1%; }
+  background-color: #73B370;
+  color: #D41942;
+  padding: 2%; }
 
 .cat-order {
   list-style: none;
@@ -246,15 +253,37 @@ footer {
   width: 170px;
   height: 150px; }
 
-.container-invFarm {
-  width: 100%;
-  margin: 0 auto;
-  border-top: 1px solid red; }
+.new-veg-pic {
+  display: none; }
+
+.veg-pic:hover + .new-veg-pic {
+  display: inline; }
+
+.container-buyer-all img {
+  width: 100%; }
+
+.buyer-wrap {
+  margin-top: 5%; }
+
+.buyer-img-wrap {
+  height: 200px;
+  overflow: hidden; }
 
 .container-invFarmProd {
   height: 240px;
   display: inline-block;
   overflow-y: scroll; }
+  .container-invFarmProd ul li {
+    list-style: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 1% 0; }
+    .container-invFarmProd ul li span {
+      font-weight: normal; }
+  .container-invFarmProd input {
+    margin-bottom: 3%; }
+  .container-invFarmProd button {
+    width: 100%; }
 
 #cat-name {
   text-align: center;
@@ -263,11 +292,8 @@ footer {
   padding-bottom: 2%; }
 
 .list-prod {
-  list-style: none;
-  display: inline-block;
-  padding: 0px;
-  margin-left: 10%;
-  text-align: center; }
+  padding: 5% 10%;
+  background: #efefef; }
 
 .container-buyerProfile {
   width: 100%; }
@@ -278,37 +304,34 @@ footer {
 .container-user {
   text-align: center; }
 
-.container-pic p {
-  color: blue; }
+.farm-wrap {
+  margin-top: 10%; }
 
-#this-one {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  overflow-y: scroll;
+.farm-wrap-inner {
+  position: fixed; }
+
+.product-wrap-inner {
+  background: #efefef;
+  margin-bottom: 8%;
+  padding: 5%; }
+
+.signin-form input {
+  margin-bottom: 3%; }
+
+.signin-form select {
   width: 100%;
-  height: 300px;
-  border: 2px solid red; }
+  margin-bottom: 3%; }
 
-#that-one {
-  position: absolute;
-  top: 0px;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 300px;
-  overflow-y: scroll;
-  border: 2px solid red; }
+.pending, .approved {
+  background: #efefef;
+  padding: 5%; }
+  .pending h4, .approved h4 {
+    margin: 0; }
 
-#this-one li {
-  list-style: none; }
+.pending h4 {
+  color: orange; }
 
-hr {
-  border-width: 3px; }
-
-a {
-  text-decoration: none; }
-
-section {
-  padding: 100px 0; }
+.approved {
+  margin-top: 5%; }
+  .approved h4 {
+    color: green; }

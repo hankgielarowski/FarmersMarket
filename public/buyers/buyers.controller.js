@@ -28,19 +28,18 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
         if($scope.user.userType === 'Buyer') {
           BuyersService.createOrder(order, id)
           .then(function(res){
+            console.log("Res", order)
             $scope.pendingOrders.push(order);
             $scope.thing = {};
           })
-
-        } else if ($scope.user.userType === "Admin"){
-          BuyersService.createOrderAdmin(order,$routeParams.id)
+        } else if($scope.user.userType === "Admin") {
+          BuyersService.createOrderAdmin(order, $routeParams.id)
           .then(function(res) {
             $scope.pendingOrders.push(order);
             $scope.thing = {};
           })
         }
     }
-
 
     if($scope.user.userType === 'Buyer') {
       BuyersService.getOrdersPending(true).then(function(data) {
@@ -55,7 +54,7 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
           $scope.pendingOrders = data.data.filter(function(order) {
             return order.pendingApproval === true;
           })
-          $scope.notPending = data.data.filter(function(order) {
+          $scope.notPendingOrders = data.data.filter(function(order) {
             return order.pendingApproval === false;
           })
         })

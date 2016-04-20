@@ -1,4 +1,4 @@
-  angular
+angular
 .module("farmers.module")
 .controller("FarmersController", FarmersController);
 
@@ -47,26 +47,24 @@ $scope.createInventory = function(inventory) {
     $scope.categories = data.data;
   })
 
-  if($scope.user.userType === 'Farmer') {
+  if($scope.user.userType === "Farmer") {
     BuyersService.getOrdersPending(true).then(function(data) {
         $scope.pendingOrders = data.data;
-    })
-    BuyersService.getOrdersPending(false).then(function(data) {
-        $scope.approvedOrders = data.data;
-    })
-  } else if($scope.user.userType === "Admin"){
-    BuyersService.getOrdersPendingByAdmin($routeParams.id)
-      .then(function(data) {
-        $scope.pendingOrders = data.data.filter(function(order) {
-          return order.pendingApproval === true;
-        })
-        $scope.approvedOrders = data.data.filter(function(order) {
-          return order.pendingApproval === false;
-        })
+  })
+  BuyersService.getOrdersPending(false).then(function(data) {
+      $scope.pendingOrders = data.data;
+  })
+} else if($scope.user.userType === "Admin") {
+  BuyersService.getOrdersPendingByAdmin($routeParams.id)
+    .then(function(data){
+      $scope.pendingOrders = data.data.filter(function(order){
+        return order.pendingApproval === true;
       })
-  };
-
-
+      $scope.approvedOrders = data.data.filter(function(order){
+        return order.pendingApproval === false;
+      })
+    })
+};
 
 
   $scope.authorizeOrder = function(pending,index){

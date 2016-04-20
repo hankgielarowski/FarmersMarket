@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <title>Farmers Market</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" media="screen" title="no title" charset="utf-8">
-    <link rel="stylesheet" href="main.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="main.css" media="screen" title="no title" charset="utf-8">
     <script src="node_modules/jquery/dist/jquery.js" charset="utf-8"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js" charset="utf-8"></script>
     <script src="node_modules/underscore/underscore.js" charset="utf-8"></script>
@@ -15,18 +15,20 @@
 
   <ng-include src="'home/views/navbar.html'"></ng-include>
 
-  <div class="container-main">
+  <div class="container">
 
     <ng-view></ng-view>
 
   </div>
 
   <footer>
-    <div class="row row-footer">
-      <div class="col-lg-12">
-        <p id="copyright">Copyright ©2016 Farmers Market, All Rights Reserved</p></li>
+    <div class="col-xs-12">
+        <ul>
+        <li><button type="button" class="btn login btn-danger">contact</button></li>
+        <li><a href="https://www.placecage.com/gif/600/600">FAQ</a></li>
+        <li id="copyright"><p>Copyright ©2016 Farmers Market, All Rights Reserved</p></li>
+        </ul>
     </div>
-  </div>
   </footer>
 
 
