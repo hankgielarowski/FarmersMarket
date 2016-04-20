@@ -10,7 +10,6 @@
         </li>
         <li class="cat-list">
           <img class="veg-pic" ng-src="imagesCategories/{{category.imageCategory}}" alt="">
-          <img class="new-veg-pic" ng-src="imagesCategories/Tits.jpg" alt="">
         </li>
     </a>
     </ul>
@@ -53,11 +52,8 @@
         <div class="well" >
           <h4 class="text-danger">Pending Orders</h4>
           <div class="orderStuff" ng-repeat="thing in pendingOrders track by $index">
-
-
             <ul class ="pendingOrders" >
               <li>{{::thing.category}} , {{::thing.name}} , $ {{::thing.price}} , {{::user.userName}} , {{::thing.quantityOrdered}} lbs</li>
-
             </ul>
             </div>
         </div>
@@ -67,7 +63,6 @@
           <h4 class="text-success"> Approved Orders </h4>
           <ul ng-repeat="stuff in notPendingOrders track by $index">
             <li>{{stuff.category}} , {{stuff.name}} , $ {{stuff.price}} , {{user.userName}} , {{stuff.quantityOrdered}} lbs</li>
-
           </ul>
         </div>
       </div>

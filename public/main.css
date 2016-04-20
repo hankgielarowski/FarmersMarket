@@ -1,105 +1,18 @@
 .body {
   width: 90%; }
 
-.nav-user {
-  margin: 10px;
-  margin-right: 15px !important;
-  float: right;
-  font-size: 20px;
-  color: whitesmoke; }
-
-.nav-signup {
-  margin: 10px;
-  margin-right: 15px !important;
-  float: right; }
-
-.nav-signin {
-  margin: 10px;
-  margin-right: 15px !important;
-  float: right; }
-
-.nav-profile {
-  margin: 10px;
-  margin-right: 15px !important;
-  float: right; }
-
-.nav-logout {
-  margin: 10px;
-  margin-right: 15px !important;
-  float: right; }
-
-.navbar-text {
-  margin-left: 240px !important;
-  font-size: 1.6em; }
-
-.nav-title {
-  font-size: 20px;
-  color: whitesmoke; }
-
-.nav-branding {
-  list-style: none;
-  display: inline-block;
-  float: left; }
-
-.navbar li {
-  list-style: none;
-  display: inline-block; }
-
 .container-main {
   margin-top: 93px;
   width: 90%;
   margin-right: auto;
   margin-left: auto; }
 
-.container-full-bg {
-  width: 100%;
-  height: 70%; }
-
-.row-one {
-  height: 650px;
-  background-image: url(img/hero-pic.jpg);
-  background-size: cover; }
-
-.connect {
-  font-size: 2.5em;
-  font-family: Copperplate / Copperplate Gothic Light, sans-serif;
-  float: right;
-  padding-top: 75px;
-  color: #309700;
-  margin-right: 8%; }
-
-.row-two {
-  height: 300px;
-  margin-left: 0 !important;
-  margin-right: 0 !important; }
-
-.statement {
-  background-color: #ffffff;
-  opacity: 0.6; }
-
-.about {
-  text-align: center;
-  font-size: 2em;
-  color: #C21B0A; }
-
-.mission {
-  color: #000;
-  font-size: 1.3em;
-  font-family: Copperplate / Copperplate Gothic Light, sans-serif;
-  font-weight: bold; }
-
 footer {
   height: 70px;
   border: 2px solid red; }
 
-footer ul {
-  display: inline-block;
-  width: 100%; }
-
-footer li {
-  display: inline-block;
-  list-style: none;
-  padding-right: 10%; }
+.row-footer {
+  text-align: center; }
 
 .container-farm {
   width: 100%;
@@ -160,9 +73,86 @@ footer li {
 .social .fa-instagram:hover {
   background: #375989; }
 
-.container-category {
+.nav-user {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right;
+  font-size: 20px;
+  color: whitesmoke; }
+
+.nav-signup {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right; }
+
+.nav-signin {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right; }
+
+.nav-profile {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right; }
+
+.nav-logout {
+  margin: 10px;
+  margin-right: 15px !important;
+  float: right; }
+
+.navbar-text {
+  margin-left: 240px !important;
+  font-size: 1.6em; }
+
+.nav-title {
+  font-size: 20px;
+  color: whitesmoke; }
+
+.nav-branding {
+  list-style: none;
+  display: inline-block;
+  float: left; }
+
+.navbar li {
+  list-style: none;
+  display: inline-block; }
+
+.container-full-bg {
   width: 100%;
-  height: 300px; }
+  height: 70%; }
+
+.row-one {
+  height: 650px;
+  background-image: url(img/hero-pic.jpg);
+  background-size: cover; }
+
+.connect {
+  font-size: 2.5em;
+  font-family: Copperplate / Copperplate Gothic Light, sans-serif;
+  float: right;
+  padding-top: 75px;
+  color: #309700;
+  margin-right: 8%; }
+
+.row-two {
+  height: 300px;
+  margin-left: 0 !important;
+  margin-right: 0 !important; }
+
+.statement {
+  background-color: #ffffff;
+  opacity: 0.6; }
+
+.about {
+  text-align: center;
+  font-size: 2em;
+  color: #C21B0A; }
+
+.mission {
+  color: #000;
+  font-size: 1.3em;
+  font-family: Copperplate / Copperplate Gothic Light, sans-serif;
+  font-weight: bold; }
 
 #farmer-right {
   top: 0px;
@@ -172,14 +162,6 @@ footer li {
   height: 300px;
   overflow-y: scroll;
   border: 2px solid red; }
-
-.radio li {
-  list-style: none;
-  display: inline-block;
-  padding-left: 50px; }
-
-.radio li label {
-  padding: 0; }
 
 #left {
   position: absolute;
@@ -214,7 +196,7 @@ footer li {
 
 .container-catAll {
   display: inline-block;
-  width: 19%;
+  width: 18%;
   margin-bottom: 4%;
   vertical-align: top; }
 
@@ -245,12 +227,6 @@ footer li {
 .cat-list img {
   width: 170px;
   height: 150px; }
-
-.new-veg-pic {
-  display: none; }
-
-.veg-pic:hover + .new-veg-pic {
-  display: inline; }
 
 .container-invFarm {
   width: 100%;
