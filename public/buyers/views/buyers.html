@@ -1,3 +1,12 @@
+<div class="container-pic">
+  <div class="row">
+    <div class="col-lg-12">
+      <p><h1>Farmers Market</h1></p>
+      <p><h3>We Have What You Are Looking For!</h3></p>
+      <hr>
+  </div>
+ </div>
+</div>
 
 <div class="container-allInv">
   <h4 class="text-cat"> Category </h4>
@@ -29,7 +38,7 @@
       <li>$ {{thing.price}}</li>
         <a href="/#/farmers-profile/{{thing.user.companyName}}"><li>{{thing.user.companyName}}</li></a>
       <li>{{thing.userType}}</li>
-      <form class="order-form" ng-submit="createOrder(thing)">
+      <form class="order-form" ng-submit="createOrder(thing, thing.id)">
         <li>
           <input id="who" class="form-control" type="text" placeholder="Enter Quantity" name="" ng-model="thing.quantityOrdered">
           <input class="btn btn-sm btn-danger btn-register" type="submit"value="Submit Order" name="">

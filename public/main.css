@@ -8,11 +8,11 @@
   margin-left: auto; }
 
 footer {
-  height: 70px;
-  border: 2px solid red; }
+  height: 40px; }
 
 .row-footer {
-  text-align: center; }
+  text-align: center;
+  color: blue; }
 
 .container-farm {
   width: 100%;
@@ -171,7 +171,7 @@ footer {
   width: 49.1%;
   height: 300px;
   overflow-y: scroll;
-  border: 2px solid red; }
+  background-color: rgba(97, 217, 223, 0.18); }
 
 #right {
   position: absolute;
@@ -181,10 +181,30 @@ footer {
   overflow-y: scroll;
   width: 49.3%;
   height: 300px;
-  border: 2px solid red; }
+  background-color: rgba(97, 217, 223, 0.18); }
+
+.farm-right {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px; }
+
+.farm-left {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px; }
 
 #left li {
   list-style: none; }
+
+.container-pic {
+  position: relative;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-image: url(img/restaurant.jpg);
+  text-align: center;
+  color: white;
+  height: 590px; }
 
 .container-allInv {
   width: 100%;
@@ -202,12 +222,10 @@ footer {
 
 .text-cat {
   text-align: center;
-  border: 1px solid #000;
+  border-bottom: 2px solid rgba(63, 184, 191, 0.18);
   font-size: 2.5em;
-  margin-bottom: 5%;
-  background-color: #73B370;
-  color: #D41942;
-  padding-bottom: 2%; }
+  margin-bottom: 3%;
+  padding-bottom: 1%; }
 
 .cat-order {
   list-style: none;
@@ -259,3 +277,38 @@ footer {
 
 .container-user {
   text-align: center; }
+
+.container-pic p {
+  color: blue; }
+
+#this-one {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow-y: scroll;
+  width: 100%;
+  height: 300px;
+  border: 2px solid red; }
+
+#that-one {
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  overflow-y: scroll;
+  border: 2px solid red; }
+
+#this-one li {
+  list-style: none; }
+
+hr {
+  border-width: 3px; }
+
+a {
+  text-decoration: none; }
+
+section {
+  padding: 100px 0; }

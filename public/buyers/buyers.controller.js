@@ -31,7 +31,8 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
             $scope.pendingOrders.push(order);
             $scope.thing = {};
           })
-        } else {
+
+        } else if ($scope.user.userType === "Admin"){
           BuyersService.createOrderAdmin(order,$routeParams.id)
           .then(function(res) {
             $scope.pendingOrders.push(order);
@@ -39,10 +40,24 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
           })
         }
     }
-    BuyersService.getOrdersPending(true).then(function(data) {
-        $scope.pendingOrders = data.data;
-    })
-    BuyersService.getOrdersPending(false).then(function(data) {
-        $scope.notPendingOrders = data.data;
-    })
+
+
+    if($scope.user.userType === 'Buyer') {
+      BuyersService.getOrdersPending(true).then(function(data) {
+          $scope.pendingOrders = data.data;
+      })
+      BuyersService.getOrdersPending(false).then(function(data) {
+          $scope.notPendingOrders = data.data;
+      })
+    } else if($scope.user.userType === "Admin"){
+      BuyersService.getOrdersPendingByAdmin($routeParams.id)
+        .then(function(data) {
+          $scope.pendingOrders = data.data.filter(function(order) {
+            return order.pendingApproval === true;
+          })
+          $scope.notPending = data.data.filter(function(order) {
+            return order.pendingApproval === false;
+          })
+        })
+    };
 }

@@ -3,7 +3,7 @@
   <div class="col-md-12">
     <div class="row">
       <div class="col-md-6" id="left">
-        <div class="well">
+        <div class="farm-left">
           <h4 class="text-danger">Goods For Sale</h4>
             <ul>
               <form class="signin-form" ng-submit="createInventory(list)">
@@ -17,14 +17,14 @@
         </div>
       </div>
       <div class="col-md-6" id="right">
-        <div class="well">
+        <div class="farm-right">
           <h4 class="text-success"> Goods Available </h4>
           <ul ng-repeat="product in myProducts track by $index">
             <li>{{product.category}}</li>
             <li>{{product.name}}</li>
             <li>{{product.quantityAvailable}} lb</li>
             <li>$ {{product.price}}</li>
-            <button type="button" class="btn btn-danger navbar-right login" ng-click="updateInventory(product)">Edit Inventory</button>
+            <button type="button" class="btn btn-danger btn-sm" ng-click="updateInventory(product)">Edit Inventory</button>
             <button type="button" class="btn btn-danger btn-sm" ng-click="deleteInventory(product)">Delete Order</button>
           </ul>
         </div>
@@ -39,7 +39,7 @@
   <div class="col-md-12">
     <div class="row">
       <div class="col-md-6" id="left">
-        <div class="well">
+        <div class="farm-left">
           <h4 class="text-danger">Product Orders</h4>
             <ul ng-repeat="thing in pendingOrders track by $index">
               <li>{{::thing.category}} , {{::thing.name}} , {{::thing.buyer.userName}} , $ {{::thing.price}} , {{::thing.quantityOrdered}} lbs</li>
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="col-md-6" id="right">
-        <div class="well">
+        <div class="farm-right">
           <h4 class="text-success"> Approved Orders </h4>
           <ul ng-repeat="approved in approvedOrders track by $index">
             <li>{{approved.category}} , {{approved.name}} , {{approved.buyer.userName}} ,  $ {{approved.price}} , {{approved.quantityOrdered}} lbs</li>

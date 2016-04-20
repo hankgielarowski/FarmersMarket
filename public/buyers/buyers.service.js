@@ -15,18 +15,24 @@ angular
     }
 
     function createOrderAdmin(order, buyerId, id){
-      return $http.post('/orders/admin/'+ buyerId + '/' + order.id , order);
+      return $http.post('/orders/admin/'+ buyerId + '/' + id , order);
     }
 
     function getOrdersPending(pending){
+      console.log("Orders", pending);
       return $http.get('/orders/' + pending)
     }
 
+    function getOrdersPendingByAdmin(userId){
+      console.log('this is the userID from buyers service', userId);
+      return $http.get('/orders/user/' + userId)
+    }
       return {
           getAllInventoryByCategory: getAllInventoryByCategory,
           getAllCategories: getAllCategories,
           createOrder:createOrder,
           getOrdersPending:getOrdersPending,
-          createOrderAdmin:createOrderAdmin
+          createOrderAdmin:createOrderAdmin,
+          getOrdersPendingByAdmin:getOrdersPendingByAdmin
         }
   })

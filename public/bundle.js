@@ -419,7 +419,8 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
             $scope.pendingOrders.push(order);
             $scope.thing = {};
           })
-        } else {
+
+        } else if ($scope.user.userType === "Admin"){
           BuyersService.createOrderAdmin(order,$routeParams.id)
           .then(function(res) {
             $scope.pendingOrders.push(order);
@@ -427,12 +428,26 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
           })
         }
     }
-    BuyersService.getOrdersPending(true).then(function(data) {
-        $scope.pendingOrders = data.data;
-    })
-    BuyersService.getOrdersPending(false).then(function(data) {
-        $scope.notPendingOrders = data.data;
-    })
+
+
+    if($scope.user.userType === 'Buyer') {
+      BuyersService.getOrdersPending(true).then(function(data) {
+          $scope.pendingOrders = data.data;
+      })
+      BuyersService.getOrdersPending(false).then(function(data) {
+          $scope.notPendingOrders = data.data;
+      })
+    } else if($scope.user.userType === "Admin"){
+      BuyersService.getOrdersPendingByAdmin($routeParams.id)
+        .then(function(data) {
+          $scope.pendingOrders = data.data.filter(function(order) {
+            return order.pendingApproval === true;
+          })
+          $scope.notPending = data.data.filter(function(order) {
+            return order.pendingApproval === false;
+          })
+        })
+    };
 }
 
 },{}],17:[function(require,module,exports){
@@ -471,19 +486,25 @@ angular
     }
 
     function createOrderAdmin(order, buyerId, id){
-      return $http.post('/orders/admin/'+ buyerId + '/' + order.id , order);
+      return $http.post('/orders/admin/'+ buyerId + '/' + id , order);
     }
 
     function getOrdersPending(pending){
+      console.log("Orders", pending);
       return $http.get('/orders/' + pending)
     }
 
+    function getOrdersPendingByAdmin(userId){
+      console.log('this is the userID from buyers service', userId);
+      return $http.get('/orders/user/' + userId)
+    }
       return {
           getAllInventoryByCategory: getAllInventoryByCategory,
           getAllCategories: getAllCategories,
           createOrder:createOrder,
           getOrdersPending:getOrdersPending,
-          createOrderAdmin:createOrderAdmin
+          createOrderAdmin:createOrderAdmin,
+          getOrdersPendingByAdmin:getOrdersPendingByAdmin
         }
   })
 
@@ -631,9 +652,29 @@ $scope.createInventory = function(inventory) {
   .then(function(data){
     $scope.categories = data.data;
   })
-  BuyersService.getOrdersPending(true).then(function(data) {
-      $scope.pendingOrders = data.data;
-  })
+
+  if($scope.user.userType === 'Farmer') {
+    BuyersService.getOrdersPending(true).then(function(data) {
+        $scope.pendingOrders = data.data;
+    })
+    BuyersService.getOrdersPending(false).then(function(data) {
+        $scope.approvedOrders = data.data;
+    })
+  } else if($scope.user.userType === "Admin"){
+    BuyersService.getOrdersPendingByAdmin($routeParams.id)
+      .then(function(data) {
+        $scope.pendingOrders = data.data.filter(function(order) {
+          return order.pendingApproval === true;
+        })
+        $scope.approvedOrders = data.data.filter(function(order) {
+          return order.pendingApproval === false;
+        })
+      })
+  };
+
+
+
+
   $scope.authorizeOrder = function(pending,index){
     FarmersService.authorizeOrder(pending)
     .then (function(data){
