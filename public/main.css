@@ -1,6 +1,33 @@
 .body {
   width: 90%; }
 
+ul {
+  margin-bottom: 0; }
+
+.btn-go {
+  background: green;
+  color: rgba(0, 0, 0, 0.5);
+  transition: .2s all; }
+  .btn-go:hover {
+    background: darkgreen;
+    color: white; }
+
+.btn-edit {
+  background: orange;
+  color: rgba(0, 0, 0, 0.5);
+  transition: .2s all; }
+  .btn-edit:hover {
+    background: blue;
+    color: white; }
+
+.btn-delete {
+  background: red;
+  color: rgba(0, 0, 0, 0.5);
+  transition: .2s all; }
+  .btn-delete:hover {
+    background: purple;
+    color: white; }
+
 .nav-user {
   margin: 10px;
   margin-right: 15px !important;
@@ -33,17 +60,25 @@
   font-size: 1.6em; }
 
 .nav-title {
-  font-size: 20px;
-  color: whitesmoke; }
+  font-size: 25px;
+  color: whitesmoke;
+  margin-left: 2%;
+  vertical-align: middle; }
 
 .nav-branding {
   list-style: none;
   display: inline-block;
   float: left; }
 
-.navbar li {
-  list-style: none;
-  display: inline-block; }
+.navbar {
+  background: black; }
+  .navbar .logo {
+    width: 70px;
+    height: 70px;
+    vertical-align: middle; }
+  .navbar li {
+    list-style: none;
+    display: inline-block; }
 
 .container-main {
   margin-top: 93px;
@@ -55,10 +90,11 @@
   width: 100%;
   height: 70%; }
 
-.row-one {
+.hero {
   height: 650px;
   background-image: url(img/hero-pic.jpg);
-  background-size: cover; }
+  background-size: cover;
+  margin: 10% 0; }
 
 .connect {
   font-size: 2.5em;
@@ -74,19 +110,14 @@
   margin-right: 0 !important; }
 
 .statement {
-  background-color: #ffffff;
-  opacity: 0.6; }
-
-.about {
-  text-align: center;
-  font-size: 2em;
-  color: #C21B0A; }
-
-.mission {
-  color: #000;
-  font-size: 1.3em;
-  font-family: Copperplate / Copperplate Gothic Light, sans-serif;
-  font-weight: bold; }
+  margin-bottom: 10%; }
+  .statement h5 {
+    color: red;
+    font-size: 2rem;
+    text-align: center; }
+  .statement p {
+    font-size: 1.6rem;
+    font-weight: bold; }
 
 footer {
   height: 70px;
@@ -101,14 +132,11 @@ footer li {
   list-style: none;
   padding-right: 10%; }
 
-.container-farm {
-  width: 100%;
-  height: 318px; }
-
 .social {
   margin: 0;
   padding: 0;
-  text-align: center; }
+  text-align: center;
+  margin: 3% 0; }
 
 .social ul {
   margin: 0;
@@ -181,36 +209,16 @@ footer li {
 .radio li label {
   padding: 0; }
 
-#left {
-  position: absolute;
-  top: 0px;
-  bottom: 0;
-  left: 0;
-  width: 49.1%;
-  height: 300px;
-  overflow-y: scroll;
-  border: 2px solid red; }
-
-#right {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  overflow-y: scroll;
-  width: 49.3%;
-  height: 300px;
-  border: 2px solid red; }
-
-#left li {
-  list-style: none; }
-
 .container-allInv {
   width: 100%;
-  margin: 0 auto; }
+  margin: 0 auto;
+  margin-top: 7%; }
 
 .container-buyer-all {
-  height: 240px;
-  overflow-y: scroll; }
+  height: 500px;
+  overflow-y: scroll;
+  border: 1px solid #efefef;
+  padding: 3%; }
 
 .container-catAll {
   display: inline-block;
@@ -222,10 +230,9 @@ footer li {
   text-align: center;
   border: 1px solid #000;
   font-size: 2.5em;
-  margin-bottom: 5%;
   background-color: #73B370;
   color: #D41942;
-  padding-bottom: 2%; }
+  padding: 2%; }
 
 .cat-order {
   list-style: none;
@@ -252,15 +259,31 @@ footer li {
 .veg-pic:hover + .new-veg-pic {
   display: inline; }
 
-.container-invFarm {
-  width: 100%;
-  margin: 0 auto;
-  border-top: 1px solid red; }
+.container-buyer-all img {
+  width: 100%; }
+
+.buyer-wrap {
+  margin-top: 5%; }
+
+.buyer-img-wrap {
+  height: 200px;
+  overflow: hidden; }
 
 .container-invFarmProd {
   height: 240px;
   display: inline-block;
   overflow-y: scroll; }
+  .container-invFarmProd ul li {
+    list-style: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 1% 0; }
+    .container-invFarmProd ul li span {
+      font-weight: normal; }
+  .container-invFarmProd input {
+    margin-bottom: 3%; }
+  .container-invFarmProd button {
+    width: 100%; }
 
 #cat-name {
   text-align: center;
@@ -269,11 +292,8 @@ footer li {
   padding-bottom: 2%; }
 
 .list-prod {
-  list-style: none;
-  display: inline-block;
-  padding: 0px;
-  margin-left: 10%;
-  text-align: center; }
+  padding: 5% 10%;
+  background: #efefef; }
 
 .container-buyerProfile {
   width: 100%; }
@@ -283,3 +303,35 @@ footer li {
 
 .container-user {
   text-align: center; }
+
+.farm-wrap {
+  margin-top: 10%; }
+
+.farm-wrap-inner {
+  position: fixed; }
+
+.product-wrap-inner {
+  background: #efefef;
+  margin-bottom: 8%;
+  padding: 5%; }
+
+.signin-form input {
+  margin-bottom: 3%; }
+
+.signin-form select {
+  width: 100%;
+  margin-bottom: 3%; }
+
+.pending, .approved {
+  background: #efefef;
+  padding: 5%; }
+  .pending h4, .approved h4 {
+    margin: 0; }
+
+.pending h4 {
+  color: orange; }
+
+.approved {
+  margin-top: 5%; }
+  .approved h4 {
+    color: green; }
