@@ -13,55 +13,77 @@ Data Collections:
 Tables
 Users (which includes Farmers and Buyers)
 Inventories
-Purchases
+Orders
+Categories
 
 Users
-id
-password
-userType (of user: farmer or buyer)
-userName
-companyName (company name)
-location (location of farmer or buyer)
-phone
-email
-isValid? (is a valid used approved by the Admin)
+int id,
+String userName,
+String passwordHash,
+String userType,
+String companyName,
+String location,
+String phone,
+String email,
+Boolean isValid
 
 Inventories
-id
-category (each produce item will be placed into a category which will be filterable)
-name (specific name of produce, not filterable)
-quantityAvailable (all by pounds/lbs.)
-farmer
-price
+int id,
+String category,
+String name,
+int quantityAvailable,
+double price,
+User user
 
-*no need for a category picture since we will hard code that. no pictures needed for each listed item since we are just making lists
+Orders
+int id,
+String category,
+String name,
+User buyer,
+User farmer,
+int quantityOrdered,
+double price,
+LocalDateTime timeStampOrdered,
+boolean isPendingApproval,
+Inventory inventory
 
-*when an inventory quantity reaches zero, instead of automatically deleting it from the farmers inventory, keep it there even when its zeroed out so that it still shows in the farmer’s page so they don't have to re-enter it once it is grown again.
-
-Purchases
-id
-category
-name
-buyer
-farmer
-quantityPurchased
-price
-timeStamp (local date time)
-isPendingApproval (approval by Farmer to sell item)
-dateDesired (after the buyer clicks “order” a box pops up and allows the buyer to type in a string of desired delivery date)
+Categories
+int id,
+String categoryName,
+String imageCategory
 
 
 Routes:
-createUser: "/users" POST 
-updateUser: "/users/{id}" PUT
-deleteUser: "/users/{id}" DELETE
-getAllUsers: "/users" GET all
-getOneUser: "/users/{id}" GET one
-login: "/login" POST
-logout: "/logout" POST
-getValidatingUsers: "/users/validate" GET all Users who are "false" for isValid
-validateUser: "/users/validate/{id}" PUT (this should be connected to the "approve" button on the Admin's page next to each user that is displayed by the previous method)
-getUsersInCategory: "/users/category/{category}" GET all users by userType (either "Farmer" or "Buyer")
+createUser - "/users", method = RequestMethod.POST
+updateUser - "/users/{id}", method = RequestMethod.PUT
+deleteUserDeniedByAdmin	- "/users/{id}", method = RequestMethod.DELETE
+getAllUsers - "/users", method = RequestMethod.GET
+getOneUser - "/users/{id}", method = RequestMethod.GET
+getUsersInCategory - "/users/category/{category}", method = RequestMethod.GET
+validateUser - "/users/validate/{id}", method = RequestMethod.PUT
+getValidatingUsers - "/users/validate", method = RequestMethod.GET
+login - "/login", method = RequestMethod.POST
+logout - "/logout", method = RequestMethod.POST
+createInventory - "/inventory", method = RequestMethod.POST
+createInventoryByAdmin - "/inventory/user/{id}", method = RequestMethod.POST
+*getAllInventory - "/inventory", method = RequestMethod.GET
+getAllInventoryByUser - "/inventory/user/{id}", method = RequestMethod.GET
+getAllInventorybyCategory - "/inventory/category/{category}", method = RequestMethod.GET
+*getOneInventory - "/inventory/{id}", method = RequestMethod.GET
+deleteInventory - "/inventory/{id}", method = RequestMethod.DELETE
+updateInventory - "/inventory/{id}", method = RequestMethod.PUT
+getAllCategories - "/categories", method = RequestMethod.GET
+*getCategoriesByLetter - "/categories/{letter}", method = RequestMethod.GET
+getOrdersPending - "/orders/{pending}", method = RequestMethod.GET
+createOrder - "/orders/{invId}", method = RequestMethod.POST
+createOrderAdmin - "/orders/admin/{buyerId}/{invId}" , method = RequestMethod.POST
+deleteOrder - "/orders/{id}", method = RequestMethod.DELETE
+getUserOrders - "/orders/user/{userId}", method = RequestMethod.GET
+authorizeOrder - /orders/authorize/{id}", method = RequestMethod.PUT
+Tables
+Users (which includes Farmers and Buyers)
+Inventories
+Purchases
 
 
 Technology:

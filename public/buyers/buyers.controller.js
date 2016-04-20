@@ -28,21 +28,35 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
         if($scope.user.userType === 'Buyer') {
           BuyersService.createOrder(order, id)
           .then(function(res){
+            console.log("Res", order)
             $scope.pendingOrders.push(order);
             $scope.thing = {};
           })
-        } else {
-          BuyersService.createOrderAdmin(order,$routeParams.id)
+        } else if($scope.user.userType === "Admin") {
+          BuyersService.createOrderAdmin(order, $routeParams.id)
           .then(function(res) {
             $scope.pendingOrders.push(order);
             $scope.thing = {};
           })
         }
     }
-    BuyersService.getOrdersPending(true).then(function(data) {
-        $scope.pendingOrders = data.data;
-    })
-    BuyersService.getOrdersPending(false).then(function(data) {
-        $scope.notPendingOrders = data.data;
-    })
+    
+    if($scope.user.userType === 'Buyer') {
+      BuyersService.getOrdersPending(true).then(function(data) {
+          $scope.pendingOrders = data.data;
+      })
+      BuyersService.getOrdersPending(false).then(function(data) {
+          $scope.notPendingOrders = data.data;
+      })
+    } else if($scope.user.userType === "Admin"){
+      BuyersService.getOrdersPendingByAdmin($routeParams.id)
+        .then(function(data) {
+          $scope.pendingOrders = data.data.filter(function(order) {
+            return order.pendingApproval === true;
+          })
+          $scope.notPendingOrders = data.data.filter(function(order) {
+            return order.pendingApproval === false;
+          })
+        })
+    };
 }
