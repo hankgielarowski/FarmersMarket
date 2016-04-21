@@ -6,6 +6,10 @@ ul{
   margin-bottom:0;
 }
 
+li{
+  list-style: none;
+}
+
 // buttons
 
 .btn-go{
@@ -211,21 +215,6 @@ vertical-align: middle;
 // end home html \\
 
 
-// .container-category {
-//   width: 100%;
-//   height: 300px;
-// }
-//
-// #farmer-right {
-//   top: 0px;
-//   bottom: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 300px;
-//   overflow-y: scroll;
-//   border: 2px solid red;
-// }
-
  // buyer home page
 .container-allInv {
   width: 100%;
@@ -253,8 +242,8 @@ vertical-align: middle;
   text-align: center;
   border: 1px solid #000;
   font-size: 2.5em;
-  background-color: #73B370;
-  color: #547221;
+  background-color: #547221;
+  color: white;
   padding:2%;
 }
 
@@ -308,62 +297,137 @@ vertical-align: middle;
 
 // buyer page orders ||
 .pending, .approved{
-  background:#547221;
-  padding:5%;
+  background: #90854C;
+  padding: 5%;
   h4{
-    margin:0;
+    margin: 0;
   }
 }
 .pending {
   h4 {
-    color: orange;
+    color: #fff;
   }
 }
 .approved {
-  margin-top:5%;
+  margin-top: 5%;
   h4{
-    color:green;
+    color: #fff;
+  }
+}
+// end Buyer page ||
+
+// farmer page ||
+
+.goods-available {
+  height: 200px;
+  overflow-y: scroll;
+  h3{
+    color:#90854C;
   }
 }
 
-
-
-
-
-// farmer page ||
-.farmer-all {
-  margin-left: 35%;
+.product-orders{
+  height: 200px;
+  overflow-y: scroll;
+  h3{
+    color:#90854C;
+  }
 }
+
+.approved-orders{
+  height: 200px;
+  overflow-y: scroll;
+  h3{
+    color:#90854C;
+  }
+}
+
 .container-user {
   text-align: center;
 }
+
 .farm-wrap {
   margin-top: 10%;
 }
+
 .farm-wrap-inner {
   position: fixed;
+  h3{
+    color:#90854C;
+  }
 }
 
 .product-wrap-inner {
-  background: #efefef;
+  background: #35B82E;
   margin-bottom: 8%;
   padding:5%;
 }
+// end famer page
 
-//buyer profile page
-.container-buyerProfile {
- width: 100%
- // background-color: rgba(115, 186, 241, 0.3);
+// Admin Page
+.container-admin {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 7%;
 }
-// end profile page
 
+.all-users {
+  height: 500px;
+  overflow-y: scroll;
+  border: 1px solid #efefef;
+  padding: 0%;
+  background-image:url(img/hero-pic.jpg);
+  background-size: cover;
+    h4{
+    text-align: center;
+    font-size: 2em;
+    }
+}
 
+.admin-user-list {
+  display: inline-block;
+  width: 32%;
+  margin-bottom: 4%;
+ 	vertical-align: top;
+}
 
+.user-wrap-inner {
+  background: #efefef;
+  margin-bottom: 8%;
+  padding:5%;
+  font-size: 1.3em;
+}
 
+.container-viewUsers {
+  height: 500px;
+  overflow-y: scroll;
+  border: 1px solid #efefef;
+  text-align: center;
+}
 
+.user-buyer {
+  text-align: center;
+  list-style: none;
+}
 
+.user-famrer {
+  text-align: center;
+  list-style: none;
+}
 
+.mucho-user-list {
+  text-align: center;
+  margin-bottom: 4%;
+  font-size: 1.3em;
+}
 
+.many-user-List{
+  text-align: center;
+  margin-bottom: 4%;
+  font-size: 1.3em;
+}
+
+// end Admin Page
 
 footer {
   text-align: center;

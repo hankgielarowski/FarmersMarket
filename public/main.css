@@ -4,6 +4,9 @@
 ul {
   margin-bottom: 0; }
 
+li {
+  list-style: none; }
+
 .btn-go {
   background: #90854C;
   color: white;
@@ -189,8 +192,8 @@ ul {
   text-align: center;
   border: 1px solid #000;
   font-size: 2.5em;
-  background-color: #73B370;
-  color: #547221;
+  background-color: #547221;
+  color: white;
   padding: 2%; }
 
 .container-buyer-all img {
@@ -227,21 +230,36 @@ ul {
   background: #90854C; }
 
 .pending, .approved {
-  background: #547221;
+  background: #90854C;
   padding: 5%; }
   .pending h4, .approved h4 {
     margin: 0; }
 
 .pending h4 {
-  color: orange; }
+  color: #fff; }
 
 .approved {
   margin-top: 5%; }
   .approved h4 {
-    color: green; }
+    color: #fff; }
 
-.farmer-all {
-  margin-left: 35%; }
+.goods-available {
+  height: 200px;
+  overflow-y: scroll; }
+  .goods-available h3 {
+    color: #90854C; }
+
+.product-orders {
+  height: 200px;
+  overflow-y: scroll; }
+  .product-orders h3 {
+    color: #90854C; }
+
+.approved-orders {
+  height: 200px;
+  overflow-y: scroll; }
+  .approved-orders h3 {
+    color: #90854C; }
 
 .container-user {
   text-align: center; }
@@ -251,14 +269,65 @@ ul {
 
 .farm-wrap-inner {
   position: fixed; }
+  .farm-wrap-inner h3 {
+    color: #90854C; }
 
 .product-wrap-inner {
-  background: #efefef;
+  background: #35B82E;
   margin-bottom: 8%;
   padding: 5%; }
 
-.container-buyerProfile {
-  width: 100%; }
+.container-admin {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 7%; }
+
+.all-users {
+  height: 500px;
+  overflow-y: scroll;
+  border: 1px solid #efefef;
+  padding: 0%;
+  background-image: url(img/hero-pic.jpg);
+  background-size: cover; }
+  .all-users h4 {
+    text-align: center;
+    font-size: 2em; }
+
+.admin-user-list {
+  display: inline-block;
+  width: 32%;
+  margin-bottom: 4%;
+  vertical-align: top; }
+
+.user-wrap-inner {
+  background: #efefef;
+  margin-bottom: 8%;
+  padding: 5%;
+  font-size: 1.3em; }
+
+.container-viewUsers {
+  height: 500px;
+  overflow-y: scroll;
+  border: 1px solid #efefef;
+  text-align: center; }
+
+.user-buyer {
+  text-align: center;
+  list-style: none; }
+
+.user-famrer {
+  text-align: center;
+  list-style: none; }
+
+.mucho-user-list {
+  text-align: center;
+  margin-bottom: 4%;
+  font-size: 1.3em; }
+
+.many-user-List {
+  text-align: center;
+  margin-bottom: 4%;
+  font-size: 1.3em; }
 
 footer {
   text-align: center;
