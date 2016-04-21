@@ -1,4 +1,4 @@
-  angular
+angular
 .module("farmers.module")
 .controller("FarmersController", FarmersController);
 

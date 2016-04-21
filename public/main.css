@@ -5,19 +5,19 @@ ul {
   margin-bottom: 0; }
 
 .btn-go {
-  background: green;
-  color: rgba(0, 0, 0, 0.5);
+  background: #90854C;
+  color: white;
   transition: .2s all; }
   .btn-go:hover {
-    background: darkgreen;
+    background: #547221;
     color: white; }
 
 .btn-edit {
-  background: orange;
-  color: rgba(0, 0, 0, 0.5);
+  background: #547221;
+  color: white;
   transition: .2s all; }
   .btn-edit:hover {
-    background: blue;
+    background: #90854C;
     color: white; }
 
 .btn-delete {
@@ -80,15 +80,12 @@ ul {
     list-style: none;
     display: inline-block; }
 
-.container-main {
-  margin-top: 93px;
-  width: 90%;
-  margin-right: auto;
-  margin-left: auto; }
+.signin-form input {
+  margin-bottom: 3%; }
 
-.container-full-bg {
+.signin-form select {
   width: 100%;
-  height: 70%; }
+  margin-bottom: 3%; }
 
 .hero {
   height: 650px;
@@ -104,11 +101,6 @@ ul {
   color: #309700;
   margin-right: 8%; }
 
-.row-two {
-  height: 300px;
-  margin-left: 0 !important;
-  margin-right: 0 !important; }
-
 .statement {
   margin-bottom: 10%; }
   .statement h5 {
@@ -118,19 +110,6 @@ ul {
   .statement p {
     font-size: 1.6rem;
     font-weight: bold; }
-
-footer {
-  height: 70px;
-  border: 2px solid red; }
-
-footer ul {
-  display: inline-block;
-  width: 100%; }
-
-footer li {
-  display: inline-block;
-  list-style: none;
-  padding-right: 10%; }
 
 .social {
   margin: 0;
@@ -188,27 +167,6 @@ footer li {
 .social .fa-instagram:hover {
   background: #375989; }
 
-.container-category {
-  width: 100%;
-  height: 300px; }
-
-#farmer-right {
-  top: 0px;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 300px;
-  overflow-y: scroll;
-  border: 2px solid red; }
-
-.radio li {
-  list-style: none;
-  display: inline-block;
-  padding-left: 50px; }
-
-.radio li label {
-  padding: 0; }
-
 .container-allInv {
   width: 100%;
   margin: 0 auto;
@@ -218,7 +176,8 @@ footer li {
   height: 500px;
   overflow-y: scroll;
   border: 1px solid #efefef;
-  padding: 3%; }
+  padding: 3%;
+  text-align: center; }
 
 .container-catAll {
   display: inline-block;
@@ -231,33 +190,8 @@ footer li {
   border: 1px solid #000;
   font-size: 2.5em;
   background-color: #73B370;
-  color: #D41942;
+  color: #547221;
   padding: 2%; }
-
-.cat-order {
-  list-style: none;
-  display: inline-block;
-  padding: 0px;
-  margin-left: 15%;
-  text-align: center; }
-
-.cat-list {
-  list-style: none;
-  display: inline-block; }
-
-.cat-list p {
-  text-align: center;
-  color: #9C8332; }
-
-.cat-list img {
-  width: 170px;
-  height: 150px; }
-
-.new-veg-pic {
-  display: none; }
-
-.veg-pic:hover + .new-veg-pic {
-  display: inline; }
 
 .container-buyer-all img {
   width: 100%; }
@@ -268,6 +202,9 @@ footer li {
 .buyer-img-wrap {
   height: 200px;
   overflow: hidden; }
+
+#cat-name {
+  color: #547221; }
 
 .container-invFarmProd {
   height: 240px;
@@ -285,18 +222,23 @@ footer li {
   .container-invFarmProd button {
     width: 100%; }
 
-#cat-name {
-  text-align: center;
-  font-size: 2.5em;
-  color: #73B370;
-  padding-bottom: 2%; }
-
 .list-prod {
   padding: 5% 10%;
-  background: #efefef; }
+  background: #90854C; }
 
-.container-buyerProfile {
-  width: 100%; }
+.pending, .approved {
+  background: #547221;
+  padding: 5%; }
+  .pending h4, .approved h4 {
+    margin: 0; }
+
+.pending h4 {
+  color: orange; }
+
+.approved {
+  margin-top: 5%; }
+  .approved h4 {
+    color: green; }
 
 .farmer-all {
   margin-left: 35%; }
@@ -315,23 +257,10 @@ footer li {
   margin-bottom: 8%;
   padding: 5%; }
 
-.signin-form input {
-  margin-bottom: 3%; }
+.container-buyerProfile {
+  width: 100%; }
 
-.signin-form select {
-  width: 100%;
-  margin-bottom: 3%; }
-
-.pending, .approved {
-  background: #efefef;
-  padding: 5%; }
-  .pending h4, .approved h4 {
-    margin: 0; }
-
-.pending h4 {
-  color: orange; }
-
-.approved {
-  margin-top: 5%; }
-  .approved h4 {
-    color: green; }
+footer {
+  text-align: center;
+  border-top: 2px solid rgba(176, 199, 236, 0.25);
+  color: #547221; }

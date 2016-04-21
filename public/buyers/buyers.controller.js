@@ -40,7 +40,7 @@ function BuyersController($scope, $http, $location, $q, $rootScope, BuyersServic
           })
         }
     }
-    
+
     if($scope.user.userType === 'Buyer') {
       BuyersService.getOrdersPending(true).then(function(data) {
           $scope.pendingOrders = data.data;
