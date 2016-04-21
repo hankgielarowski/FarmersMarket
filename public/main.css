@@ -192,8 +192,8 @@ li {
   text-align: center;
   border: 1px solid #000;
   font-size: 2.5em;
-  background-color: #73B370;
-  color: #547221;
+  background-color: #547221;
+  color: white;
   padding: 2%; }
 
 .container-buyer-all img {
@@ -230,18 +230,18 @@ li {
   background: #90854C; }
 
 .pending, .approved {
-  background: #547221;
+  background: #90854C;
   padding: 5%; }
   .pending h4, .approved h4 {
     margin: 0; }
 
 .pending h4 {
-  color: orange; }
+  color: #fff; }
 
 .approved {
   margin-top: 5%; }
   .approved h4 {
-    color: green; }
+    color: #fff; }
 
 .goods-available {
   height: 200px;

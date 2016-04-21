@@ -7,7 +7,7 @@ ul{
 }
 
 li{
-  list-style:none;
+  list-style: none;
 }
 
 // buttons
@@ -242,8 +242,8 @@ vertical-align: middle;
   text-align: center;
   border: 1px solid #000;
   font-size: 2.5em;
-  background-color: #73B370;
-  color: #547221;
+  background-color: #547221;
+  color: white;
   padding:2%;
 }
 
@@ -297,24 +297,27 @@ vertical-align: middle;
 
 // buyer page orders ||
 .pending, .approved{
-  background:#547221;
-  padding:5%;
+  background: #90854C;
+  padding: 5%;
   h4{
-    margin:0;
+    margin: 0;
   }
 }
+
 .pending {
   h4 {
-    color: orange;
+    color: #fff;
   }
 }
+
 .approved {
-  margin-top:5%;
+  margin-top: 5%;
   h4{
-    color:green;
+    color: #fff;
   }
 }
-//end Buyer Page
+
+// end Buyer page ||
 
 // farmer page ||
 
@@ -362,13 +365,14 @@ vertical-align: middle;
   margin-bottom: 8%;
   padding:5%;
 }
-//end Farmer Page
 
-//Admin Page
+// end famer page
+
+// Admin Page
 .container-admin {
-  width:100%;
-  margin:0 auto;
-  margin-top:7%;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 7%;
 }
 
 .all-users {
@@ -388,7 +392,7 @@ vertical-align: middle;
   display: inline-block;
   width: 32%;
   margin-bottom: 4%;
-    vertical-align: top;
+ 	vertical-align: top;
 }
 
 .user-wrap-inner {
@@ -427,7 +431,7 @@ vertical-align: middle;
   font-size: 1.3em;
 }
 
-//end admin page
+// end Admin Page
 
 footer {
   text-align: center;

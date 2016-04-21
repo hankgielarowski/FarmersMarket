@@ -1,23 +1,25 @@
 <div class="container-admin">
-  <div class="col-xs-6" id="allUsers">
+  <div class="all-users col-xs-8">
     <h4> All Pending Users </h4>
-    <div class="adminUserList" ng-repeat="user in users">
-      <ul>
-        <li>{{user.companyName}}</li>
-        <li>{{user.location}}</li>
-        <li>{{user.phone}}</li>
-        <li>{{user.email}}</li>
-        <button type="button" class="btn btn-sm btn-go" ng-click="validateUser(user, $index)">Approve User</button>
-        <button type="button" class="btn btn-sm btn-edit" ng-click="deleteUserDeniedByAdmin (user, $index)">Delete User</button>
-      </ul>
+    <div class="admin-user-List col-xs-6" ng-repeat="user in users">
+      <div class="user-wrap-inner">
+        <ul>
+          <li>{{user.companyName}}</li>
+          <li>{{user.location}}</li>
+          <li>{{user.phone}}</li>
+          <li>{{user.email}}</li>
+          <button type="button" class="btn btn-sm btn-go" ng-click="validateUser(user, $index)">Approve User</button>
+          <button type="button" class="btn btn-sm btn-edit" ng-click="deleteUserDeniedByAdmin (user, $index)">Delete User</button>
+        </ul>
+      </div>
     </div>
   </div>
-  <div class="container-viewUsers col-xs-6">
-    <button type="button" class="btn farmer-all btn-edit" ng-click="getCatUsers('Farmer')">View all Farmers</button>
+  <div class="container-viewUsers col-xs-4">
+    <button type="button" class="btn btn-edit" ng-click="getCatUsers('Farmer')">View all Farmers</button>
     <button type="button" class="btn btn-edit" ng-click="getCatUsers('Buyer')">View all Buyers</button>
-    <div class="col-xs-12" ng-show="showFarmer">
-      <h1 ng-show="showFarmer">List of Farmers</h1>
-      <div class="farmers-List" ng-repeat="person in farmers">
+    <div class="col-xs-12 user-farmer" ng-show="showFarmer">
+      <h4>List of Farmers</h4>
+      <div class="many-user-List" ng-repeat="person in farmers">
         <ul>
           <li>
             <a href="/#/farmers/{{person.id}}">{{person.userName}}</a>
@@ -25,10 +27,9 @@
         </ul>
       </div>
     </div>
-  </div>
-    <div class="buyer-list col-xs-12" ng-show="showBuyer">
-        <h1 ng-show="showBuyer">List of Buyers</h1>
-        <div class="buyers-list" ng-repeat="person in buyers">
+    <div class="col-xs-12 user-buyer" ng-hide="showBuyer">
+        <h4>List of Buyers</h4>
+        <div class="mucho-user-list" ng-repeat="person in buyers">
           <ul>
             <li>
               <a href="/#/buyers/{{person.id}}">{{person.userName}}</a>
@@ -36,4 +37,5 @@
           </ul>
         </div>
     </div>
+  </div>
 </div>
