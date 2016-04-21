@@ -9,21 +9,21 @@ ul{
 // buttons
 
 .btn-go{
-  background: green;
-  color:rgba(0,0,0,0.5);
+  background: #90854C;
+  color:white;
   transition:.2s all;
   &:hover{
-    background:darkgreen;
+    background:#547221;
     color:white;
   }
 }
 
 .btn-edit {
-  background: orange;
-  color:rgba(0,0,0,0.5);
+  background: #547221;
+  color: white;
   transition:.2s all;
   &:hover{
-    background:blue;
+    background:#90854C;
     color:white;
   }
 }
@@ -37,6 +37,10 @@ ul{
   }
 }
 
+<<<<<<< HEAD
+=======
+// navbar \\
+>>>>>>> b3e2db2f4c1a96375d586bf39b2485c47ddcd753
 .nav-user {
   margin: 10px;
   margin-right: 15px !important;
@@ -100,19 +104,21 @@ vertical-align: middle;
   }
 }
 
-.container-main {
-  margin-top: 93px;
-  width: 90%;
-  margin-right: auto;
-  margin-left: auto;
+
+// navbar html sign-in modal
+
+.signin-form {
+  input {
+    margin-bottom: 3%;
+  }
+  select {
+    width: 100%;
+    margin-bottom: 3%;
+  }
 }
 
-//home page
-.container-full-bg {
-  width: 100%;
-  height: 70%;
-}
 
+// home html \\
 .hero {
   height: 650px;
   background-image:url(img/hero-pic.jpg);
@@ -129,13 +135,6 @@ vertical-align: middle;
   margin-right: 8%;
 }
 
-
-.row-two {
-  height: 300px;
-  margin-left: 0!important;
-  margin-right: 0!important;
-}
-
 .statement {
  margin-bottom:10%;
    h5 {
@@ -149,32 +148,6 @@ vertical-align: middle;
   }
 }
 
-footer {
-  height: 70px;
-  border: 2px solid red;
-}
-
-footer ul {
-  display: inline-block;
-  width: 100%;
-}
-
-footer li {
-  display: inline-block;
-  list-style: none;
-  padding-right: 10%;
-}
-
-#copyright {
-
-}
-
-.container-farm {
-
-}
-.box {
-
-}
 .social {
     margin: 0;
     padding: 0;
@@ -239,35 +212,25 @@ footer li {
 .social .fa-instagram:hover {
     background: #375989;
 }
+// end home html \\
 
-.container-category {
-  width: 100%;
-  height: 300px;
-}
 
-#farmer-right {
-  top: 0px;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 300px;
-  overflow-y: scroll;
-  border: 2px solid red;
-}
-
-.radio li {
-  list-style: none;
-  display: inline-block;
-  padding-left: 50px;
-}
-
-.radio li label{
-  padding: 0;
-}
-
+// .container-category {
+//   width: 100%;
+//   height: 300px;
+// }
+//
+// #farmer-right {
+//   top: 0px;
+//   bottom: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 300px;
+//   overflow-y: scroll;
+//   border: 2px solid red;
+// }
 
  // buyer home page
-
 .container-allInv {
   width: 100%;
   margin: 0 auto;
@@ -279,6 +242,7 @@ footer li {
   overflow-y: scroll;
   border: 1px solid #efefef;
   padding: 3%;
+  text-align: center;
 }
 
 .container-catAll {
@@ -294,43 +258,8 @@ footer li {
   border: 1px solid #000;
   font-size: 2.5em;
   background-color: #73B370;
-  color: #D41942;
+  color: #547221;
   padding:2%;
-}
-// for category all and categrory inv
-.cat-order {
-  list-style: none;
-  display: inline-block;
-  padding: 0px;
-  margin-left: 15%;
-  text-align: center;
-}
-// end
-
-
-.cat-list {
-  list-style: none;
-  display: inline-block;
-}
-
-.cat-list p {
-  text-align: center;
-  color: #9C8332;
-}
-
-.cat-list img {
-  width: 170px;
-  height: 150px;
-}
-
-.new-veg-pic {
-  display: none;
-}
-.veg-pic:hover + .new-veg-pic {
-  display: inline;
-}
-
-.container-invFarm {
 }
 
 .container-buyer-all img {
@@ -342,6 +271,10 @@ footer li {
 .buyer-img-wrap {
   height: 200px;
   overflow: hidden;
+}
+
+#cat-name {
+  color: #547221;
 }
 
 .container-invFarmProd {
@@ -365,26 +298,43 @@ footer li {
   }
 }
 
-#cat-name {
-  text-align: center;
-  font-size: 2.5em;
-  color: #73B370;
-  padding-bottom: 2%;
-}
+// #cat-name {
+//   text-align: center;
+//   font-size: 2.5em;
+//   color: #73B370;
+//   padding-bottom: 2%;
+// }
 
 .list-prod {
-    padding: 5% 10%;
-    background:#efefef;
+  padding: 5% 10%;
+  background:#90854C;
 }
- //buyer profile page
-.container-buyerProfile {
-  width: 100%
-  // background-color: rgba(115, 186, 241, 0.3);
+
+// buyer page orders ||
+.pending, .approved{
+  background:#547221;
+  padding:5%;
+  h4{
+    margin:0;
+  }
 }
-// end profile page
+.pending {
+  h4 {
+    color: orange;
+  }
+}
+.approved {
+  margin-top:5%;
+  h4{
+    color:green;
+  }
+}
 
-//admin page
 
+
+
+
+// farmer page ||
 .farmer-all {
   margin-left: 35%;
 }
@@ -404,35 +354,23 @@ footer li {
   padding:5%;
 }
 
-// login screen
-
-.signin-form {
-  input {
-    margin-bottom: 3%;
-  }
-  select {
-    width: 100%;
-    margin-bottom: 3%;
-  }
+//buyer profile page
+.container-buyerProfile {
+ width: 100%
+ // background-color: rgba(115, 186, 241, 0.3);
 }
+// end profile page
 
-// orders
 
-.pending, .approved{
-  background:#efefef;
-  padding:5%;
-  h4{
-    margin:0;
-  }
-}
-.pending {
-  h4 {
-    color: orange;
-  }
-}
-.approved {
-  margin-top:5%;
-  h4{
-    color:green;
-  }
+
+
+
+
+
+
+
+footer {
+  text-align: center;
+  border-top: 2px solid rgba(176, 199, 236, 0.25);
+  color: #547221;
 }

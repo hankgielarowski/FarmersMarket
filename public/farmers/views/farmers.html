@@ -27,7 +27,7 @@
             <li>$ {{product.price}}</li>
           </ul>
           <button type="button" class="btn btn-sm btn-edit" ng-click="updateInventory(product)">Edit Inventory</button>
-          <button type="button" class="btn btn-sm btn-delete" ng-click="deleteInventory(product)">Delete Order</button>
+          <button type="button" class="btn btn-sm btn-go" ng-click="deleteInventory(product)">Delete Order</button>
         </div>
       </div>
     </div>
@@ -38,8 +38,8 @@
           <div class="product-wrap-inner">
             <ul>
               <li>{{::thing.category}} , {{::thing.name}} , {{::thing.buyer.userName}} , $ {{::thing.price}} , {{::thing.quantityOrdered}} lbs</li>
-              <button type="button" class="btn btn-sm btn-go" ng-click="authorizeOrder(thing)">Accept Order</button>
-              <button type="button" class="btn btn-sm btn-delete" ng-click="deleteOrder(thing)">Delete Order</button>
+              <button type="button" class="btn btn-sm btn-edit" ng-click="authorizeOrder(thing)">Accept Order</button>
+              <button type="button" class="btn btn-sm btn-go" ng-click="deleteOrder(thing)">Delete Order</button>
             </ul>
         </div>
       </div>

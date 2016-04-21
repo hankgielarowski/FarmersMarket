@@ -1,48 +1,39 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12" id="allUsers">
-      <div class="well">
-        <h4 class="text-success"> All Pending Users </h4>
-        <ul class="adminUserList" ng-repeat="user in users">
-          <li>{{user.companyName}}</li>
-          <li>{{user.location}}</li>
-          <li>{{user.phone}}</li>
-          <li>{{user.email}}</li>
-            <button type="button" class="btn btn-danger btn-sm" ng-click="validateUser(user, $index)">Approve User</button>
-            <button type="button" class="btn btn-danger btn-sm" ng-click="deleteUserDeniedByAdmin (user, $index)">Delete User</button>
+<div class="contianer-admin">
+  <div class="col-xs-6" id="allUsers">
+    <h4> All Pending Users </h4>
+    <div class="adminUserList" ng-repeat="user in users">
+      <ul>
+        <li>{{user.companyName}}</li>
+        <li>{{user.location}}</li>
+        <li>{{user.phone}}</li>
+        <li>{{user.email}}</li>
+        <button type="button" class="btn btn-sm btn-go" ng-click="validateUser(user, $index)">Approve User</button>
+        <button type="button" class="btn btn-sm btn-edit" ng-click="deleteUserDeniedByAdmin (user, $index)">Delete User</button>
+      </ul>
+    </div>
+  </div>
+  <div class="container-viewUsers col-xs-6">
+    <button type="button" class="btn farmer-all btn-edit" ng-click="getCatUsers('Farmer')">View all Farmers</button>
+    <button type="button" class="btn btn-edit" ng-click="getCatUsers('Buyer')">View all Buyers</button>
+    <div class="col-xs-12" ng-show="showFarmer">
+      <h1>List of Farmers</h1>
+      <div class="farmers-List" ng-repeat="person in farmers">
+        <ul>
+          <li>
+            <a href="/#/farmers/{{person.id}}">{{person.userName}}</a>
+          </li>
         </ul>
       </div>
     </div>
   </div>
-</div>
-
-<div class="container-viewUsers">
-  <div class="row">
-    <div class="col-sm-12">
-      <button type="button" class="btn farmer-all btn-danger" ng-click="getCatUsers('Farmer')">View all Farmers</button>
-      <button type="button" class="btn btn-danger" ng-click="getCatUsers('Buyer')">View all Buyers</button>
+    <div class="buyer-list col-xs-12" ng-show="showBuyer">
+        <h1>List of Buyers</h1>
+        <div class="buyers-list" ng-repeat="person in buyers">
+          <ul>
+            <li>
+              <a href="/#/buyers/{{person.id}}">{{person.userName}}</a>
+            </li>
+          </ul>
+        </div>
     </div>
-  </div>
-</div>
-
-<div class="row" ng-show="showFarmer">
-  <div class="col-12-md">
-    <h1>List of Farmers</h1>
-    <ul class="userList" ng-repeat="person in farmers">
-      <li>
-        <a href="/#/farmers/{{person.id}}">{{person.userName}}</a>
-      </li>
-    </ul>
-  </div>
-</div>
-
-<div class="row" ng-show="showBuyer">
-  <div class="col-12-md">
-      <h1>List of Buyers</h1>
-    <ul class="userList" ng-repeat="person in buyers">
-      <li>
-        <a href="/#/buyers/{{person.id}}">{{person.userName}}</a>
-      </li>
-    </ul>
-  </div>
 </div>
