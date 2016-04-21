@@ -6,10 +6,10 @@
       <a href="#/"><li class="nav-title">Farmers Market</li></a>
     </ul>
     <ul class="button-nav col-xs-12 col-sm-6">
-      <li class="nav-signup"><button ng-hide="isAuthenticated()" type="button" class="btn btn-danger login"  ng-click="openSignup()">Sign Up</button></li>
-      <li class="nav-signin"><button ng-hide="isAuthenticated()" type="button" class="btn btn-primary login" ng-click="openLogin()">Sign In</button></li>
-      <li class="nav-logout"><button ng-click="logOut()" type="button" class="btn btn-warning login" ng-show="isAuthenticated()">Log Out</button></li>
-      <li class="nav-profile"><button ng-click="goToProfile()" type="button" class="btn btn-success login" ng-show="isAuthenticated()">Profile</button></li>
+      <li class="nav-signup"><button ng-hide="isAuthenticated()" type="button" class="btn btn-edit"  ng-click="openSignup()">Sign Up</button></li>
+      <li class="nav-signin"><button ng-hide="isAuthenticated()" type="button" class="btn btn-edit" ng-click="openLogin()">Sign In</button></li>
+      <li class="nav-logout"><button ng-click="logOut()" type="button" class="btn btn-edit" ng-show="isAuthenticated()">Log Out</button></li>
+      <li class="nav-profile"><button ng-click="goToProfile()" type="button" class="btn btn-go" ng-show="isAuthenticated()">Profile</button></li>
       <li class="nav-user"><p ng-show="isAuthenticated()">
         Welcome, {{user.companyName}}
       </p></li>
